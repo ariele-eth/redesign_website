@@ -8,27 +8,27 @@ const executiveMembers = [
     role: 'President & Founder\nBSc Computer Science',
     description:
       'Passionate about blockchain technology and its potential to revolutionize industries.',
-    image: '/assets/team/jennis.jpeg', // Add your photo here
+    image: '/assets/team/jennis.jpeg',
   },
   {
     name: 'Anej Rozman',
     role: 'Head of Events & Co-Founder\nMSc Quantitative Finance',
     description:
       'Strong believer in the longevity of blockchain technologies, crypto currencies and decentralization.',
-    image: '/assets/team/anej.jpeg', // Add your photo here
+    image: '/assets/team/anej.jpeg',
   },
   {
     name: 'Gustave Charles',
     role: 'Head of Recruiting and Member Organization\nMSc Cyber Security',
     description:
       'Working in privacy, decentralisation and governance real-world usecases.',
-    image: '/assets/team/gustave.jpeg', // Add your photo here
+    image: '/assets/team/gustave.jpeg',
   },
   {
     name: 'Ariele Marcellino',
     role: 'Head of Innovation and Technology',
-    description: 'Lorem',
-    image: '/assets/team/ariele.png', // Add your photo here
+    description: 'Leading innovation and technology initiatives.',
+    image: '/assets/team/ariele.png',
   },
 ]
 
@@ -81,7 +81,7 @@ const poles = [
   {
     name: 'Recruiting & Member Organization',
     lead: { name: 'Gustave Charles', image: '/assets/team/gustave.jpeg' },
-    description: 'Lorem',
+    description: 'Managing member recruitment and organization activities.',
     members: [],
   },
 ]

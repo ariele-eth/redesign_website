@@ -205,11 +205,7 @@ export const AnimatedNetwork = ({ fixed = false }: { fixed?: boolean }) => {
     animate()
 
     const handleResize = () => {
-      // Store old values for potential animation transitions
       const oldRadius = sphereRadius
-      // Note: oldCenterX and oldCenterY could be used for smooth transitions
-      // const oldCenterX = centerX;
-      // const oldCenterY = centerY;
 
       // Update canvas dimensions
       canvasWidth = canvas.offsetWidth

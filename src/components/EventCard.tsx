@@ -13,7 +13,7 @@ type EventRow = {
   end_time?: string | null
   location?: string | null
   image_url?: string | null
-  luma_url?: string | null // <— add this
+  luma_url?: string | null 
 }
 
 interface EventCardProps {

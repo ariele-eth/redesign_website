@@ -175,13 +175,13 @@ export default function Home() {
             <PersonCard
               name="Jerome"
               role="Branding Advisor"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+              description="Strategic advisor with expertise in branding and marketing."
             />
 
             <PersonCard
               name="Adrian"
               role="Strategic Advisor"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+              description="Strategic advisor with expertise in business development and partnerships."
             />
           </div>
         </div>
