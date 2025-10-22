@@ -27,7 +27,7 @@ export const Navigation = () => {
               <Link key={link.path} href={link.path}>
                 <Button
                   variant={pathname === link.path ? 'default' : 'ghost'}
-                  className="transition-smooth"
+                  className="transition-smooth nav-link"
                 >
                   {link.name}
                 </Button>
@@ -42,6 +42,7 @@ export const Navigation = () => {
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
+              className="transition-smooth nav-link"
             >
               {mobileMenuOpen ? (
                 <X className="h-5 w-5" />
@@ -65,7 +66,7 @@ export const Navigation = () => {
               >
                 <Button
                   variant={pathname === link.path ? 'secondary' : 'ghost'}
-                  className="w-full justify-start"
+                  className="w-full justify-start transition-smooth nav-link"
                 >
                   {link.name}
                 </Button>

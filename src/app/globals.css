@@ -159,3 +159,9 @@ html {
 .shadow-glass {
   box-shadow: 0 4px 16px -4px hsl(0 0% 0% / 0.08);
 }
+
+/* Navigation hover effects */
+.nav-link:hover {
+  background-color: hsl(199 100% 35% / 0.1) !important;
+  color: hsl(199 100% 35%) !important;
+}
