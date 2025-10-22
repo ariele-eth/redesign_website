@@ -1,10 +1,10 @@
-import Home from '@/app/pages/Home'
+import About from '@/app/pages/About'
 import { Providers } from '@/components/Providers'
 
-export default function RootPage() {
+export default function AboutPage() {
   return (
     <Providers>
-      <Home />
+      <About />
     </Providers>
   )
 }

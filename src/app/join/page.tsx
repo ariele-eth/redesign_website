@@ -1,10 +1,10 @@
-import Home from '@/app/pages/Home'
+import Join from '@/app/pages/Join'
 import { Providers } from '@/components/Providers'
 
-export default function RootPage() {
+export default function JoinPage() {
   return (
     <Providers>
-      <Home />
+      <Join />
     </Providers>
   )
 }

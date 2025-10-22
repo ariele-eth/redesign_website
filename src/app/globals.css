@@ -1,8 +1,58 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Shadowy white theme - neutral grayscale */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 8%;
+
+  --card: 0 0% 98%;
+  --card-foreground: 0 0% 8%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 8%;
+
+  /* ETH Zurich blue (#007ab3) as primary accent */
+  --primary: 199 100% 35%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 0 0% 94%;
+  --secondary-foreground: 0 0% 8%;
+
+  --muted: 0 0% 92%;
+  --muted-foreground: 0 0% 40%;
+
+  --accent: 199 100% 35%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 88%;
+  --input: 0 0% 88%;
+  --ring: 199 100% 35%;
+
+  --radius: 0.5rem;
+
+  /* Custom design tokens - calm, physics-informed */
+  --gradient-primary: linear-gradient(
+    135deg,
+    hsl(199 100% 35%) 0%,
+    hsl(199 100% 45%) 100%
+  );
+  --gradient-subtle: linear-gradient(
+    180deg,
+    hsl(0 0% 100%) 0%,
+    hsl(0 0% 96%) 100%
+  );
+  --shadow-soft: 0 2px 8px -2px hsl(0 0% 0% / 0.08);
+  --shadow-medium: 0 4px 16px -4px hsl(0 0% 0% / 0.12);
+  --shadow-elegant: 0 8px 32px -8px hsl(199 100% 35% / 0.15);
+  --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-calm: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 @theme inline {
@@ -12,15 +62,100 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: hsl(var(--border));
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom utility classes */
+.gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.gradient-subtle {
+  background: var(--gradient-subtle);
+}
+
+.shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+.shadow-medium {
+  box-shadow: var(--shadow-medium);
+}
+
+.shadow-elegant {
+  box-shadow: var(--shadow-elegant);
+}
+
+.transition-smooth {
+  transition: var(--transition-smooth);
+}
+
+.transition-calm {
+  transition: var(--transition-calm);
+}
+
+/* Font utilities */
+.font-light-title {
+  font-weight: 600;
+}
+
+.font-light-bold {
+  font-weight: 500;
+}
+
+/* Override Tailwind's default font weights for consistency */
+.font-semibold {
+  font-weight: 500 !important;
+}
+
+.font-bold {
+  font-weight: 600 !important;
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Shadow utilities */
+.shadow-glass {
+  box-shadow: 0 4px 16px -4px hsl(0 0% 0% / 0.08);
 }
