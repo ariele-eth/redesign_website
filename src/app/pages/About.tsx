@@ -68,7 +68,7 @@ const poles = [
       'Leading the technical development of our website and additional projects.',
     members: [
       { name: 'Cyrill', image: '/assets/team/cyrill.jpg' },
-      { name: 'Gamal H', image: undefined },
+      { name: 'Gamal', image: '/assets/team/gamal.jpeg' },
     ],
   },
   {
