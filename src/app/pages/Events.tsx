@@ -34,38 +34,6 @@ export default function Events() {
       .finally(() => setLoading(false))
   }, [])
 
-  const fmt = (iso?: string | null) =>
-    iso ? new Date(iso).toLocaleString() : null
-
-  // put this helper inside your Events component (above the return)
-  function formatEventDate(
-    startISO: string,
-    endISO?: string | null,
-    tz = 'Europe/Zurich'
-  ) {
-    const start = new Date(startISO)
-    const end = endISO ? new Date(endISO) : null
-
-    const md = new Intl.DateTimeFormat('en-GB', {
-      timeZone: tz,
-      month: '2-digit',
-      day: '2-digit',
-    }).formatToParts(start)
-    const M = md.find((p) => p.type === 'month')?.value ?? '00'
-    const D = md.find((p) => p.type === 'day')?.value ?? '00'
-
-    const hh = new Intl.DateTimeFormat('en-GB', {
-      timeZone: tz,
-      hour: '2-digit',
-      hour12: false,
-    })
-
-    const h1 = hh.format(start) // e.g. "17"
-    const h2 = end ? hh.format(end) : '' // e.g. "19"
-
-    return `${M}.${D} | ${h1}H${h2 ? ` - ${h2}H` : ''}`
-  }
-
   return (
     <div className="min-h-screen">
       <Navigation />

@@ -1,0 +1,9 @@
+name = "your-next-app"
+main = ".opennext/worker/index.js"
+account_id="4a4d21018db00cc3cf88a4b67d70b6cf"
+compatibility_date = "2025-10-01"
+
+[vars]
+NEXT_PUBLIC_SUPABASE_URL = "https://dqxoiudeespmrocafyip.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxeG9pdWRlZXNwbXJvY2FmeWlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAyMTg3NjQsImV4cCI6MjA3NTc5NDc2NH0.LyJIZKbJ5jzAlHABXSFk3BqO_2A6RNchpBxFHbLN6UA"
+SUPABASE_SERVICE_ROLE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxeG9pdWRlZXNwbXJvY2FmeWlwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MDIxODc2NCwiZXhwIjoyMDc1Nzk0NzY0fQ.u1sFFn2moUAGbDCDE1CVSWZ-Tyrh7JzB-Y57LDV12nk"
