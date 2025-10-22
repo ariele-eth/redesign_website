@@ -8,16 +8,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-type Event = {
-  id: string
-  title: string
-  description: string | null
-  start_time: string
-  end_time: string | null
-  location: string | null
-  image_url: string | null
-  date: string
-}
+// kept minimal server handler; the Event type was unused and triggered a linter warning
 
 export async function GET(request: Request) {
   try {
@@ -48,10 +39,12 @@ export async function GET(request: Request) {
     })
 
     return NextResponse.json({ count: data?.length ?? 0, events: events ?? [] })
-  } catch (e: any) {
-    return NextResponse.json(
-      { error: e?.message ?? 'Unexpected error' },
-      { status: 500 }
-    )
+  } catch (err: unknown) {
+    const message =
+      typeof err === 'object' && err !== null && 'message' in err
+        ? String((err as { message?: unknown }).message)
+        : 'Unexpected error'
+
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }
