@@ -1,3 +1,5 @@
+export const runtime = 'edge'; // ✅ Required for Cloudflare Pages
+
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
@@ -5,7 +7,6 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    // Validate required fields
     const requiredFields = [
       'first_name',
       'last_name',
@@ -26,7 +27,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Insert application into Supabase
     const { data, error } = await supabaseAdmin
       .from('applications')
       .insert([

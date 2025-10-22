@@ -1,4 +1,5 @@
-// src/app/api/events/route.ts
+export const runtime = 'edge'; // ✅ Required for Cloudflare Pages
+
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
@@ -21,8 +22,8 @@ type Event = {
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const from = searchParams.get('from') // e.g., 2025-10-01
-    const to = searchParams.get('to') // e.g., 2025-12-31
+    const from = searchParams.get('from')
+    const to = searchParams.get('to')
     const limit = Number(searchParams.get('limit') ?? 50)
 
     let q = supabase
@@ -47,7 +48,6 @@ export async function GET(request: Request) {
     })
 
     return NextResponse.json({ count: data?.length ?? 0, events: events ?? [] })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     return NextResponse.json(
       { error: e?.message ?? 'Unexpected error' },
