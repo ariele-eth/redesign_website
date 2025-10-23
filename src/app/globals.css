@@ -165,3 +165,10 @@ html {
   background-color: hsl(199 100% 35% / 0.1) !important;
   color: hsl(199 100% 35%) !important;
 }
+
+/* Active navigation state */
+.nav-link.active {
+  background-color: hsl(199 100% 35%) !important;
+  color: white !important;
+  box-shadow: 0 2px 8px -2px hsl(199 100% 35% / 0.3) !important;
+}

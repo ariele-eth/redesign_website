@@ -27,7 +27,9 @@ export const Navigation = () => {
               <Link key={link.path} href={link.path}>
                 <Button
                   variant={pathname === link.path ? 'default' : 'ghost'}
-                  className="transition-smooth nav-link"
+                  className={`transition-smooth nav-link ${
+                    pathname === link.path ? 'active' : ''
+                  }`}
                 >
                   {link.name}
                 </Button>
@@ -66,7 +68,9 @@ export const Navigation = () => {
               >
                 <Button
                   variant={pathname === link.path ? 'secondary' : 'ghost'}
-                  className="w-full justify-start transition-smooth nav-link"
+                  className={`w-full justify-start transition-smooth nav-link ${
+                    pathname === link.path ? 'active' : ''
+                  }`}
                 >
                   {link.name}
                 </Button>
