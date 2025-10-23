@@ -1,4 +1,5 @@
-// src/app/api/events/route.ts
+export const runtime = 'edge'; // ✅ Required for Cloudflare Pages
+
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
@@ -7,22 +8,13 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-type Event = {
-  id: string
-  title: string
-  description: string | null
-  start_time: string
-  end_time: string | null
-  location: string | null
-  image_url: string | null
-  date: string
-}
+// kept minimal server handler; the Event type was unused and triggered a linter warning
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const from = searchParams.get('from') // e.g., 2025-10-01
-    const to = searchParams.get('to') // e.g., 2025-12-31
+    const from = searchParams.get('from')
+    const to = searchParams.get('to')
     const limit = Number(searchParams.get('limit') ?? 50)
 
     let q = supabase
@@ -47,11 +39,12 @@ export async function GET(request: Request) {
     })
 
     return NextResponse.json({ count: data?.length ?? 0, events: events ?? [] })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    return NextResponse.json(
-      { error: e?.message ?? 'Unexpected error' },
-      { status: 500 }
-    )
+  } catch (err: unknown) {
+    const message =
+      typeof err === 'object' && err !== null && 'message' in err
+        ? String((err as { message?: unknown }).message)
+        : 'Unexpected error'
+
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }
