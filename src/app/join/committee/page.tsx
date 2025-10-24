@@ -52,9 +52,8 @@ export default function CommitteeApplication() {
 
       if (response.ok && result.success) {
         toast({
-          title: 'Committee Application Submitted!',
-          description:
-            "We'll review your application and get back to you soon.",
+          title: 'Thank you',
+          description: 'Thank you for your application. We will get back to you soon!.',
         })
         // Reset form
         setFormData({

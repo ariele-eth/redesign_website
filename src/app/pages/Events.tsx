@@ -87,7 +87,13 @@ export default function Events() {
 
           {!loading && !error && events.length > 0 && (
             <div className="max-w-7xl mx-auto flex justify-center">
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-fit justify-items-center">
+              <div
+                className={
+                  `grid gap-8 ${
+                    events.length === 1 ? 'grid-cols-1' : 'sm:grid-cols-2 lg:grid-cols-3'
+                  } justify-items-center`
+                }
+              >
                 {events.map((e) => (
                   <EventCard key={e.id} event={e} />
                 ))}

@@ -75,12 +75,8 @@ export function EventCard({ event, className }: EventCardProps) {
     >
       {/* Banner */}
       <div className="w-full aspect-[16/9] rounded-xl mx-auto mb-4 overflow-hidden group-hover:scale-[1.01] transition-smooth">
-        {event.image_url ? (
-          <img
-            src={event.image_url}
-            alt={event.title}
-            className="w-full h-full object-cover"
-          />
+        {imgSrc ? (
+          <img src={imgSrc} alt={event.title} className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full bg-gradient-primary rounded-xl flex items-center justify-center text-white text-2xl font-bold">
             {event.title

@@ -47,8 +47,8 @@ export default function Join() {
 
       if (response.ok && result.success) {
         toast({
-          title: "Application Submitted!",
-          description: "We'll get back to you soon. Welcome to the community!",
+          title: "Thank you",
+          description: "Thank you for your application. We will get back to you soon!",
         });
         // Reset form
         setFormData({
