@@ -50,6 +50,21 @@ function formatEventDate(
 
 export function EventCard({ event, className }: EventCardProps) {
   const dateStr = formatEventDate(event.start_time, event.end_time)
+  // Resolve image URL: events may store a bare filename or a non-URL string
+  // Normalize common cases so images placed under `public/events/` load correctly.
+  let imgSrc: string | null = event.image_url ?? null
+  if (imgSrc) {
+    // If it's already an absolute URL or starts with a slash, use as-is
+    if (!(imgSrc.startsWith('http') || imgSrc.startsWith('/'))) {
+      // Replace spaces with hyphens (your public filename uses hyphens)
+      let name = imgSrc.replace(/\s+/g, '-')
+      // Ensure it has an extension; default to jpg if missing
+      if (!/\.[a-zA-Z0-9]+$/.test(name)) {
+        name = `${name}.jpg`
+      }
+      imgSrc = `/events/${encodeURIComponent(name)}`
+    }
+  }
 
   return (
     <Card
