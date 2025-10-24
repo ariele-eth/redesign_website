@@ -82,6 +82,12 @@ html {
 /* Custom utility classes */
 .gradient-primary {
   background: var(--gradient-primary);
+  color: hsl(var(--primary-foreground)) !important; /* ensure white text on gradient buttons */
+}
+
+.gradient-primary svg {
+  color: inherit;
+  stroke: currentColor;
 }
 
 .gradient-subtle {

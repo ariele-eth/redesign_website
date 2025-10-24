@@ -27,10 +27,16 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center mt-16">
           <div className="animate-fade-in-up">
             <div className="mb-6 flex justify-center">
+              {/* Mobile: small svg; Desktop: full png */}
+              <img
+                src="/ETHBCC_small.svg"
+                alt="ETHBCC Logo"
+                className="h-10 w-auto transition-smooth hover:scale-105 block md:hidden"
+              />
               <img
                 src="/ethbcc_logo.png"
                 alt="ETHBCC Logo"
-                className="h-20 w-auto transition-smooth hover:scale-105"
+                className="h-20 w-auto transition-smooth hover:scale-105 hidden md:block"
               />
             </div>
             <p className="text-xl md:text-2xl mb-8 text-foreground/80 max-w-3xl mx-auto font-light">
@@ -42,7 +48,7 @@ export default function Home() {
               <Link href="/join">
                 <Button
                   size="lg"
-                  className="gradient-primary shadow-elegant hover:shadow-medium transition-calm group"
+                  className="gradient-primary shadow-elegant group transform transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-md hover:brightness-95"
                 >
                   Join Us
                   <ArrowRight className="ml-2 h-5 w-5 transition-smooth group-hover:translate-x-1" />
@@ -51,9 +57,14 @@ export default function Home() {
               <Link href="/events">
                 <Button
                   size="lg"
-                  className="bg-white text-primary border border-primary/30 hover:bg-primary/5 transition-calm"
+                  className="group bg-white text-primary border border-primary/30
+                             hover:bg-gray-50 hover:text-primary hover:border-primary/40
+                             shadow-sm hover:shadow-md
+                             transform transition-colors transition-transform duration-150 ease-out
+                             hover:-translate-y-[2px] h-11 rounded-md px-8 inline-flex items-center justify-center gap-2"
                 >
                   See Events
+                  <Calendar className="ml-2 h-5 w-5 transition-transform duration-150 group-hover:translate-y-[-3px]" />
                 </Button>
               </Link>
             </div>
