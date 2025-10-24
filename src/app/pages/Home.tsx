@@ -49,8 +49,7 @@ export default function Home() {
               <Link href="/events">
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="border-primary/30 hover:bg-primary/5 transition-calm"
+                  className="bg-white text-primary border border-primary/30 hover:bg-primary/5 transition-calm"
                 >
                   See Events
                 </Button>
