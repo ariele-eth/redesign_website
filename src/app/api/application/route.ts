@@ -1,4 +1,4 @@
-export const runtime = 'edge'; // ✅ Required for Cloudflare Pages
+export const runtime = 'edge' // ✅ Required for Cloudflare Pages
 
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
@@ -42,8 +42,12 @@ export async function POST(request: NextRequest) {
           university: body.university,
           experience: body.experience,
           accept_member: body.accept_member || false,
-          registration: 'external',
+          registration: body.registration || 'external',
           academic_department: body.academic_department,
+          // Committee-specific fields (only for committee applications)
+          preferred_role: body.committee_role || null,
+          time_commit: body.time_commitment || null,
+          leadership_exp: body.leadership_experience || null,
           status: 'pending',
           submitted_at: new Date().toISOString(),
           created_at: new Date().toISOString(),

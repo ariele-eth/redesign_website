@@ -1,101 +1,102 @@
-"use client";
+'use client'
 
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Send } from "lucide-react";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { Navigation } from '@/components/Navigation'
+import { Footer } from '@/components/Footer'
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Send } from 'lucide-react'
+import { useState } from 'react'
+import { useToast } from '@/hooks/use-toast'
 
 export default function MemberApplication() {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    city: "",
-    company: "",
-    industry: "",
-    motivation: "",
-    university: "",
-    experience: "",
-    academic_department: "",
+    first_name: '',
+    last_name: '',
+    email: '',
+    city: '',
+    company: '',
+    industry: '',
+    motivation: '',
+    university: '',
+    experience: '',
+    academic_department: '',
     accept_terms: false,
     accept_member: false,
-  });
+  })
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+    e.preventDefault()
+    setIsSubmitting(true)
 
     try {
-      const response = await fetch("/api/application", {
-        method: "POST",
+      const response = await fetch('/api/application', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...formData,
-          application_type: "member", // Add this to distinguish
+          application_type: 'member', // Add this to distinguish
+          registration: 'external', // Always set to "external" for member applications
         }),
-      });
+      })
 
-      const result = await response.json();
+      const result = await response.json()
 
       if (response.ok && result.success) {
         toast({
-          title: "Application Submitted!",
+          title: 'Application Submitted!',
           description: "We'll get back to you soon. Welcome to the community!",
-        });
+        })
         // Reset form
         setFormData({
-          first_name: "",
-          last_name: "",
-          email: "",
-          city: "",
-          company: "",
-          industry: "",
-          motivation: "",
-          university: "",
-          experience: "",
-          academic_department: "",
+          first_name: '',
+          last_name: '',
+          email: '',
+          city: '',
+          company: '',
+          industry: '',
+          motivation: '',
+          university: '',
+          experience: '',
+          academic_department: '',
           accept_terms: false,
           accept_member: false,
-        });
+        })
       } else {
         toast({
-          title: "Error",
+          title: 'Error',
           description:
-            result.error || "Failed to submit application. Please try again.",
-          variant: "destructive",
-        });
+            result.error || 'Failed to submit application. Please try again.',
+          variant: 'destructive',
+        })
       }
     } catch {
       toast({
-        title: "Error",
-        description: "Failed to submit application. Please try again.",
-        variant: "destructive",
-      });
+        title: 'Error',
+        description: 'Failed to submit application. Please try again.',
+        variant: 'destructive',
+      })
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const handleCheckboxChange = (name: string, checked: boolean) => {
-    setFormData({ ...formData, [name]: checked });
-  };
+    setFormData({ ...formData, [name]: checked })
+  }
 
   return (
     <div className="min-h-screen">
@@ -256,7 +257,7 @@ export default function MemberApplication() {
                     id="accept_terms"
                     checked={formData.accept_terms}
                     onCheckedChange={(checked) =>
-                      handleCheckboxChange("accept_terms", checked as boolean)
+                      handleCheckboxChange('accept_terms', checked as boolean)
                     }
                   />
                   <Label htmlFor="accept_terms" className="text-sm">
@@ -268,7 +269,7 @@ export default function MemberApplication() {
                     id="accept_member"
                     checked={formData.accept_member}
                     onCheckedChange={(checked) =>
-                      handleCheckboxChange("accept_member", checked as boolean)
+                      handleCheckboxChange('accept_member', checked as boolean)
                     }
                   />
                   <Label htmlFor="accept_member" className="text-sm">
@@ -283,7 +284,7 @@ export default function MemberApplication() {
                 className="w-full gradient-primary shadow-elegant group"
               >
                 <Send className="mr-2 h-5 w-5 transition-smooth group-hover:translate-x-1" />
-                {isSubmitting ? "Submitting..." : "Submit Application"}
+                {isSubmitting ? 'Submitting...' : 'Submit Application'}
               </Button>
             </form>
           </Card>
@@ -292,5 +293,5 @@ export default function MemberApplication() {
 
       <Footer />
     </div>
-  );
+  )
 }

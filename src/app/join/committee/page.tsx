@@ -1,104 +1,105 @@
-"use client";
+'use client'
 
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Send } from "lucide-react";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { Navigation } from '@/components/Navigation'
+import { Footer } from '@/components/Footer'
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Send } from 'lucide-react'
+import { useState } from 'react'
+import { useToast } from '@/hooks/use-toast'
 
 export default function CommitteeApplication() {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    city: "",
-    university: "",
-    academic_department: "",
-    experience: "",
-    leadership_experience: "", // New field for committee
-    motivation: "",
-    committee_role: "", // New field for preferred role
-    time_commitment: "", // New field
+    first_name: '',
+    last_name: '',
+    email: '',
+    city: '',
+    university: '',
+    academic_department: '',
+    experience: '',
+    leadership_experience: '', // New field for committee
+    motivation: '',
+    committee_role: '', // New field for preferred role
+    time_commitment: '', // New field
     accept_terms: false,
     accept_committee: false, // Different checkbox
-  });
+  })
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+    e.preventDefault()
+    setIsSubmitting(true)
 
     try {
-      const response = await fetch("/api/application", {
-        method: "POST",
+      const response = await fetch('/api/application', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...formData,
-          application_type: "committee", // Add this to distinguish
+          application_type: 'committee', // Add this to distinguish
+          registration: 'committee', // Always set to "committee" for committee applications
         }),
-      });
+      })
 
-      const result = await response.json();
+      const result = await response.json()
 
       if (response.ok && result.success) {
         toast({
-          title: "Committee Application Submitted!",
+          title: 'Committee Application Submitted!',
           description:
             "We'll review your application and get back to you soon.",
-        });
+        })
         // Reset form
         setFormData({
-          first_name: "",
-          last_name: "",
-          email: "",
-          city: "",
-          university: "",
-          academic_department: "",
-          experience: "",
-          leadership_experience: "",
-          motivation: "",
-          committee_role: "",
-          time_commitment: "",
+          first_name: '',
+          last_name: '',
+          email: '',
+          city: '',
+          university: '',
+          academic_department: '',
+          experience: '',
+          leadership_experience: '',
+          motivation: '',
+          committee_role: '',
+          time_commitment: '',
           accept_terms: false,
           accept_committee: false,
-        });
+        })
       } else {
         toast({
-          title: "Error",
+          title: 'Error',
           description:
-            result.error || "Failed to submit application. Please try again.",
-          variant: "destructive",
-        });
+            result.error || 'Failed to submit application. Please try again.',
+          variant: 'destructive',
+        })
       }
     } catch {
       toast({
-        title: "Error",
-        description: "Failed to submit application. Please try again.",
-        variant: "destructive",
-      });
+        title: 'Error',
+        description: 'Failed to submit application. Please try again.',
+        variant: 'destructive',
+      })
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const handleCheckboxChange = (name: string, checked: boolean) => {
-    setFormData({ ...formData, [name]: checked });
-  };
+    setFormData({ ...formData, [name]: checked })
+  }
 
   return (
     <div className="min-h-screen">
@@ -280,7 +281,7 @@ export default function CommitteeApplication() {
                     id="accept_terms"
                     checked={formData.accept_terms}
                     onCheckedChange={(checked) =>
-                      handleCheckboxChange("accept_terms", checked as boolean)
+                      handleCheckboxChange('accept_terms', checked as boolean)
                     }
                   />
                   <Label htmlFor="accept_terms" className="text-sm">
@@ -293,7 +294,7 @@ export default function CommitteeApplication() {
                     checked={formData.accept_committee}
                     onCheckedChange={(checked) =>
                       handleCheckboxChange(
-                        "accept_committee",
+                        'accept_committee',
                         checked as boolean
                       )
                     }
@@ -312,8 +313,8 @@ export default function CommitteeApplication() {
               >
                 <Send className="mr-2 h-5 w-5 transition-smooth group-hover:translate-x-1" />
                 {isSubmitting
-                  ? "Submitting..."
-                  : "Submit Committee Application"}
+                  ? 'Submitting...'
+                  : 'Submit Committee Application'}
               </Button>
             </form>
           </Card>
@@ -322,5 +323,5 @@ export default function CommitteeApplication() {
 
       <Footer />
     </div>
-  );
+  )
 }
