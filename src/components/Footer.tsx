@@ -1,5 +1,5 @@
-import { Github, Linkedin, Mail } from 'lucide-react'
-import Link from 'next/link'
+import { Github, Linkedin, Mail, Twitter, Instagram } from "lucide-react";
+import Link from "next/link";
 
 export const Footer = () => {
   return (
@@ -72,7 +72,7 @@ export const Footer = () => {
             <h4 className="font-semibold">Connect</h4>
             <div className="flex justify-center md:justify-start space-x-4">
               <a
-                href="https://github.com/ethblockchain"
+                href="https://github.com/ETH-Blockchain-Club"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-smooth"
@@ -81,7 +81,16 @@ export const Footer = () => {
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="https://linkedin.com/company/ethblockchain"
+                href="https://x.com/ethbclub"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-smooth"
+                aria-label="X (Twitter)"
+              >
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/ethbclub"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-smooth"
@@ -90,7 +99,16 @@ export const Footer = () => {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="mailto:contact@ethblockchain.club"
+                href="https://www.instagram.com/ethbclub"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-smooth"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                href="mailto:contact@eth-blockchain.org"
                 className="text-muted-foreground hover:text-primary transition-smooth"
                 aria-label="Email"
               >
@@ -115,5 +133,5 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};

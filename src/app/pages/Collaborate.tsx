@@ -1,76 +1,83 @@
-'use client'
+"use client";
 
-import { Navigation } from '@/components/Navigation'
-import { Footer } from '@/components/Footer'
-import { Card } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Handshake, Mail, Send, Building, Users, Lightbulb } from 'lucide-react'
-import { useState } from 'react'
-import { useToast } from '@/hooks/use-toast'
+} from "@/components/ui/select";
+import {
+  Handshake,
+  Mail,
+  Send,
+  Building,
+  Users,
+  Lightbulb,
+} from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const collaborationTypes = [
   {
-    title: 'Industry Partnerships',
+    title: "Industry Partnerships",
     icon: Building,
     description:
-      'Partner with us for research projects, internships, and industry insights.',
+      "Partner with us for research projects, internships, and industry insights.",
   },
   {
-    title: 'Academic Collaboration',
+    title: "Academic Collaboration",
     icon: Lightbulb,
     description:
-      'Collaborate on research papers, joint studies, and academic initiatives.',
+      "Collaborate on research papers, joint studies, and academic initiatives.",
   },
   {
-    title: 'Event Sponsorship',
+    title: "Event Sponsorship",
     icon: Users,
-    description: 'Sponsor our workshops, hackathons, and networking events.',
+    description: "Sponsor our workshops, hackathons, and networking events.",
   },
-]
+];
 
 export default function Collaborate() {
-  const { toast } = useToast()
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    organization: '',
-    role: '',
-    collaborationType: '',
-    message: '',
-  })
+    name: "",
+    email: "",
+    organization: "",
+    role: "",
+    collaborationType: "",
+    message: "",
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     toast({
-      title: 'Collaboration Request Submitted!',
+      title: "Collaboration Request Submitted!",
       description:
-        'We&apos;ll review your proposal and get back to you within 48 hours.',
-    })
+        "We&apos;ll review your proposal and get back to you within 48 hours.",
+    });
     setFormData({
-      name: '',
-      email: '',
-      organization: '',
-      role: '',
-      collaborationType: '',
-      message: '',
-    })
-  }
+      name: "",
+      email: "",
+      organization: "",
+      role: "",
+      collaborationType: "",
+      message: "",
+    });
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="min-h-screen">
@@ -108,7 +115,7 @@ export default function Collaborate() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {collaborationTypes.map((type, index) => {
-              const Icon = type.icon
+              const Icon = type.icon;
               return (
                 <Card
                   key={index}
@@ -120,7 +127,7 @@ export default function Collaborate() {
                   <h3 className="text-xl font-semibold mb-3">{type.title}</h3>
                   <p className="text-muted-foreground">{type.description}</p>
                 </Card>
-              )
+              );
             })}
           </div>
         </div>
@@ -308,20 +315,13 @@ export default function Collaborate() {
               Have questions about collaboration opportunities? We&apos;d love
               to hear from you.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Button
                 variant="outline"
                 className="border-primary/30 hover:bg-primary/5 transition-calm"
               >
                 <Mail className="mr-2 h-5 w-5" />
-                partnerships@ethbcc.ch
-              </Button>
-              <Button
-                variant="outline"
-                className="border-primary/30 hover:bg-primary/5 transition-calm"
-              >
-                <Handshake className="mr-2 h-5 w-5" />
-                Schedule a Meeting
+                contact@eth-blockchain.org
               </Button>
             </div>
           </div>
@@ -330,5 +330,5 @@ export default function Collaborate() {
 
       <Footer />
     </div>
-  )
+  );
 }
