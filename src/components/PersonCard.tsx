@@ -44,12 +44,16 @@ export function PersonCard({
       </div>
       <h3 className="font-semibold text-lg mb-1 text-primary">{name}</h3>
       <p
-        className="text-primary text-sm mb-3 font-medium"
+        className="text-primary text-sm mb-3 font-medium whitespace-pre-line"
         style={{ color: "hsl(199 100% 35%)" }}
       >
         {role}
       </p>
-      {description && <p className="text-sm text-gray-600">{description}</p>}
+      {description && (
+        <p className="text-sm text-gray-600 whitespace-pre-line">
+          {description}
+        </p>
+      )}
     </Card>
   );
 }

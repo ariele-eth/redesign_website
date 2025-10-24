@@ -87,7 +87,7 @@ export default function Collaborate() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-                Why Partner with ETHBCC?
+                Why Partner with us?
               </h2>
               <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
             </div>
@@ -148,7 +148,7 @@ export default function Collaborate() {
               className="border-primary/30 hover:bg-primary/5 transition-calm"
             >
               <Mail className="mr-2 h-5 w-5" />
-              contact@eth-blockchain.org
+              collaborate@eth-blockchain.org
             </Button>
           </div>
         </div>

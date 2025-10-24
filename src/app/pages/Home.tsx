@@ -71,7 +71,7 @@ export default function Home() {
               </h2>
               <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
             </div>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="pace-y-6 text-muted-foreground leading-relaxed text-lg text-center md:text-left">
               {/* We aim to positively shape the industry of tomorrow by educating and empowering students. <br /> {/*the next generation of blockchain leaders.
               To reach our goal, we focus on three main pillars: Education, Events, and Industry Collaboration.<br />
               This allows us to deepen interest, broaden knowledge, and foster innovation in the blockchain space, ultimately contributing to the mainstream adoption of blockchain technology.*/}
@@ -152,14 +152,14 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <PersonCard
               name="Dr. Bastian Bergmann"
-              role="Lecturer and Executive Director of the FinsureTech Hub, ETH Zürich"
+              role={"Lecturer and Executive Director of the FinsureTech Hub\nETH Zürich"}
               description="As founding mentor, he has provided invaluable guidance, mentorship and support."
               image={bergmannImage}
             />
 
             <PersonCard
               name="Prof. Dr. Arthur Gervais"
-              role="Professor of Information Security, University College London"
+              role={"Professor of Information Security\nUniversity College London"}
               description="As founding supporter, he has provided essential academic insights, mentorship and transformative opportunities."
               image={gervaisImage}
             />
@@ -177,17 +177,16 @@ export default function Home() {
             <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <PersonCard
-              name="Jerome"
-              role="Branding Advisor"
-              description="Strategic advisor with expertise in branding and marketing."
-            />
-
-            <PersonCard
-              name="Adrian"
-              role="Strategic Advisor"
-              description="Strategic advisor with expertise in business development and partnerships."
-            />
+            <div className="md:col-span-2 flex justify-center">
+              <div className="w-full md:w-1/2 lg:w-1/2 max-w-sm">
+                <PersonCard
+                  name="Adrian Kögl"
+                  role={"Strategic Advisor\nSecurity Engineer, Quantstamp"}
+                  description="As co-founder of the TUM Blockchain Club and Co-Chair of IEEE Blockchain Switzerland, he supports us with proven experience in building successful, student-led communities."
+                  image="/assets/advisors/adrian.jpg"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

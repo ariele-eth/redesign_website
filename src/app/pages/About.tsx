@@ -26,7 +26,7 @@ const executiveMembers = [
   },
   {
     name: "Ariele Marcellino",
-    role: "Head of Innovation and Technology",
+    role: "Head of Innovation and Technology\nBSc Computer Science",
     description: "Leading innovation and technology initiatives.",
     image: "/assets/team/ariele.png",
   },
@@ -58,7 +58,7 @@ const poles = [
       "Organizing meetups, hackathons, and social events for our community with delicious catering.",
     members: [
       { name: "Firas Dridi", image: undefined },
-      { name: "Gökhan XX", image: undefined },
+      { name: "Gökhan", image: undefined },
     ],
   },
   {
@@ -122,22 +122,23 @@ export default function About() {
               </h2>
               <div className="w-16 h-1 gradient-primary mx-auto"></div>
             </div>
-            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg text-center">
+            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg text-center md:text-left">
               <p>
-                We&apos;re the first accredited student blockchain association
-                at ETH Zurich. Started as a student initiative, our goal is
-                simple: plant seeds of knowledge and curiosity about blockchain
+                We're the first student blockchain club at ETH
+                Zurich. Started as a student initiative in September 2025, with months of preparation, our goal is simple:
+                plant seeds of knowledge and curiosity about blockchain
                 technology in our peers.
               </p>
               <p>
-                What drives us? We want students to become educators
-                themselves—sharing what they learn with classmates today and
-                colleagues tomorrow. It&apos;s about raising awareness beyond
-                the hype and speculation.
+                What drives us? We want to positively shape the industry and empower students to become educators
+                themselves - sharing what they learn with classmates today and
+                colleagues tomorrow. It's about raising awareness beyond the
+                hype and speculation.
+
               </p>
               <p>
                 This is our contribution to a better blockchain space. One with
-                fewer scams, less noise, and more people who actually understand
+                less black sheep, less noise, and more people who actually understand
                 the fundamentals. We believe education is how we get there.
               </p>
             </div>
@@ -155,16 +156,17 @@ export default function About() {
               </h2>
               <div className="w-16 h-1 gradient-primary mx-auto"></div>
             </div>
-            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg text-center">
+            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg text-center md:text-left">
               <p>
-                ETHBLOCKCHAIN CLUB is a student-run initiative at ETH Zurich.
-                We&apos;re into blockchain, cryptography, and everything
+                The ETH Blockchain Club is a student-run initiative at ETH Zurich.
+                Our interests lie in blockchain, cryptography, and everything
                 decentralized.
               </p>
               <p>
-                Academic research meets real-world building here. Theory
-                isn&apos;t stuck in papers, and projects aren&apos;t built in a
-                vacuum. That&apos;s the space we create.
+                Academic research meets industry and real-world building here. Theory isn't
+                stuck in papers, and projects aren't built in a vacuum.
+                We believe going the full cycle from Introduction to Theory to Application is key. That's
+                the space we create.
               </p>
             </div>
           </div>
