@@ -150,12 +150,14 @@ export default function Home() {
               name="Dr. Bastian Bergmann"
               role="Lecturer and Executive Director of the FinsureTech Hub, ETH Zürich"
               description="As founding mentor, he has provided invaluable guidance, mentorship and support."
+              image="/assets/advisors/bergmann.jpeg"
             />
 
             <PersonCard
               name="Prof. Dr. Arthur Gervais"
               role="Professor of Information Security, University College London"
               description="As founding supporter, he has provided essential academic insights, mentorship and transformative opportunities."
+              image="/assets/advisors/gervais.png"
             />
           </div>
         </div>
