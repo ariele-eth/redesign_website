@@ -124,7 +124,7 @@ export default function About() {
             </div>
             <div className="space-y-6 text-muted-foreground leading-relaxed text-lg text-center md:text-left">
               <p>
-                We're the first student blockchain club at ETH
+                We&apos;re the first student blockchain club at ETH
                 Zurich. Started as a student initiative in September 2025, with months of preparation, our goal is simple:
                 plant seeds of knowledge and curiosity about blockchain
                 technology in our peers.
@@ -132,7 +132,7 @@ export default function About() {
               <p>
                 What drives us? We want to positively shape the industry and empower students to become educators
                 themselves - sharing what they learn with classmates today and
-                colleagues tomorrow. It's about raising awareness beyond the
+                colleagues tomorrow. It&apos;s about raising awareness beyond the
                 hype and speculation.
 
               </p>
@@ -163,9 +163,9 @@ export default function About() {
                 decentralized.
               </p>
               <p>
-                Academic research meets industry and real-world building here. Theory isn't
-                stuck in papers, and projects aren't built in a vacuum.
-                We believe going the full cycle from Introduction to Theory to Application is key. That's
+                Academic research meets industry and real-world building here. Theory isn&apos;t
+                stuck in papers, and projects aren&apos;t built in a vacuum.
+                We believe going the full cycle from Introduction to Theory to Application is key. That&apos;s
                 the space we create.
               </p>
             </div>
