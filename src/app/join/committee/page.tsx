@@ -52,7 +52,7 @@ export default function CommitteeApplication() {
 
       if (response.ok && result.success) {
         toast({
-          title: 'Thank you',
+          title: 'Application Submitted',
           description: 'Thank you for your application. We will get back to you soon!.',
         })
         // Reset form
