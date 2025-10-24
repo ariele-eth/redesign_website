@@ -1,90 +1,90 @@
-import { Navigation } from '@/components/Navigation'
-import { Footer } from '@/components/Footer'
-import { PersonCard } from '@/components/PersonCard'
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { PersonCard } from "@/components/PersonCard";
 
 const executiveMembers = [
   {
-    name: 'Jennis Bešić',
-    role: 'President & Founder\nBSc Computer Science',
+    name: "Jennis Bešić",
+    role: "President & Founder\nBSc Computer Science",
     description:
-      'Passionate about blockchain technology and its potential to revolutionize industries.',
-    image: '/assets/team/jennis.jpeg',
+      "Passionate about blockchain technology and its potential to revolutionize industries.",
+    image: "/assets/team/jennis.jpeg",
   },
   {
-    name: 'Anej Rozman',
-    role: 'Head of Events & Co-Founder\nMSc Quantitative Finance',
+    name: "Anej Rozman",
+    role: "Head of Events & Co-Founder\nMSc Quantitative Finance",
     description:
-      'Strong believer in the longevity of blockchain technologies, crypto currencies and decentralization.',
-    image: '/assets/team/anej.jpeg',
+      "Strong believer in the longevity of blockchain technologies, crypto currencies and decentralization.",
+    image: "/assets/team/anej.jpeg",
   },
   {
-    name: 'Gustave Charles',
-    role: 'Head of Recruiting and Member Organization\nMSc Cyber Security',
+    name: "Gustave Charles",
+    role: "Head of Recruiting and Member Organization\nMSc Cyber Security",
     description:
-      'Working in privacy, decentralisation and governance real-world usecases.',
-    image: '/assets/team/gustave.jpeg',
+      "Working in privacy, decentralisation and governance real-world usecases.",
+    image: "/assets/team/gustave.jpeg",
   },
   {
-    name: 'Ariele Marcellino',
-    role: 'Head of Innovation and Technology',
-    description: 'Leading innovation and technology initiatives.',
-    image: '/assets/team/ariele.png',
+    name: "Ariele Marcellino",
+    role: "Head of Innovation and Technology",
+    description: "Leading innovation and technology initiatives.",
+    image: "/assets/team/ariele.png",
   },
-]
+];
 
 const poles = [
   {
-    name: 'Marketing',
-    lead: { name: 'This could be you!', image: undefined },
+    name: "Marketing",
+    lead: { name: "This could be you!", image: undefined },
     description:
-      'Leading our marketing initiatives and community outreach efforts.',
-    members: [{ name: 'Dominic', image: '/assets/team/dominic.jpg' }],
+      "Leading our marketing initiatives and community outreach efforts.",
+    members: [{ name: "Dominic", image: "/assets/team/dominic.jpg" }],
   },
   {
-    name: 'External Relations',
-    lead: { name: 'This could be you!', image: undefined },
+    name: "External Relations",
+    lead: { name: "This could be you!", image: undefined },
     description:
-      'Managing partnerships and external communications with industry leaders.',
+      "Managing partnerships and external communications with industry leaders.",
     members: [
-      { name: 'Noé Macé', image: '/assets/team/noe.jpeg' },
-      { name: 'Pedro Gouveia', image: undefined },
-      { name: 'Ilan Nissim', image: '/assets/team/ilan.png' },
+      { name: "Noé Macé", image: "/assets/team/noe.jpeg" },
+      { name: "Pedro Gouveia", image: undefined },
+      { name: "Ilan Nissim", image: "/assets/team/ilan.png" },
     ],
   },
   {
-    name: 'Events',
-    lead: { name: 'Anej Rozman', image: '/assets/team/anej.jpeg' },
+    name: "Events",
+    lead: { name: "Anej Rozman", image: "/assets/team/anej.jpeg" },
     description:
-      'Organizing meetups, hackathons, and social events for our community with delicious catering.',
+      "Organizing meetups, hackathons, and social events for our community with delicious catering.",
     members: [
-      { name: 'Firas Dridi', image: undefined },
-      { name: 'Gökhan XX', image: undefined },
+      { name: "Firas Dridi", image: undefined },
+      { name: "Gökhan XX", image: undefined },
     ],
   },
   {
-    name: 'Innovation and Technology',
-    lead: { name: 'Ariele Marcellino', image: '/assets/team/ariele.png' },
+    name: "Innovation and Technology",
+    lead: { name: "Ariele Marcellino", image: "/assets/team/ariele.png" },
     description:
-      'Leading the technical development of our website and additional projects.',
+      "Leading the technical development of our website and additional projects.",
     members: [
-      { name: 'Cyrill', image: '/assets/team/cyrill.jpg' },
-      { name: 'Gamal', image: '/assets/team/gamal.jpeg' },
+      { name: "Cyrill", image: "/assets/team/cyrill.jpg" },
+      { name: "Gamal", image: "/assets/team/gamal.jpeg" },
     ],
   },
   {
-    name: 'Financial & Legal',
-    lead: { name: 'This could be you!', image: undefined },
+    name: "Financial & Legal",
+    lead: { name: "This could be you!", image: undefined },
     description:
-      'Building connections with universities and the global Ethereum community.',
+      "Building connections with universities and the global Ethereum community.",
     members: [],
   },
   {
-    name: 'Recruiting & Member Organization',
-    lead: { name: 'Gustave Charles', image: '/assets/team/gustave.jpeg' },
-    description: 'Managing member recruitment and organization activities.',
+    name: "Recruiting & Member Organization",
+    lead: { name: "Gustave Charles", image: "/assets/team/gustave.jpeg" },
+    description: "Managing member recruitment and organization activities.",
     members: [],
   },
-]
+];
 
 export default function About() {
   return (
@@ -122,7 +122,7 @@ export default function About() {
               </h2>
               <div className="w-16 h-1 gradient-primary mx-auto"></div>
             </div>
-            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
+            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg text-center">
               <p>
                 We&apos;re the first accredited student blockchain association
                 at ETH Zurich. Started as a student initiative, our goal is
@@ -155,7 +155,7 @@ export default function About() {
               </h2>
               <div className="w-16 h-1 gradient-primary mx-auto"></div>
             </div>
-            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
+            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg text-center">
               <p>
                 ETHBLOCKCHAIN CLUB is a student-run initiative at ETH Zurich.
                 We&apos;re into blockchain, cryptography, and everything
@@ -248,11 +248,11 @@ export default function About() {
               </h2>
               <div className="w-16 h-1 gradient-primary mx-auto"></div>
             </div>
-            <div className="mb-8 rounded-lg overflow-hidden shadow-elegant relative h-64">
+            <div className="mb-8 rounded-lg overflow-hidden shadow-elegant">
               <img
                 src="/eth-zurich-campus.jpg"
                 alt="ETH Zurich Campus - Aerial view of the main building"
-                className="object-cover"
+                className="w-full h-auto"
               />
             </div>
             <p className="text-muted-foreground leading-relaxed text-center">
@@ -269,5 +269,5 @@ export default function About() {
 
       <Footer />
     </div>
-  )
+  );
 }
