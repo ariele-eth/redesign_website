@@ -1,11 +1,13 @@
-import { Navigation } from '@/components/Navigation'
-import { Footer } from '@/components/Footer'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { PersonCard } from '@/components/PersonCard'
-import Link from 'next/link'
-import { ArrowRight, GraduationCap, Calendar, Users } from 'lucide-react'
-import { AnimatedNetwork } from '@/components/AnimatedNetwork'
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { PersonCard } from "@/components/PersonCard";
+import Link from "next/link";
+import { ArrowRight, GraduationCap, Calendar, Users } from "lucide-react";
+import { AnimatedNetwork } from "@/components/AnimatedNetwork";
+import bergmannImage from "@/assets/advisors/bergmann.jpeg";
+import gervaisImage from "@/assets/advisors/gervais.png";
 
 export default function Home() {
   return (
@@ -151,12 +153,14 @@ export default function Home() {
               name="Dr. Bastian Bergmann"
               role="Lecturer and Executive Director of the FinsureTech Hub, ETH Zürich"
               description="As founding mentor, he has provided invaluable guidance, mentorship and support."
+              image={bergmannImage}
             />
 
             <PersonCard
               name="Prof. Dr. Arthur Gervais"
               role="Professor of Information Security, University College London"
               description="As founding supporter, he has provided essential academic insights, mentorship and transformative opportunities."
+              image={gervaisImage}
             />
           </div>
         </div>
@@ -221,5 +225,5 @@ export default function Home() {
 
       <Footer />
     </div>
-  )
+  );
 }
