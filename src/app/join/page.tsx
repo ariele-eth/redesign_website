@@ -62,7 +62,7 @@ export default function JoinLanding() {
                 </h3>
                 <p className="text-muted-foreground mb-6">
                   Take on a leadership role in organizing events, managing
-                  projects, and shaping the club's direction.
+                  projects, and shaping the club&apos;s direction.
                 </p>
                 <Link href="/join/committee">
                   <Button className="w-full gradient-primary shadow-elegant">

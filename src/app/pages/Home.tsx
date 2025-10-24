@@ -6,8 +6,10 @@ import { PersonCard } from "@/components/PersonCard";
 import Link from "next/link";
 import { ArrowRight, GraduationCap, Calendar, Users } from "lucide-react";
 import { AnimatedNetwork } from "@/components/AnimatedNetwork";
-import bergmannImage from "@/assets/advisors/bergmann.jpeg";
-import gervaisImage from "@/assets/advisors/gervais.png";
+// Use public asset paths (public/assets/advisors/) instead of importing from src
+// This avoids module-not-found errors in CI if images are tracked under `public/`
+const bergmannImage = "/assets/advisors/bergmann.jpeg";
+const gervaisImage = "/assets/advisors/gervais.png";
 
 export default function Home() {
   return (
