@@ -81,7 +81,7 @@ export default function JoinLanding() {
           <h2 className="text-3xl font-light-title mb-12 text-center">
             Join Our Community
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="flex justify-center max-w-4xl mx-auto">
             <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth text-center group">
               <div className="w-16 h-16 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-smooth">
                 <MessageSquare className="h-8 w-8 text-primary" />
@@ -91,12 +91,22 @@ export default function JoinLanding() {
                 Join our active Telegram community for daily discussions,
                 announcements, and quick questions.
               </p>
-              <Button variant="outline" className="w-full">
-                Join Telegram
-              </Button>
+              <a
+                href="https://t.me/+CV7HLFRdFUFkNTBk"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  variant="outline"
+                  className="w-full transform transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-md hover:border-primary/60 active:translate-y-0 active:shadow-sm"
+                >
+                  Join Telegram
+                </Button>
+              </a>
             </Card>
 
-            <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth text-center group">
+            {/* Mailing List - Will be reactivated in the future */}
+            {/* <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth text-center group">
               <div className="w-16 h-16 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-smooth">
                 <Mail className="h-8 w-8 text-primary" />
               </div>
@@ -108,7 +118,7 @@ export default function JoinLanding() {
               <Button variant="outline" className="w-full">
                 Subscribe
               </Button>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </section>
