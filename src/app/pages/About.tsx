@@ -33,13 +33,25 @@ const executiveMembers = [
 ];
 
 const poles = [
-  {
-    name: "Marketing",
-    lead: { name: "This could be you!", image: undefined },
+    {
+    name: "President",
+    lead: { name: "Jennis Bešić", image: "/assets/team/jennis.jpeg" },
     description:
-      "Leading our marketing initiatives and community outreach efforts.",
-    members: [{ name: "Dominic", image: "/assets/team/dominic.jpg" }],
+      "Responsible for the strategic and operational management in addition to representing the board internally and the club as a whole externally.",
+    members: [],
   },
+
+    {
+    name: "Innovation and Technology",
+    lead: { name: "Ariele Marcellino", image: "/assets/team/ariele.png" },
+    description:
+      "Leading the technical development of our website and additional projects.",
+    members: [
+      { name: "Cyrill", image: "/assets/team/cyrill.jpg" },
+      { name: "Gamal", image: "/assets/team/gamal.jpeg" },
+    ],
+  },
+
   {
     name: "External Relations",
     lead: { name: "This could be you!", image: undefined },
@@ -61,29 +73,38 @@ const poles = [
       { name: "Gökhan", image: undefined },
     ],
   },
-  {
-    name: "Innovation and Technology",
-    lead: { name: "Ariele Marcellino", image: "/assets/team/ariele.png" },
-    description:
-      "Leading the technical development of our website and additional projects.",
-    members: [
-      { name: "Cyrill", image: "/assets/team/cyrill.jpg" },
-      { name: "Gamal", image: "/assets/team/gamal.jpeg" },
-    ],
+
+    {
+    name: "Recruiting & Member Organization",
+    lead: { name: "Gustave Charles", image: "/assets/team/gustave.jpeg" },
+    description: "Coordinating leads in cooperation with the president, overseeing day to day and flagship events operations.",
+    members: [],
   },
+
+    {
+    name: "Marketing",
+    lead: { name: "This could be you!", image: undefined },
+    description:
+      "Leading our marketing initiatives and community outreach efforts.",
+    members: [{ name: "Dominic", image: "/assets/team/dominic.jpg" }],
+  },
+
   {
     name: "Financial & Legal",
     lead: { name: "This could be you!", image: undefined },
     description:
-      "Building connections with universities and the global Ethereum community.",
+      "Building connections with universities, industries and the global blockchain community.",
     members: [],
   },
+
   {
-    name: "Recruiting & Member Organization",
-    lead: { name: "Gustave Charles", image: "/assets/team/gustave.jpeg" },
-    description: "Managing member recruitment and organization activities.",
+    name: "Education",
+    lead: { name: "This could be you!", image: undefined },
+    description:
+      "Fostering a culture of continuous learning and knowledge sharing.",
     members: [],
-  },
+  }
+  
 ];
 
 export default function About() {
