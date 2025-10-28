@@ -90,7 +90,7 @@ const poles = [
   },
 
   {
-    name: "Financial & Legal",
+    name: "Finances & Legal",
     lead: { name: "This could be you!", image: undefined },
     description:
       "Building connections with universities, industries and the global blockchain community.",
