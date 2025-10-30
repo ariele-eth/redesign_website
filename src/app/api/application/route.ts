@@ -27,33 +27,39 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const { data, error } = await supabaseAdmin
-      .from('applications')
-      .insert([
-        {
-          first_name: body.first_name,
-          last_name: body.last_name,
-          city: body.city,
-          company: body.company,
-          industry: body.industry,
-          motivation: body.motivation,
-          accept_terms: body.accept_terms || false,
-          email: body.email,
-          university: body.university,
-          experience: body.experience,
-          accept_member: body.accept_member || false,
-          registration: body.registration || 'external',
-          academic_department: body.academic_department,
-          // Committee-specific fields (only for committee applications)
-          preferred_role: body.committee_role || null,
-          time_commit: body.time_commitment || null,
-          leadership_exp: body.leadership_experience || null,
-          status: 'pending',
-          submitted_at: new Date().toISOString(),
-          created_at: new Date().toISOString(),
-        },
-      ])
-      .select()
+    // Build insert row dynamically so we only include accept_terms / accept_member
+    // when the client explicitly provided them. This prevents inserting `null`
+    // into NOT NULL columns if the DB hasn't been migrated yet.
+  const insertRow: Record<string, unknown> = {
+      first_name: body.first_name,
+      last_name: body.last_name,
+      city: body.city,
+      company: body.company,
+      industry: body.industry,
+      motivation: body.motivation,
+      email: body.email,
+      university: body.university,
+      experience: body.experience,
+      registration: body.registration || 'external',
+      academic_department: body.academic_department,
+      // Committee-specific fields (only for committee applications)
+      preferred_role: body.committee_role || null,
+      time_commit: body.time_commitment || null,
+      leadership_exp: body.leadership_experience || null,
+      status: 'pending',
+      submitted_at: new Date().toISOString(),
+      created_at: new Date().toISOString(),
+    }
+
+    if (typeof body.accept_terms === 'boolean') {
+      insertRow.accept_terms = body.accept_terms
+    }
+
+    if (typeof body.accept_member === 'boolean') {
+      insertRow.accept_member = body.accept_member
+    }
+
+    const { data, error } = await supabaseAdmin.from('applications').insert([insertRow]).select()
 
     if (error) {
       console.error('Supabase error:', error)

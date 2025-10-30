@@ -53,11 +53,22 @@ export function EventCard({ event, className }: EventCardProps) {
   // Resolve image URL: events may store a bare filename or a non-URL string
   // Normalize common cases so images placed under `public/events/` load correctly.
   let imgSrc: string | null = event.image_url ?? null
+
+  // If Luma provides a direct image URL (some Luma event links include a direct
+  // image) prefer that over a local public/events fallback.
+  if (!imgSrc && event.luma_url) {
+    const maybe = String(event.luma_url)
+    if (/(?:\.png|\.jpe?g|\.webp|\.gif|\.svg)(?:\?|$)/i.test(maybe)) {
+      imgSrc = maybe
+    }
+  }
   if (imgSrc) {
     // If it's already an absolute URL or starts with a slash, use as-is
     if (!(imgSrc.startsWith('http') || imgSrc.startsWith('/'))) {
+      // If the value includes a path (e.g. "events/filename.jpg"), use only the final segment
+      let name = imgSrc.includes('/') ? imgSrc.split('/').pop() ?? imgSrc : imgSrc
       // Replace spaces with hyphens (your public filename uses hyphens)
-      let name = imgSrc.replace(/\s+/g, '-')
+      name = name.replace(/\s+/g, '-')
       // Ensure it has an extension; default to jpg if missing
       if (!/\.[a-zA-Z0-9]+$/.test(name)) {
         name = `${name}.jpg`

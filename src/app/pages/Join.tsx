@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+// Checkbox removed: accept_terms will be set true by default in the API
 import { MessageSquare, Mail, Send } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -26,13 +26,13 @@ export default function Join() {
     university: "",
     experience: "",
     academic_department: "",
-    accept_terms: false,
-    accept_member: false,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+  // Terms acceptance removed from UI; do NOT send accept_terms so it remains empty by default
 
     try {
       const response = await fetch("/api/application", {
@@ -40,7 +40,7 @@ export default function Join() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+  body: JSON.stringify({ ...formData }),
       });
 
       const result = await response.json();
@@ -62,8 +62,6 @@ export default function Join() {
           university: "",
           experience: "",
           academic_department: "",
-          accept_terms: false,
-          accept_member: false,
         });
       } else {
         toast({
@@ -73,7 +71,8 @@ export default function Join() {
           variant: "destructive",
         });
       }
-    } catch {
+    } catch (err) {
+      console.error('Submit error', err)
       toast({
         title: "Error",
         description: "Failed to submit application. Please try again.",
@@ -92,6 +91,8 @@ export default function Join() {
 
   const handleCheckboxChange = (name: string, checked: boolean) => {
     setFormData({ ...formData, [name]: checked });
+           // accept_terms/accept_member removed from UI; no need to reset
+
   };
 
   return (
@@ -262,32 +263,7 @@ export default function Join() {
                 />
               </div>
 
-              <div className="space-y-4">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="accept_terms"
-                    checked={formData.accept_terms}
-                    onCheckedChange={(checked) =>
-                      handleCheckboxChange("accept_terms", checked as boolean)
-                    }
-                  />
-                  <Label htmlFor="accept_terms" className="text-sm">
-                    I accept the terms and conditions *
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="accept_member"
-                    checked={formData.accept_member}
-                    onCheckedChange={(checked) =>
-                      handleCheckboxChange("accept_member", checked as boolean)
-                    }
-                  />
-                  <Label htmlFor="accept_member" className="text-sm">
-                    I want to become a member *
-                  </Label>
-                </div>
-              </div>
+              {/* Terms acceptance removed from UI; stored as true by default */}
 
               <Button
                 type="submit"
