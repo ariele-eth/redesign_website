@@ -126,7 +126,7 @@ export default function Join() {
           <div className="max-w-3xl mx-auto text-center mb-12">
             <p className="text-lg text-muted-foreground leading-relaxed">
               Whether you&apos;re a complete beginner or an experienced
-              blockchain developer, ETHBLOCKCHAIN CLUB welcomes all students
+              blockchain developer, ETH Blockchain Club welcomes all students
               passionate about decentralized technology. Join our community to
               learn, build, and shape the future of blockchain innovation.
             </p>
@@ -257,7 +257,7 @@ export default function Join() {
                   name="motivation"
                   value={formData.motivation}
                   onChange={handleChange}
-                  placeholder="Why do you want to join ETHBLOCKCHAIN CLUB?"
+                  placeholder="Why do you want to join ETH Blockchain Club?"
                   className="min-h-24"
                   required
                 />

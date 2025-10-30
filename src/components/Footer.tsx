@@ -140,7 +140,7 @@ export const Footer = () => {
 
         <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
           <p>
-            © {new Date().getFullYear()} ETHBLOCKCHAIN CLUB. All rights
+            © {new Date().getFullYear()} ETH Blockchain Club. All rights
             reserved.
           </p>
         </div>

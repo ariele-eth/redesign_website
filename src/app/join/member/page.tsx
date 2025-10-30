@@ -230,7 +230,7 @@ export default function MemberApplication() {
                   name="experience"
                   value={formData.experience}
                   onChange={handleChange}
-                  placeholder="Tell us about your blockchain/crypto experience..."
+                  placeholder="Please tell us about your blockchain/crypto experience."
                   className="min-h-24"
                   required
                 />
@@ -243,7 +243,7 @@ export default function MemberApplication() {
                   name="motivation"
                   value={formData.motivation}
                   onChange={handleChange}
-                  placeholder="Why do you want to join ETHBLOCKCHAIN CLUB?"
+                  placeholder="Why do you want to join the ETH Blockchain Club?"
                   className="min-h-24"
                   required
                 />

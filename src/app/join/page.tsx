@@ -46,8 +46,8 @@ export default function JoinLanding() {
                   workshops, and connect with fellow blockchain enthusiasts.
                 </p>
                 <Link href="/join/member">
-                  <Button className="w-full gradient-primary shadow-elegant">
-                    Apply as Member
+                  <Button className="w-full gradient-primary shadow-elegant transform transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-md hover:brightness-95">
+                    Apply as a Member
                   </Button>
                 </Link>
               </Card>
@@ -65,8 +65,8 @@ export default function JoinLanding() {
                   projects, and shaping the club&apos;s direction.
                 </p>
                 <Link href="/join/committee">
-                  <Button className="w-full gradient-primary shadow-elegant">
-                    Apply for Committee
+                  <Button className="w-full gradient-primary shadow-elegant transform transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-md hover:brightness-95">
+                    Apply as a Committee Member
                   </Button>
                 </Link>
               </Card>
