@@ -15,7 +15,7 @@ export default function Home() {
   // Add partner logos here (place logo files in public/assets/partners/)
   const partners = [
     { name: "ETH Zürich", logo: "/assets/partners/eth.png", href: "https://ethz.ch" },
-    { name: "ETH Zürich FinsureTech Hub", logo: "/assets/partners/ETHZ_FinsureTech_Hub.jpg", href: "https://finsuretech.ethz.ch" },
+    { name: "ETH Zürich FinsureTech Hub", logo: "/assets/partners/ETHZ_FinsureTech_Hub.png", href: "https://finsuretech.ethz.ch" },
     { name: "ETH Student Project House", logo: "/assets/partners/ETH_Student_Project_House.png", href: "https://sph.ethz.ch" },
     { name: "Blockchain Student Association (EPFL)", logo: "/assets/partners/Blockchain_Student_Association.svg", href: "https://www.bsaepfl.ch" },
   ];
