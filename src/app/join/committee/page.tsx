@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Send } from 'lucide-react'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
@@ -27,13 +26,14 @@ export default function CommitteeApplication() {
     motivation: '',
     committee_role: '', // New field for preferred role
     time_commitment: '', // New field
-    accept_terms: false,
-    accept_committee: false, // Different checkbox
+    // accept_terms removed from UI; will be submitted as true by default
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+
+  // Terms acceptance removed from UI; do NOT send accept_terms so it remains empty by default
 
     try {
       const response = await fetch('/api/application', {
@@ -68,8 +68,7 @@ export default function CommitteeApplication() {
           motivation: '',
           committee_role: '',
           time_commitment: '',
-          accept_terms: false,
-          accept_committee: false,
+          // accept_terms and accept_committee removed from UI; no need to reset
         })
       } else {
         toast({
@@ -274,36 +273,7 @@ export default function CommitteeApplication() {
                 />
               </div>
 
-              <div className="space-y-4">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="accept_terms"
-                    checked={formData.accept_terms}
-                    onCheckedChange={(checked) =>
-                      handleCheckboxChange('accept_terms', checked as boolean)
-                    }
-                  />
-                  <Label htmlFor="accept_terms" className="text-sm">
-                    I accept the terms and conditions *
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="accept_committee"
-                    checked={formData.accept_committee}
-                    onCheckedChange={(checked) =>
-                      handleCheckboxChange(
-                        'accept_committee',
-                        checked as boolean
-                      )
-                    }
-                  />
-                  <Label htmlFor="accept_committee" className="text-sm">
-                    I want to join the committee and take on leadership
-                    responsibilities *
-                  </Label>
-                </div>
-              </div>
+              {/* Terms acceptance removed from UI; stored as true by default */}
 
               <Button
                 type="submit"

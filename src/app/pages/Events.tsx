@@ -95,7 +95,8 @@ export default function Events() {
                 }
               >
                 {events.map((e) => (
-                  <EventCard key={e.id} event={e} />
+                  // Constrain each card width so single events are not excessively large
+                  <EventCard key={e.id} event={e} className="max-w-sm w-full" />
                 ))}
               </div>
             </div>
