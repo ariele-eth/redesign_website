@@ -30,38 +30,24 @@ const executiveMembers = [
     description: "Leading innovation and technology initiatives.",
     image: "/assets/team/ariele.png",
   },
+  {
+    name: "Ilan Nissim",
+    role: "Head of External Relations\nMSc Data Science",
+    description: "Interested in decentralized finance and blockchain technology.",
+    image: "/assets/team/ilan.png",
+  },
 ];
 
 const poles = [
-  {
-    name: "Marketing",
-    lead: { name: "This could be you!", image: undefined },
+    {
+    name: "President",
+    lead: { name: "Jennis Bešić", image: "/assets/team/jennis.jpeg" },
     description:
-      "Leading our marketing initiatives and community outreach efforts.",
-    members: [{ name: "Dominic", image: "/assets/team/dominic.jpg" }],
+      "Responsible for the strategic and operational management in addition to representing the board internally and the club as a whole externally.",
+    members: [],
   },
-  {
-    name: "External Relations",
-    lead: { name: "This could be you!", image: undefined },
-    description:
-      "Managing partnerships and external communications with industry leaders.",
-    members: [
-      { name: "Noé Macé", image: "/assets/team/noe.jpeg" },
-      { name: "Pedro Gouveia", image: undefined },
-      { name: "Ilan Nissim", image: "/assets/team/ilan.png" },
-    ],
-  },
-  {
-    name: "Events",
-    lead: { name: "Anej Rozman", image: "/assets/team/anej.jpeg" },
-    description:
-      "Organizing meetups, hackathons, and social events for our community with delicious catering.",
-    members: [
-      { name: "Firas Dridi", image: undefined },
-      { name: "Gökhan", image: undefined },
-    ],
-  },
-  {
+
+    {
     name: "Innovation and Technology",
     lead: { name: "Ariele Marcellino", image: "/assets/team/ariele.png" },
     description:
@@ -71,19 +57,59 @@ const poles = [
       { name: "Gamal", image: "/assets/team/gamal.jpeg" },
     ],
   },
+
   {
-    name: "Financial & Legal",
-    lead: { name: "This could be you!", image: undefined },
+    name: "External Relations",
+    lead: { name: "Ilan Nissim", image: "/assets/team/ilan.png" },
     description:
-      "Building connections with universities and the global Ethereum community.",
-    members: [],
+      "Managing partnerships and external communications with industry leaders.",
+    members: [
+      { name: "Noé Macé", image: "/assets/team/noe.jpeg" },
+      { name: "Pedro Gouveia", image: undefined }
+    ],
   },
   {
+    name: "Events",
+    lead: { name: "Anej Rozman", image: "/assets/team/anej.jpeg" },
+    description:
+      "Organizing meetups, hackathons, and social events for our community with delicious catering.",
+    members: [
+      { name: "Firas Dridi", image: "/assets/team/firas.png" },
+      { name: "Gökhan", image: undefined },
+    ],
+  },
+
+    {
     name: "Recruiting & Member Organization",
     lead: { name: "Gustave Charles", image: "/assets/team/gustave.jpeg" },
-    description: "Managing member recruitment and organization activities.",
+    description: "Coordinating leads in cooperation with the president, overseeing day to day and flagship events operations.",
     members: [],
   },
+
+    {
+    name: "Marketing",
+    lead: { name: "This could be you!", image: undefined },
+    description:
+      "Leading our marketing initiatives and community outreach efforts.",
+    members: [{ name: "Dominic", image: "/assets/team/dominic.jpg" }],
+  },
+
+  {
+    name: "Finances & Legal",
+    lead: { name: "This could be you!", image: undefined },
+    description:
+      "Building connections with universities, industries and the global blockchain community.",
+    members: [],
+  },
+
+  {
+    name: "Education",
+    lead: { name: "This could be you!", image: undefined },
+    description:
+      "Fostering a culture of continuous learning and knowledge sharing.",
+    members: [],
+  }
+  
 ];
 
 export default function About() {
@@ -182,16 +208,20 @@ export default function About() {
             </h2>
             <div className="w-16 h-1 gradient-primary mx-auto"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {executiveMembers.map((member, index) => (
-              <PersonCard
-                key={index}
-                name={member.name}
-                role={member.role}
-                description={member.description}
-                image={member.image}
-              />
-            ))}
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-6">
+              {executiveMembers.map((member, index) => (
+                <div key={index} className="w-full md:w-1/2 lg:w-1/4 flex justify-center">
+                  <PersonCard
+                    name={member.name}
+                    role={member.role}
+                    description={member.description}
+                    image={member.image}
+                    className="w-full max-w-sm"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -215,7 +245,7 @@ export default function About() {
                 <div className="flex justify-center mb-8">
                   <PersonCard
                     name={pole.lead.name}
-                    role="Lead"
+                    role="Head"
                     description={pole.description}
                     image={pole.lead.image}
                     className="max-w-sm"

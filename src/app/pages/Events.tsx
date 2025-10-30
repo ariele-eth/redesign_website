@@ -90,13 +90,12 @@ export default function Events() {
               <div
                 className={
                   `grid gap-8 ${
-                    events.length === 1 ? 'grid-cols-1' : 'sm:grid-cols-2 lg:grid-cols-3'
+                    events.length === 1 ? 'grid-cols-1' : 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
                   } justify-items-center`
                 }
               >
                 {events.map((e) => (
-                  // Constrain each card width so single events are not excessively large
-                  <EventCard key={e.id} event={e} className="max-w-sm w-full" />
+                  <EventCard key={e.id} event={e} className="max-w-sm" />
                 ))}
               </div>
             </div>

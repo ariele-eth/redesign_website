@@ -72,13 +72,11 @@ export const Footer = () => {
             <h4 className="font-semibold">Connect</h4>
             <div className="flex justify-center md:justify-start space-x-4">
               <a
-                href="https://github.com/ETH-Blockchain-Club"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:contact@eth-blockchain.org"
                 className="text-muted-foreground hover:text-primary transition-smooth"
-                aria-label="GitHub"
+                aria-label="Email"
               >
-                <Github className="h-5 w-5" />
+                <Mail className="h-5 w-5" />
               </a>
               <a
                 href="https://x.com/ethbclub"
@@ -96,15 +94,6 @@ export const Footer = () => {
                 </svg>
               </a>
               <a
-                href="https://www.linkedin.com/company/ethbclub"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-smooth"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a
                 href="https://www.instagram.com/ethbclub"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -114,11 +103,29 @@ export const Footer = () => {
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="mailto:contact@eth-blockchain.org"
+                href="https://www.linkedin.com/company/ethbclub"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-smooth"
-                aria-label="Email"
+                aria-label="LinkedIn"
               >
-                <Mail className="h-5 w-5" />
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a
+                href="https://t.me/+UQYeBnteJoM4MWM0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-smooth"
+                aria-label="Telegram"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M22.05 1.577c-.393-.016-.784.08-1.117.235-.484.186-4.92 1.902-9.41 3.64-2.26.873-4.518 1.746-6.256 2.415-1.737.67-3.045 1.168-3.114 1.192-.46.16-1.082.362-1.61.984-.133.155-.267.354-.335.628s-.038.622.095.895c.265.547.714.773 1.244.976 1.76.564 3.58 1.102 5.087 1.608.556 1.96 1.09 3.927 1.618 5.89.174.394.553.54.944.544l-.002.02s.307.03.606-.042c.3-.07.677-.244 1.02-.565.377-.354 1.4-1.36 1.98-1.928l4.37 3.226.035.02s.484.34 1.192.388c.354.024.82-.044 1.22-.337.403-.294.67-.767.795-1.307.374-1.63 2.853-13.427 3.276-15.38l-.012.046c.296-1.1.187-2.108-.496-2.705-.342-.297-.736-.427-1.13-.444zm-.118 1.874c.027.008.02-.004.027 0 .015 0 .063-.008.056.067l-.063.28s-2.9 13.75-3.276 15.377c-.016.065-.024.027-.04.094-.005.024-.04.047-.06.067-.015.015-.058.008-.103.008l-5.224-3.856-2.44 2.383.48-4.388 8.185-7.615s.8-.746.816-.852c.015-.106-.1-.106-.1-.106-.04 0-.15.04-.272.097-3.645 2.236-7.29 4.472-10.94 6.708-.024.008-.024.008-.063.016l-6.246-1.98c-.054-.02-.054-.02 0-.04 1.855-.705 15.18-5.892 15.18-5.892s.37-.134.654-.134c.094 0 .212.024.318.08z"/>
+                </svg>
               </a>
             </div>
             <p className="text-sm text-muted-foreground">

@@ -12,6 +12,14 @@ const bergmannImage = "/assets/advisors/bergmann.jpeg";
 const gervaisImage = "/assets/advisors/gervais.png";
 
 export default function Home() {
+  // Add partner logos here (place logo files in public/assets/partners/)
+  const partners = [
+    { name: "ETH Zürich", logo: "/assets/partners/eth.png", href: "https://ethz.ch" },
+    { name: "ETH Zürich FinsureTech Hub", logo: "/assets/partners/ETHZ_FinsureTech_Hub.jpg", href: "https://finsuretech.ethz.ch" },
+    { name: "ETH Student Project House", logo: "/assets/partners/ETH_Student_Project_House.png", href: "https://sph.ethz.ch" },
+    { name: "Blockchain Student Association (EPFL)", logo: "/assets/partners/Blockchain_Student_Association.svg", href: "https://www.bsaepfl.ch" },
+  ];
+
   return (
     <div className="min-h-screen snap-y snap-mandatory">
       <Navigation />
@@ -27,10 +35,16 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center mt-16">
           <div className="animate-fade-in-up">
             <div className="mb-6 flex justify-center">
+              {/* Mobile: small svg; Desktop: full png */}
+              <img
+                src="/ETHBCC_small.svg"
+                alt="ETHBCC Logo"
+                className="h-10 w-auto transition-smooth hover:scale-105 block md:hidden"
+              />
               <img
                 src="/ethbcc_logo.png"
                 alt="ETHBCC Logo"
-                className="h-20 w-auto transition-smooth hover:scale-105"
+                className="h-20 w-auto transition-smooth hover:scale-105 hidden md:block"
               />
             </div>
             <p className="text-xl md:text-2xl mb-8 text-foreground/80 max-w-3xl mx-auto font-light">
@@ -42,7 +56,7 @@ export default function Home() {
               <Link href="/join">
                 <Button
                   size="lg"
-                  className="gradient-primary shadow-elegant hover:shadow-medium transition-calm group"
+                  className="gradient-primary shadow-elegant group transform transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-md hover:brightness-95"
                 >
                   Join Us
                   <ArrowRight className="ml-2 h-5 w-5 transition-smooth group-hover:translate-x-1" />
@@ -51,9 +65,14 @@ export default function Home() {
               <Link href="/events">
                 <Button
                   size="lg"
-                  className="bg-white text-primary border border-primary/30 hover:bg-primary/5 transition-calm"
+                  className="group bg-white text-primary border border-primary/30
+                             hover:bg-gray-50 hover:text-primary hover:border-primary/40
+                             shadow-sm hover:shadow-md
+                             transform transition-colors transition-transform duration-150 ease-out
+                             hover:-translate-y-[2px] h-11 rounded-md px-8 inline-flex items-center justify-center gap-2"
                 >
                   See Events
+                  <Calendar className="ml-2 h-5 w-5 transition-transform duration-150 group-hover:translate-y-[-3px]" />
                 </Button>
               </Link>
             </div>
@@ -187,6 +206,33 @@ export default function Home() {
                 />
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
+              Our Partners
+            </h2>
+            <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
+          </div>
+
+          <div className="flex flex-wrap justify-center items-center gap-12 max-w-5xl mx-auto">
+            {partners.map((p) => (
+              <a
+                key={p.name}
+                href={p.href ?? "#"}
+                className="flex items-center justify-center p-8 bg-white rounded-lg hover:shadow-lg transition-all duration-200 ease-out hover:-translate-y-1 min-w-[200px] min-h-[140px]"
+                aria-label={p.name}
+                target={p.href && p.href !== "#" ? "_blank" : undefined}
+                rel={p.href && p.href !== "#" ? "noopener noreferrer" : undefined}
+              >
+                <img src={p.logo} alt={p.name} className="max-h-24 max-w-[180px] object-contain" />
+              </a>
+            ))}
           </div>
         </div>
       </section>
