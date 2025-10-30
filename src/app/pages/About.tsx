@@ -30,6 +30,12 @@ const executiveMembers = [
     description: "Leading innovation and technology initiatives.",
     image: "/assets/team/ariele.png",
   },
+  {
+    name: "Ilan Nissim",
+    role: "Head of External Relations\nMSc Data Science",
+    description: "Interested in decentralized finance and blockchain technology.",
+    image: "/assets/team/ilan.png",
+  },
 ];
 
 const poles = [
@@ -54,13 +60,12 @@ const poles = [
 
   {
     name: "External Relations",
-    lead: { name: "This could be you!", image: undefined },
+    lead: { name: "Ilan Nissim", image: "/assets/team/ilan.png" },
     description:
       "Managing partnerships and external communications with industry leaders.",
     members: [
       { name: "Noé Macé", image: "/assets/team/noe.jpeg" },
-      { name: "Pedro Gouveia", image: undefined },
-      { name: "Ilan Nissim", image: "/assets/team/ilan.png" },
+      { name: "Pedro Gouveia", image: undefined }
     ],
   },
   {
@@ -203,16 +208,20 @@ export default function About() {
             </h2>
             <div className="w-16 h-1 gradient-primary mx-auto"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {executiveMembers.map((member, index) => (
-              <PersonCard
-                key={index}
-                name={member.name}
-                role={member.role}
-                description={member.description}
-                image={member.image}
-              />
-            ))}
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-6">
+              {executiveMembers.map((member, index) => (
+                <div key={index} className="w-full md:w-1/2 lg:w-1/4 flex justify-center">
+                  <PersonCard
+                    name={member.name}
+                    role={member.role}
+                    description={member.description}
+                    image={member.image}
+                    className="w-full max-w-sm"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -236,7 +245,7 @@ export default function About() {
                 <div className="flex justify-center mb-8">
                   <PersonCard
                     name={pole.lead.name}
-                    role="Lead"
+                    role="Head"
                     description={pole.description}
                     image={pole.lead.image}
                     className="max-w-sm"
