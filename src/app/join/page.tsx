@@ -125,7 +125,7 @@ export default function JoinLanding() {
                   </Button>
                 </Link>
                 {/* Committee benefits list (same card as the button/image) */}
-                <ul className="mt-10 space-y-4 tcreatext-left">
+                <ul className="mt-10 space-y-4 text-left">
                   <li className="flex items-start gap-3">
                     <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
                       <Flag className="h-3 w-3" />
