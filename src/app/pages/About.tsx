@@ -65,7 +65,7 @@ const poles = [
       "Managing partnerships and external communications with industry leaders.",
     members: [
       { name: "Noé Macé", image: "/assets/team/noe.jpeg" },
-      { name: "Pedro Gouveia", image: undefined }
+      { name: "Pedro Gouveia", image: "/assets/team/pedro.jpeg" },
     ],
   },
   {
