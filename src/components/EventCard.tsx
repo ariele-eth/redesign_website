@@ -46,7 +46,7 @@ function formatEventDate(
   const h1 = hh.format(start)
   const h2 = end ? hh.format(end) : ''
 
-  return `${M}.${D} | ${h1}H${h2 ? ` - ${h2}H` : ''}`
+  return `${D}.${M} | ${h1}H${h2 ? ` - ${h2}H` : ''}`
 }
 
 export function EventCard({ event, className }: EventCardProps) {
