@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
 
+const supabase_url = process.env.NEXT_PUBLIC_SUPABASE_URL
 type EventRow = {
   id: string
   title: string
@@ -13,7 +14,7 @@ type EventRow = {
   end_time?: string | null
   location?: string | null
   image_url?: string | null
-  luma_url?: string | null 
+  luma_url?: string | null
 }
 
 interface EventCardProps {
@@ -50,30 +51,35 @@ function formatEventDate(
 
 export function EventCard({ event, className }: EventCardProps) {
   const dateStr = formatEventDate(event.start_time, event.end_time)
-  // Resolve image URL: events may store a bare filename or a non-URL string
-  // Normalize common cases so images placed under `public/events/` load correctly.
+
   let imgSrc: string | null = event.image_url ?? null
 
-  // If Luma provides a direct image URL (some Luma event links include a direct
-  // image) prefer that over a local public/events fallback.
   if (!imgSrc && event.luma_url) {
     const maybe = String(event.luma_url)
     if (/(?:\.png|\.jpe?g|\.webp|\.gif|\.svg)(?:\?|$)/i.test(maybe)) {
       imgSrc = maybe
     }
   }
+
   if (imgSrc) {
-    // If it's already an absolute URL or starts with a slash, use as-is
+    // already full URL -> keep as-is
     if (!(imgSrc.startsWith('http') || imgSrc.startsWith('/'))) {
-      // If the value includes a path (e.g. "events/filename.jpg"), use only the final segment
-      let name = imgSrc.includes('/') ? imgSrc.split('/').pop() ?? imgSrc : imgSrc
-      // Replace spaces with hyphens (your public filename uses hyphens)
+      // normalize to a bare filename
+      let name = imgSrc.includes('/')
+        ? imgSrc.split('/').pop() ?? imgSrc
+        : imgSrc
       name = name.replace(/\s+/g, '-')
-      // Ensure it has an extension; default to jpg if missing
       if (!/\.[a-zA-Z0-9]+$/.test(name)) {
         name = `${name}.jpg`
       }
-      imgSrc = `/events/${encodeURIComponent(name)}`
+
+      // OLD:
+      // imgSrc = `/events/${encodeURIComponent(name)}`
+
+      // NEW: Supabase public bucket "events"
+      imgSrc = `${supabase_url}/storage/v1/object/public/events/${encodeURIComponent(
+        name
+      )}`
     }
   }
 
@@ -84,10 +90,13 @@ export function EventCard({ event, className }: EventCardProps) {
         className
       )}
     >
-      {/* Banner */}
       <div className="w-full aspect-[16/9] rounded-xl mx-auto mb-4 overflow-hidden group-hover:scale-[1.01] transition-smooth">
         {imgSrc ? (
-          <img src={imgSrc} alt={event.title} className="w-full h-full object-cover" />
+          <img
+            src={imgSrc}
+            alt={event.title}
+            className="w-full h-full object-cover"
+          />
         ) : (
           <div className="w-full h-full bg-gradient-primary rounded-xl flex items-center justify-center text-white text-2xl font-bold">
             {event.title
