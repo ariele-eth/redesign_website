@@ -75,7 +75,7 @@ const poles = [
       "Organizing meetups, hackathons, and social events for our community with delicious catering.",
     members: [
       { name: "Firas Dridi", image: "/assets/team/firas.png" },
-      { name: "Gökhan", image: undefined },
+      { name: "Gökhan", image: "/assets/team/goekhan.jpeg" },
     ],
   },
 
