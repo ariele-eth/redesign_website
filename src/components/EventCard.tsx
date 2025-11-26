@@ -86,7 +86,7 @@ export function EventCard({ event, className }: EventCardProps) {
   return (
     <Card
       className={cn(
-        'p-6 text-center shadow-glass hover:shadow-elegant transition-smooth group bg-gray-50',
+        'flex flex-col h-full p-6 text-center shadow-glass hover:shadow-elegant transition-smooth group bg-gray-50',
         className
       )}
     >
@@ -108,46 +108,50 @@ export function EventCard({ event, className }: EventCardProps) {
         )}
       </div>
 
-      {/* Date (same blue as PersonCard role) */}
-      <p
-        className="text-primary text-sm mb-2 font-medium"
-        style={{ color: 'hsl(199 100% 35%)' }}
-      >
-        {dateStr}
-      </p>
-
-      {/* Title */}
-      <h3 className="font-semibold text-[1.35rem] md:text-[1.5rem] leading-snug mb-1 text-gray-900">
-        {event.title}
-      </h3>
-
-      {event.location && (
-        <p className="text-sm text-gray-700 mb-2">{event.location}</p>
-      )}
-
-      {event.description && (
-        <p className="text-sm text-gray-600 mb-4">{event.description}</p>
-      )}
-
-      {/* Luma CTA */}
-      {event.luma_url && (
-        <Button
-          asChild
-          className="w-full gradient-primary shadow-elegant group text-white"
+      <div className="flex flex-col flex-1 text-left">
+        {/* Date (same blue as PersonCard role) */}
+        <p
+          className="text-primary text-sm mb-2 font-medium"
+          style={{ color: 'hsl(199 100% 35%)' }}
         >
-          <a
-            href={event.luma_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open event on Luma"
-          >
-            View on Luma{' '}
-            <span className="ml-2 group-hover:translate-x-0.5 transition-transform">
-              ↗
-            </span>
-          </a>
-        </Button>
-      )}
+          {dateStr}
+        </p>
+
+        {/* Title */}
+        <h3 className="font-semibold text-[1.35rem] md:text-[1.5rem] leading-snug mb-1 text-gray-900">
+          {event.title}
+        </h3>
+
+        {event.location && (
+          <p className="text-sm text-gray-700 mb-2">{event.location}</p>
+        )}
+
+        {event.description && (
+          <p className="text-sm text-gray-600 mb-4">{event.description}</p>
+        )}
+
+        <div className="mt-auto">
+          {/* Luma CTA */}
+          {event.luma_url && (
+            <Button
+              asChild
+              className="w-full gradient-primary shadow-elegant group text-white"
+            >
+              <a
+                href={event.luma_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open event on Luma"
+              >
+                View on Luma{' '}
+                <span className="ml-2 group-hover:translate-x-0.5 transition-transform">
+                  ↗
+                </span>
+              </a>
+            </Button>
+          )}
+        </div>
+      </div>
     </Card>
   )
 }
