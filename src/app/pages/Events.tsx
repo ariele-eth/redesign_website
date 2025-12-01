@@ -151,7 +151,7 @@ export default function Events() {
               <div className="max-w-7xl mx-auto flex justify-center">
                     <div className="flex flex-wrap justify-center gap-8">
                       {pastEvents.slice(0, 4).map((e) => (
-                        <div key={e.id} className="w-full sm:w-auto">
+                        <div key={e.id} className="w-full flex justify-center sm:w-auto">
                           <EventCard event={e} className="max-w-xs sm:max-w-sm h-full" />
                         </div>
                       ))}

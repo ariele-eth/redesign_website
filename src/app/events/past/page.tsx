@@ -105,7 +105,7 @@ export default function PastEventsPage() {
                 {rows.map((row, ri) => (
                   <div key={ri} className="flex justify-center gap-8">
                     {row.map((e) => (
-                      <div key={e.id} className="w-full sm:w-auto">
+                      <div key={e.id} className="w-full flex justify-center sm:w-auto">
                         <EventCard event={e} className="max-w-xs sm:max-w-sm h-full" />
                       </div>
                     ))}
