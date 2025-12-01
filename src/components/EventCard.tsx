@@ -91,12 +91,12 @@ export function EventCard({ event, className }: EventCardProps) {
         className
       )}
     >
-      <div className="w-full aspect-[16/9] rounded-xl mx-auto mb-4 overflow-hidden group-hover:scale-[1.01] transition-smooth">
+      <div className="w-full aspect-square rounded-xl mx-auto mb-4 overflow-hidden group-hover:scale-[1.01] transition-smooth">
         {imgSrc ? (
           <img
             src={imgSrc}
             alt={event.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain object-center bg-gray-100"
           />
         ) : (
           <div className="w-full h-full bg-gradient-primary rounded-xl flex items-center justify-center text-white text-2xl font-bold">
@@ -119,7 +119,7 @@ export function EventCard({ event, className }: EventCardProps) {
         </p>
 
         {/* Title */}
-        <h3 className="font-semibold text-[1.35rem] md:text-[1.5rem] leading-snug mb-1 text-gray-900">
+        <h3 className="font-semibold text-[1.1rem] md:text-[1.25rem] leading-snug mb-1 text-gray-900">
           {event.title}
         </h3>
 
