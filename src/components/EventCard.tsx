@@ -4,6 +4,7 @@
 import { Card } from '@/components/ui/card'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 const supabase_url = process.env.NEXT_PUBLIC_SUPABASE_URL
 type EventRow = {
