@@ -1,272 +1,282 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { PersonCard } from "@/components/PersonCard";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import Link from "next/link";
-import { ArrowRight, GraduationCap, Calendar, Users } from "lucide-react";
-import { AnimatedNetwork } from "@/components/AnimatedNetwork";
-// Use public asset paths (public/assets/advisors/) instead of importing from src
-// This avoids module-not-found errors in CI if images are tracked under `public/`
-const bergmannImage = "/assets/advisors/bergmann.jpeg";
-const gervaisImage = "/assets/advisors/gervais.png";
+import Image from "next/image";
+import { Layers3, Search, BriefcaseBusiness, Users } from "lucide-react";
 
 export default function Home() {
-  // Add partner logos here (place logo files in public/assets/partners/)
   const partners = [
-    { name: "ETH Zürich", logo: "/assets/partners/eth.png", href: "https://ethz.ch" },
-    { name: "ETH Zürich FinsureTech Hub", logo: "/assets/partners/ETHZ_FinsureTech_Hub.png", href: "https://finsuretech.ethz.ch" },
-    { name: "ETH Student Project House", logo: "/assets/partners/ETH_Student_Project_House.png", href: "https://sph.ethz.ch" },
-    { name: "Blockchain Student Association (EPFL)", logo: "/assets/partners/Blockchain_Student_Association.svg", href: "https://www.bsaepfl.ch" },
-      { name: "VSETH", logo: "/assets/partners/VSETH.svg", href: "https://vseth.ethz.ch" },
+    {
+      name: "ETH Zurich",
+      logo: "/assets/partners/eth.png",
+      href: "https://ethz.ch",
+    },
+    {
+      name: "ETH Zurich FinsureTech Hub",
+      logo: "/assets/partners/ETHZ_FinsureTech_Hub.png",
+      href: "https://finsuretech.ethz.ch",
+    },
+    {
+      name: "ETH Student Project House",
+      logo: "/assets/partners/ETH_Student_Project_House.png",
+      href: "https://sph.ethz.ch",
+    },
+    {
+      name: "Blockchain Student Association EPFL",
+      logo: "/assets/partners/Blockchain_Student_Association.svg",
+      href: "https://www.bsaepfl.ch",
+    },
+    {
+      name: "VSETH",
+      logo: "/assets/partners/VSETH.svg",
+      href: "https://vseth.ethz.ch",
+    },
+  ];
+
+  const pillars = [
+    {
+      title: "Education",
+      description:
+        "Structured learning tracks from blockchain basics to advanced protocol development.",
+      icon: Layers3,
+    },
+    {
+      title: "Research",
+      description:
+        "Collaborating with ETH researchers on distributed systems, cryptography and ZK proofs.",
+      icon: Search,
+    },
+    {
+      title: "Industry",
+      description:
+        "Bridging academia and the Web3 industry through partnerships and live projects.",
+      icon: BriefcaseBusiness,
+    },
+    {
+      title: "Community",
+      description:
+        "A vibrant ecosystem of builders, thinkers, and innovators united by Web3.",
+      icon: Users,
+    },
+  ];
+
+  const comingUp = [
+    {
+      dateDay: "12",
+      dateMonth: "APR",
+      title: "ZK Systems Deep Dive",
+      description: "A technical session on practical zero-knowledge systems and how they are deployed at scale.",
+      type: "Workshop",
+    },
+    {
+      dateDay: "19",
+      dateMonth: "APR",
+      title: "Builder Night: ETH x Industry",
+      description: "An evening with partners and founders focused on shipping products from campus to market.",
+      type: "Networking",
+    },
+    {
+      dateDay: "03",
+      dateMonth: "MAY",
+      title: "Research Forum",
+      description: "Open presentations on cryptography, distributed systems and protocol design from student teams.",
+      type: "Research",
+    },
   ];
 
   return (
-    <div className="min-h-screen snap-y snap-mandatory">
+    <div style={{ minHeight: "100vh", position: "relative" }}>
+      <div className="page-grid-bg" style={{ zIndex: 0 }} />
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-white snap-start">
-        {/* Animated Blockchain Network Background */}
-        <div className="absolute inset-0 bg-white overflow-hidden">
-          <AnimatedNetwork />
+      <section className="hero-section">
+        <div className="hero-top-brand">
+          <span className="hero-top-line" />
+          <span className="hero-top-text">ETH ZURICH · BLOCKCHAIN CLUB</span>
         </div>
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white to-transparent z-0 pointer-events-none" />
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center mt-16">
-          <div className="animate-fade-in-up">
-            <div className="mb-6 flex justify-center">
-              {/* Mobile: small svg; Desktop: full png */}
-              <img
-                src="/ETHBCC_small.svg"
-                alt="ETHBCC Logo"
-                className="h-10 w-auto transition-smooth hover:scale-105 block md:hidden"
-              />
-              <img
-                src="/ethbcc_logo.png"
-                alt="ETHBCC Logo"
-                className="h-20 w-auto transition-smooth hover:scale-105 hidden md:block"
-              />
+        <div className="hero-left">
+          <h1 className="hero-title-main">
+            <span>Building</span>
+            <span className="outline">the Future</span>
+            <span className="subtle">of Web3</span>
+          </h1>
+
+          <p className="hero-subtext">
+            Switzerland&apos;s most ambitious blockchain community where the best minds at ETH Zurich meet the decentralised economy.
+          </p>
+
+          <div className="hero-actions">
+            <Link href="/join" className="hero-cta-primary">
+              Join the Club →
+            </Link>
+            <Link href="/events" className="hero-cta-secondary">
+              Explore Events
+            </Link>
+          </div>
+
+          <div className="hero-stats">
+            <div>
+              <strong>500+</strong>
+              <span>Members</span>
             </div>
-            <p className="text-xl md:text-2xl mb-8 text-foreground/80 max-w-3xl mx-auto font-light">
-              {/*Shaping the industry leaders of tomorrow through blockchain education, innovation and collaboration. at ETH Zurich*/}
-              We connect strong industry partners to driven students, fostering
-              education, innovation, and collaboration in Blockchain technology.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/join">
-                <Button
-                  size="lg"
-                  className="gradient-primary shadow-elegant group transform transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-md hover:brightness-95"
-                >
-                  Join Us
-                  <ArrowRight className="ml-2 h-5 w-5 transition-smooth group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <Link href="/events">
-                <Button
-                  size="lg"
-                  className="group bg-white text-primary border border-primary/30
-                             hover:bg-gray-50 hover:text-primary hover:border-primary/40
-                             shadow-sm hover:shadow-md
-                             transform transition-colors transition-transform duration-150 ease-out
-                             hover:-translate-y-[2px] h-11 rounded-md px-8 inline-flex items-center justify-center gap-2"
-                >
-                  See Events
-                  <Calendar className="ml-2 h-5 w-5 transition-transform duration-150 group-hover:translate-y-[-3px]" />
-                </Button>
-              </Link>
+            <div>
+              <strong>40+</strong>
+              <span>Events / Year</span>
+            </div>
+            <div>
+              <strong>20+</strong>
+              <span>Partners</span>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Vision Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-                Our Vision
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
-            </div>
-            <p className="pace-y-6 text-muted-foreground leading-relaxed text-lg text-center md:text-left">
-              {/* We aim to positively shape the industry of tomorrow by educating and empowering students. <br /> {/*the next generation of blockchain leaders.
-              To reach our goal, we focus on three main pillars: Education, Events, and Industry Collaboration.<br />
-              This allows us to deepen interest, broaden knowledge, and foster innovation in the blockchain space, ultimately contributing to the mainstream adoption of blockchain technology.*/}
-              We aim to positively shape the future of blockchain technology by
-              educating tomorrow&apos;s innovators.
-              <br />
-              Through Education, Events, and Industry Collaboration, we build
-              technical expertise, expand practical knowledge, and foster
-              responsible innovation to advance real-world adoption.
-            </p>
+        <div className="hero-right">
+          <div className="hero-hex" />
+          <div className="hero-orb" />
+          <div className="hero-ring ring-a">
+            <span className="orbit-dot" />
           </div>
-        </div>
-      </section>
-
-      {/* What We Do Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-              What We Do
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
+          <div className="hero-ring ring-b">
+            <span className="orbit-dot2" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth group">
-              <div className="w-12 h-12 gradient-primary rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-smooth">
-                <GraduationCap className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">
-                Educational Workshops
-              </h3>
-              <p className="text-muted-foreground">
-                We host and develop workshops to educate students, providing
-                valueable knowledge and hands-on learning experiences.
-              </p>
-            </Card>
-
-            <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth group">
-              <div className="w-12 h-12 gradient-primary rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-smooth">
-                <Calendar className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">
-                Big Events & Hackathons
-              </h3>
-              <p className="text-muted-foreground">
-                We organize regular events and hackathons with industry
-                partners, creating opportunities for students to network, build,
-                and showcase their projects.
-              </p>
-            </Card>
-
-            <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth group">
-              <div className="w-12 h-12 gradient-primary rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-smooth">
-                <Users className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">
-                Industry Connections
-              </h3>
-              <p className="text-muted-foreground">
-                We foster direct connections between students and industry
-                leaders through partnerships, mentorship programs, and career
-                opportunities that transform learning into real-world impact.
-              </p>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Academic Collaborations Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-              Academic Collaborations
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <PersonCard
-              name="Dr. Bastian Bergmann"
-              role={"Lecturer and Executive Director of the FinsureTech Hub\nETH Zürich"}
-              description="As founding mentor, he has provided invaluable guidance, mentorship and support."
-              image={bergmannImage}
-            />
-
-            <PersonCard
-              name="Prof. Dr. Arthur Gervais"
-              role={"Professor of Information Security\nUniversity College London"}
-              description="As founding supporter, he has provided essential academic insights, mentorship and transformative opportunities."
-              image={gervaisImage}
+          <div className="hero-logo-shell">
+            <Image
+              src="/ethbcc_logo.png.png"
+              alt="ETH Blockchain Club Logo"
+              width={310}
+              height={310}
+              className="hero-logo-image"
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              priority
             />
           </div>
         </div>
       </section>
 
-      {/* Advisors Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-              Advisors
+      <section className="vision-section-home">
+        <div className="vision-bg-word">VISION</div>
+        <div className="vision-inner-home">
+          <ScrollReveal>
+            <div>
+            <span className="label">Our Vision</span>
+            <h2 className="vision-quote-home">
+              Establishing ETH Zurich as <span className="vision-accent">Europe&apos;s</span> <span className="vision-accent">leading</span> blockchain innovation hub
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="md:col-span-2 flex justify-center">
-              <div className="w-full md:w-1/2 lg:w-1/2 max-w-sm">
-                <PersonCard
-                  name="Adrian Kögl"
-                  role={"Strategic Advisor\nSecurity Engineer, Quantstamp"}
-                  description="As co-founder of the TUM Blockchain Club and Co-Chair of IEEE Blockchain Switzerland, he supports us with proven experience in building successful, student-led communities."
-                  image="/assets/advisors/adrian.jpg"
-                />
-              </div>
+            <p className="vision-copy-home">
+              Where academic excellence meets the decentralised economy — we build the bridge between world-class research and real-world Web3 applications.
+            </p>
             </div>
-          </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={120}>
+            <div className="vision-stats-home">
+            <article className="vision-stat-card">
+              <strong>500+</strong>
+              <span>Active Builders</span>
+            </article>
+            <article className="vision-stat-card">
+              <strong>40+</strong>
+              <span>Events Per Year</span>
+            </article>
+            <article className="vision-stat-card">
+              <strong>20+</strong>
+              <span>Industry Partners</span>
+            </article>
+            <article className="vision-stat-card">
+              <strong>7</strong>
+              <span>Active Committees</span>
+            </article>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Partners Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-              Our Partners
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
+      <section className="pillars-section">
+        <ScrollReveal>
+          <div className="pillars-left">
+          <span className="label">What We Do</span>
+          <h2>Four pillars, one mission</h2>
+          <p>
+            We connect education, research, industry, and community to establish ETH Zurich as Europe&apos;s leading blockchain hub.
+          </p>
+          <Link href="/about" className="pillars-about-link">
+            About the Club →
+          </Link>
           </div>
+        </ScrollReveal>
 
-          <div className="flex flex-wrap justify-center items-center gap-12 max-w-5xl mx-auto">
-            {partners.map((p) => (
+        <div className="pillars-grid">
+          {pillars.map((pillar, idx) => {
+            const Icon = pillar.icon;
+            return (
+              <ScrollReveal key={pillar.title} delay={90 + idx * 80}>
+                <article className="pillar-card">
+                  <Icon size={20} strokeWidth={1.8} className="pillar-icon" />
+                  <h3>{pillar.title}</h3>
+                  <p>{pillar.description}</p>
+                </article>
+              </ScrollReveal>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="partners-section">
+        <ScrollReveal>
+          <div className="partners-header">
+          <span className="label">Trusted By</span>
+          <h2 className="h2">Our Partners</h2>
+          <p className="lead">Partners are core to our impact. Scroll to discover the ecosystem backing our community.</p>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={120}>
+          <div className="partner-marquee-wrap">
+          <div className="partner-marquee-track">
+            {[...partners, ...partners, ...partners].map((partner, idx) => (
               <a
-                key={p.name}
-                href={p.href ?? "#"}
-                className="flex items-center justify-center p-8 bg-white rounded-lg hover:shadow-lg transition-all duration-200 ease-out hover:-translate-y-1 min-w-[200px] min-h-[140px]"
-                aria-label={p.name}
-                target={p.href && p.href !== "#" ? "_blank" : undefined}
-                rel={p.href && p.href !== "#" ? "noopener noreferrer" : undefined}
+                key={`${partner.name}-${idx}`}
+                href={partner.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="partner-marquee-chip"
               >
-                <img src={p.logo} alt={p.name} className="max-h-24 max-w-[180px] object-contain" />
+                <Image src={partner.logo} alt={partner.name} width={95} height={28} className="partner-chip-logo" />
+                <span>{partner.name}</span>
               </a>
             ))}
           </div>
-        </div>
+          </div>
+        </ScrollReveal>
       </section>
 
-      {/* Collaboration Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-                Open For Collaboration
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
-            </div>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-              As an accredited student club at ETH Zurich, we bring together a
-              community of driven and curious minds eager to collaborate. Led by
-              dedicated students, we embody ETH Zurich&apos;s spirit of
-              innovation and problem-solving. Ranked 7th globally and the top
-              university in continental Europe (QS World University Rankings
-              2025), ETH Zurich provides the perfect environment for
-              partnerships that push boundaries and create real impact.
-            </p>
-            <Link href="/collaborate">
-              <Button
-                size="lg"
-                className="gradient-primary shadow-elegant hover:shadow-medium transition-calm group"
-              >
-                Collaborate with Us
-                <ArrowRight className="ml-2 h-5 w-5 transition-smooth group-hover:translate-x-1" />
-              </Button>
-            </Link>
+      <section className="coming-up-section">
+        <ScrollReveal>
+          <div className="coming-up-head">
+          <span className="label">Coming Up</span>
+          <h2 className="h2">Upcoming Events</h2>
           </div>
+        </ScrollReveal>
+
+        <div className="coming-up-grid">
+          {comingUp.map((event, idx) => (
+            <ScrollReveal key={`${event.dateDay}-${event.title}`} delay={80 + idx * 90}>
+              <article className="coming-card">
+                <div className="coming-date">
+                  <strong>{event.dateDay}</strong>
+                  <span>{event.dateMonth}</span>
+                </div>
+
+                <div className="coming-body">
+                  <p className="coming-type">{event.type}</p>
+                  <h3>{event.title}</h3>
+                  <p>{event.description}</p>
+                </div>
+              </article>
+            </ScrollReveal>
+          ))}
         </div>
       </section>
 

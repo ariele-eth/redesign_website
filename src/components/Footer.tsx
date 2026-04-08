@@ -1,148 +1,161 @@
-import { Github, Linkedin, Mail, Instagram } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+
+const footerCols = {
+  club: [
+    { label: "About Us", href: "/about" },
+    { label: "Committees", href: "/join/committee" },
+    { label: "Team", href: "/about" },
+    { label: "Join Us", href: "/join" },
+    { label: "News", href: "/events" },
+  ],
+  participate: [
+    { label: "Events", href: "/events" },
+    { label: "Open Positions", href: "/join" },
+    { label: "Collaborate", href: "/collaborate" },
+    { label: "Become a Partner", href: "/collaborate" },
+  ],
+  learn: [
+    { label: "Education Hub", href: "/about" },
+    { label: "Knowledge Graph", href: "/about" },
+    { label: "Resources", href: "/events" },
+    { label: "Research", href: "/about" },
+  ],
+  legal: [
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Use", href: "#" },
+    { label: "Code of Ethics", href: "#" },
+    { label: "Cookie Policy", href: "#" },
+    { label: "Impressum", href: "#" },
+  ],
+};
 
 export const Footer = () => {
   return (
-    <footer className="bg-muted/30 border-t border-border mt-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
-          {/* Brand */}
-          <div className="flex flex-col justify-center space-y-4 md:col-span-2">
-            <div className="flex justify-center">
-              <img
-                src="/ethbcc_logo.png"
-                alt="ETHBCC Logo"
-                className="h-4 w-auto"
-              />
-            </div>
-            <p className="text-sm text-muted-foreground text-center">
-              Building the future of decentralized innovation at ETH Zurich.
+    <footer className="site-footer">
+      <div className="site-footer-line" />
+
+      <div className="footer-inner">
+        <div className="footer-top">
+          <div className="footer-brand">
+            <Image
+              src="/ethbcc_logo.png.png"
+              alt="ETH Blockchain Club"
+              width={94}
+              height={94}
+              className="footer-brand-logo"
+              style={{ width: "94px", height: "94px", objectFit: "contain" }}
+            />
+
+            <p className="footer-tagline">
+              Building the future of Web3 at ETH Zurich.
             </p>
-          </div>
 
-          {/* Quick Links */}
-          <div className="space-y-4 text-center md:text-left">
-            <h4 className="font-semibold">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  href="/"
-                  className="text-muted-foreground hover:text-primary transition-smooth"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="text-muted-foreground hover:text-primary transition-smooth"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/events"
-                  className="text-muted-foreground hover:text-primary transition-smooth"
-                >
-                  Events
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/join"
-                  className="text-muted-foreground hover:text-primary transition-smooth"
-                >
-                  Join Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/collaborate"
-                  className="text-muted-foreground hover:text-primary transition-smooth"
-                >
-                  Collaborate with Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Connect */}
-          <div className="space-y-4 text-center md:text-left">
-            <h4 className="font-semibold">Connect</h4>
-            <div className="flex justify-center md:justify-start space-x-4">
-              <a
-                href="mailto:contact@eth-blockchain.org"
-                className="text-muted-foreground hover:text-primary transition-smooth"
-                aria-label="Email"
-              >
-                <Mail className="h-5 w-5" />
+            <div className="footer-socials">
+              <a href="https://www.linkedin.com/company/ethbclub" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
+                <Linkedin size={15} /> LinkedIn
               </a>
-              <a
-                href="https://x.com/ethbclub"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-smooth"
-                aria-label="X (Twitter)"
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
+              <a href="https://x.com/ethbclub" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
+                X Twitter
               </a>
-              <a
-                href="https://www.instagram.com/ethbclub"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-smooth"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-5 w-5" />
+              <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
+                Discord
               </a>
-              <a
-                href="https://www.linkedin.com/company/ethbclub"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-smooth"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a
-                href="https://t.me/+UQYeBnteJoM4MWM0"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-smooth"
-                aria-label="Telegram"
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M22.05 1.577c-.393-.016-.784.08-1.117.235-.484.186-4.92 1.902-9.41 3.64-2.26.873-4.518 1.746-6.256 2.415-1.737.67-3.045 1.168-3.114 1.192-.46.16-1.082.362-1.61.984-.133.155-.267.354-.335.628s-.038.622.095.895c.265.547.714.773 1.244.976 1.76.564 3.58 1.102 5.087 1.608.556 1.96 1.09 3.927 1.618 5.89.174.394.553.54.944.544l-.002.02s.307.03.606-.042c.3-.07.677-.244 1.02-.565.377-.354 1.4-1.36 1.98-1.928l4.37 3.226.035.02s.484.34 1.192.388c.354.024.82-.044 1.22-.337.403-.294.67-.767.795-1.307.374-1.63 2.853-13.427 3.276-15.38l-.012.046c.296-1.1.187-2.108-.496-2.705-.342-.297-.736-.427-1.13-.444zm-.118 1.874c.027.008.02-.004.027 0 .015 0 .063-.008.056.067l-.063.28s-2.9 13.75-3.276 15.377c-.016.065-.024.027-.04.094-.005.024-.04.047-.06.067-.015.015-.058.008-.103.008l-5.224-3.856-2.44 2.383.48-4.388 8.185-7.615s.8-.746.816-.852c.015-.106-.1-.106-.1-.106-.04 0-.15.04-.272.097-3.645 2.236-7.29 4.472-10.94 6.708-.024.008-.024.008-.063.016l-6.246-1.98c-.054-.02-.054-.02 0-.04 1.855-.705 15.18-5.892 15.18-5.892s.37-.134.654-.134c.094 0 .212.024.318.08z"/>
-                </svg>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
+                <Github size={15} /> GitHub
               </a>
             </div>
-            <p className="text-sm text-muted-foreground">
-              ETH Zurich
-              <br />
-              Rämistrasse 101
-              <br />
-              8092 Zürich, Switzerland
-            </p>
+          </div>
+
+          <div className="footer-nav-cols">
+            <div>
+              <h4 className="footer-col-title">CLUB</h4>
+              {footerCols.club.map((item) => (
+                <Link key={item.label} href={item.href} className="footer-col-link">
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
+            <div>
+              <h4 className="footer-col-title">PARTICIPATE</h4>
+              {footerCols.participate.map((item) => (
+                <Link key={item.label} href={item.href} className="footer-col-link">
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
+            <div>
+              <h4 className="footer-col-title">LEARN</h4>
+              {footerCols.learn.map((item) => (
+                <Link key={item.label} href={item.href} className="footer-col-link">
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
+            <div>
+              <h4 className="footer-col-title">CONTACT</h4>
+              <a className="footer-col-link" href="mailto:contact@ethblockchain.ch">
+                <Mail size={14} className="footer-mail-icon" /> contact@ethblockchain.ch
+              </a>
+              <div className="footer-col-link footer-col-text">
+                ETH Zurich, Rämistrasse 101
+              </div>
+              <div className="footer-col-link footer-col-text">
+                8092 Zürich, Switzerland
+              </div>
+            </div>
+
+            <div>
+              <h4 className="footer-col-title">LEGAL</h4>
+              {footerCols.legal.map((item) => (
+                <a key={item.label} href={item.href} className="footer-col-link">
+                  {item.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>
-            © {new Date().getFullYear()} ETH Blockchain Club. All rights
-            reserved.
+        <div className="footer-newsletter">
+          <div className="footer-nl-left">
+            <h3 className="footer-nl-title">
+              Stay in the loop
+            </h3>
+            <p className="footer-nl-copy">
+              Weekly Web3 updates, event invites, and club news.
+            </p>
+          </div>
+
+          <div className="footer-nl-right">
+            <input
+              type="email"
+              placeholder="your@email.com"
+              className="footer-news-input"
+            />
+            <button type="button" className="footer-news-btn">
+              Subscribe →
+            </button>
+          </div>
+        </div>
+
+        <div className="footer-bottom-bar">
+          <p className="footer-copy">
+            © 2025 ETH Blockchain Club · All rights reserved
           </p>
+          <div className="footer-bottom-links">
+            {footerCols.legal.map((item) => (
+              <a key={item.label} href={item.href} className="footer-bottom-link">
+                {item.label}
+              </a>
+            ))}
+            <span className="footer-bottom-link footer-col-text">
+              Made with ♦ in Zürich
+            </span>
+          </div>
         </div>
       </div>
     </footer>
