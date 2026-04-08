@@ -48,9 +48,9 @@ export const Navigation = () => {
           <Image
             src="/ethbcc_logo.png.png"
             alt="ETH Blockchain Club"
-            width={58}
-            height={38}
-            style={{ width: '58px', height: '38px', objectFit: 'contain' }}
+            width={90}
+            height={58}
+            style={{ width: '90px', height: '58px', objectFit: 'contain' }}
             priority
           />
         </Link>
@@ -97,8 +97,8 @@ export const Navigation = () => {
             className="nav-cta"
             style={{
               background: 'transparent',
-              color: 'var(--accent)',
-              border: '0.5px solid var(--accent)',
+              color: 'var(--button)',
+              border: '0.5px solid var(--button)',
               borderRadius: 'var(--r)',
               padding: '7px 18px',
               fontFamily: 'var(--font-body)',
@@ -193,7 +193,7 @@ export const Navigation = () => {
         }
 
         .nav-cta:hover {
-          background: var(--accent);
+          background: var(--button);
           color: #fff;
         }
       `}</style>

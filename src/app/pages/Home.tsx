@@ -91,16 +91,16 @@ export default function Home() {
       <Navigation />
 
       <section className="hero-section">
-        <div className="hero-top-brand">
-          <span className="hero-top-line" />
-          <span className="hero-top-text">ETH ZURICH · BLOCKCHAIN CLUB</span>
-        </div>
-
         <div className="hero-left">
+          <div className="hero-top-brand">
+            <span className="hero-top-line" />
+            <span className="hero-top-text">ETH ZURICH · BLOCKCHAIN CLUB</span>
+          </div>
+
           <h1 className="hero-title-main">
             <span>Building</span>
             <span className="outline">the Future</span>
-            <span className="subtle">of Web3</span>
+            <span>of Web3</span>
           </h1>
 
           <p className="hero-subtext">
@@ -244,7 +244,6 @@ export default function Home() {
                 className="partner-marquee-chip"
               >
                 <Image src={partner.logo} alt={partner.name} width={95} height={28} className="partner-chip-logo" />
-                <span>{partner.name}</span>
               </a>
             ))}
           </div>

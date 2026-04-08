@@ -2,6 +2,15 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
+const TelegramIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path
+      fill="currentColor"
+      d="M21.8 4.6c.3-.9-.5-1.7-1.4-1.4L3.7 9.5c-1 .4-1 1.8.1 2.1l4.4 1.3 1.7 5.2c.3.8 1.3 1 1.9.4l2.5-2.3 4.4 3.3c.7.5 1.7.1 1.9-.7l1.2-14.2ZM9.6 13.5l8.2-5.2c.2-.1.4.2.2.3l-6.7 6.1-.3 2.9-1.4-4.1Z"
+    />
+  </svg>
+)
+
 const footerCols = {
   club: [
     { label: "About Us", href: "/about" },
@@ -59,8 +68,8 @@ export const Footer = () => {
               <a href="https://x.com/ethbclub" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
                 X Twitter
               </a>
-              <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
-                Discord
+              <a href="https://t.me/ethbclub" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
+                <TelegramIcon /> Telegram
               </a>
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
                 <Github size={15} /> GitHub
@@ -98,7 +107,7 @@ export const Footer = () => {
 
             <div>
               <h4 className="footer-col-title">CONTACT</h4>
-              <a className="footer-col-link" href="mailto:contact@ethblockchain.ch">
+              <a className="footer-col-link footer-email-link" href="mailto:contact@ethblockchain.ch">
                 <Mail size={14} className="footer-mail-icon" /> contact@ethblockchain.ch
               </a>
               <div className="footer-col-link footer-col-text">
@@ -117,28 +126,6 @@ export const Footer = () => {
                 </a>
               ))}
             </div>
-          </div>
-        </div>
-
-        <div className="footer-newsletter">
-          <div className="footer-nl-left">
-            <h3 className="footer-nl-title">
-              Stay in the loop
-            </h3>
-            <p className="footer-nl-copy">
-              Weekly Web3 updates, event invites, and club news.
-            </p>
-          </div>
-
-          <div className="footer-nl-right">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="footer-news-input"
-            />
-            <button type="button" className="footer-news-btn">
-              Subscribe →
-            </button>
           </div>
         </div>
 
