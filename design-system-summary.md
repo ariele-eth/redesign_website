@@ -43,7 +43,7 @@
 | Value | Used For |
 | --- | --- |
 | #16539b / rgb(22, 83, 155) | primary buttons |
-| #2eb9ff / rgb(46, 185, 255) | hover state |
+| #2eb9ff / rgb(46, 185, 255) | highlight and hover state |
 | opacity: 0.88 | primary hover effect |
 | transform: translateY(-1px) | primary hover effect |
 | rgba(22, 83, 155, 0.08) | outline hover |
