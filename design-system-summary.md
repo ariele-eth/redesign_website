@@ -9,7 +9,7 @@
 | #121b30 / rgb(18, 27, 48) | elevated surface |
 | #5b7eff / rgb(91, 126, 255) | accent |
 | #a78bfa / rgb(167, 139, 250) | secondary accent |
-| #38bdf8 / rgb(56, 189, 248) | highlight |
+| #2eb9ff / rgb(46, 185, 255) | highlight |
 | #16539b / rgb(22, 83, 155) | buttons |
 | #eef2ff / rgb(238, 242, 255) | primary text |
 | #7086b8 / rgb(112, 134, 184) | body text |
@@ -43,7 +43,9 @@
 | Value | Used For |
 | --- | --- |
 | #16539b / rgb(22, 83, 155) | primary buttons |
-| #1e68c0 / rgb(30, 104, 192) | hover state |
+| #2eb9ff / rgb(46, 185, 255) | hover state |
+| opacity: 0.88 | primary hover effect |
+| transform: translateY(-1px) | primary hover effect |
 | rgba(22, 83, 155, 0.08) | outline hover |
 | rgba(22, 83, 155, 0.12) | social pill background |
 | rgba(22, 83, 155, 0.22) | social pill border |
