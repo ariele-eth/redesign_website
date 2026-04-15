@@ -11,7 +11,7 @@ import { CalendarDays, Globe2, Landmark, MessagesSquare, Network, ShieldCheck, U
 const heroStats = [
   { value: "500+", label: "Members", note: "active contributors this semester", meter: 92, color: "var(--accent)" },
   { value: "7", label: "Committees", note: "delivery teams running in parallel", meter: 74, color: "var(--accent2)" },
-  { value: "40+", label: "Events/year", note: "lectures, labs, and builder nights", meter: 81, color: "var(--accent3)" },
+  { value: "40+", label: "Events/year", note: "lectures, labs, and builder nights", meter: 81, color: "var(--highlight)" },
   { value: "20+", label: "Partners", note: "industry and academic collaborators", meter: 68, color: "var(--text)" },
 ];
 

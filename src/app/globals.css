@@ -14,12 +14,12 @@ All colors in HSL format.
   --border2: rgba(99, 130, 255, 0.22);
   --accent: #5b7eff;
   --accent2: #a78bfa;
-  --accent3: #2eb9ff;
+  --highlight: #2eb9ff;
   --glow: rgba(91, 126, 255, 0.15);
   --text: #eef2ff;
   --text-secondary: #7086b8;
   --button: #16539b;
-  --button-hover: #2eb9ff;
+  --button-hover: var(--highlight);
   --text-tertiary: #6b7fa8;
   --muted: #6b7fa8;
   --dim: #2e3a52;
@@ -67,7 +67,7 @@ All colors in HSL format.
   --tw-popover: 225 69% 7%;
   --tw-popover-foreground: 225 100% 94%;
 
-  --tw-primary: 224 100% 46%;
+  --tw-primary: 227 100% 68%;
   --tw-primary-foreground: 0 0% 100%;
 
   --tw-secondary: 225 69% 7%;
@@ -76,22 +76,22 @@ All colors in HSL format.
   --tw-muted: 225 26% 58%;
   --tw-muted-foreground: 225 26% 29%;
 
-  --tw-accent: 224 100% 46%;
+  --tw-accent: 227 100% 68%;
   --tw-accent-foreground: 0 0% 100%;
 
   --tw-destructive: 0 84% 60%;
   --tw-destructive-foreground: 0 0% 100%;
 
-  --tw-border: 224 100% 46%;
+  --tw-border: 227 100% 68%;
   --tw-input: 225 69% 7%;
-  --tw-ring: 224 100% 46%;
+  --tw-ring: 227 100% 68%;
 
   --radius: 0.5rem;
 
   /* Custom design tokens */
   --gradient-primary: linear-gradient(
     135deg,
-    hsl(224 100% 46%) 0%,
+    hsl(227 100% 68%) 0%,
     hsl(270 100% 60%) 100%
   );
   --gradient-subtle: linear-gradient(
@@ -1075,7 +1075,7 @@ hr {
 }
 
 .pillar-icon {
-  color: var(--accent3);
+  color: var(--highlight);
   margin-bottom: 12px;
   filter: drop-shadow(0 0 10px rgba(46, 185, 255, 0.24));
 }
