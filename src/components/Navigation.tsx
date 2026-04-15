@@ -63,7 +63,7 @@ export const Navigation = () => {
         }} className="hidden md:flex">
           {navLinks.map((link) => (
             <Link
-              key={link.path}
+              key={`${link.path}-${link.name}`}
               href={link.path}
               className="nav-link"
               style={{
@@ -149,7 +149,7 @@ export const Navigation = () => {
         }}>
           {navLinks.map((link) => (
             <Link
-              key={link.path}
+              key={`${link.path}-${link.name}`}
               href={link.path}
               style={{
                 color: isActive(link.path) ? 'var(--accent)' : 'var(--muted)',

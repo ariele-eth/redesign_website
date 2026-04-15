@@ -1,305 +1,440 @@
-import { Navigation } from "@/components/Navigation";
+"use client";
+
+import { useEffect, useMemo, useState, type ComponentType } from "react";
+
 import { Footer } from "@/components/Footer";
-import { PersonCard } from "@/components/PersonCard";
+import { Navigation } from "@/components/Navigation";
+import { PageSectionHeader } from "@/components/PageSectionHeader";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { CalendarDays, Globe2, Landmark, MessagesSquare, Network, ShieldCheck, Users } from "lucide-react";
 
-const executiveMembers = [
-  {
-    name: "Jennis Bešić",
-    role: "President & Founder\nBSc Computer Science",
-    description:
-      "Passionate about blockchain technology and its potential to revolutionize industries.",
-    image: "/assets/team/jennis.jpeg",
-  },
-  {
-    name: "Anej Rozman",
-    role: "Head of Events & Co-Founder\nMSc Quantitative Finance",
-    description:
-      "Strong believer in the longevity of blockchain technologies, crypto currencies and decentralization.",
-    image: "/assets/team/anej.jpeg",
-  },
-  {
-    name: "Gustave Charles",
-    role: "Head of Recruiting and Member Organization\nMSc Cyber Security",
-    description:
-      "Working in privacy, decentralisation and governance real-world usecases.",
-    image: "/assets/team/gustave.jpeg",
-  },
-  {
-    name: "Ariele Marcellino",
-    role: "Head of Innovation and Technology\nBSc Computer Science",
-    description: "Leading innovation and technology initiatives.",
-    image: "/assets/team/ariele.png",
-  },
-  {
-    name: "Ilan Nissim",
-    role: "Head of External Relations\nMSc Data Science",
-    description: "Interested in decentralized finance and blockchain technology.",
-    image: "/assets/team/ilan.png",
-  },
+const heroStats = [
+  { value: "500+", label: "Members", note: "active contributors this semester", meter: 92, color: "var(--accent)" },
+  { value: "7", label: "Committees", note: "delivery teams running in parallel", meter: 74, color: "var(--accent2)" },
+  { value: "40+", label: "Events/year", note: "lectures, labs, and builder nights", meter: 81, color: "var(--highlight)" },
+  { value: "20+", label: "Partners", note: "industry and academic collaborators", meter: 68, color: "var(--text)" },
 ];
 
-const poles = [
-    {
-    name: "President",
-    lead: { name: "Jennis Bešić", image: "/assets/team/jennis.jpeg" },
-    description:
-      "Responsible for the strategic and operational management in addition to representing the board internally and the club as a whole externally.",
-    members: [],
-  },
-
-    {
-    name: "Innovation and Technology",
-    lead: { name: "Ariele Marcellino", image: "/assets/team/ariele.png" },
-    description:
-      "Leading the technical development of our website and additional projects.",
-    members: [
-      { name: "Cyrill", image: "/assets/team/cyrill.jpg" },
-      { name: "Gamal", image: "/assets/team/gamal.jpeg" },
-    ],
-  },
-
+const committeeSections = [
   {
-    name: "External Relations",
-    lead: { name: "Ilan Nissim", image: "/assets/team/ilan.png" },
-    description:
-      "Managing partnerships and external communications with industry leaders.",
-    members: [
-      { name: "Noé Macé", image: "/assets/team/noe.jpeg" },
-      { name: "Pedro Gouveia", image: "/assets/team/pedro.jpeg" },
+    id: "acc-1",
+    title: "Innovation & Technology",
+    icon: Network,
+    subtitle: "Research, development & technical projects",
+    content: [
+      { label: "What we do", text: "Technical workshops, protocol exploration and PoC builds on Ethereum and L2s." },
+      {
+        label: "Why it matters",
+        text: "Technical depth is the foundation of everything — this committee keeps the club at the frontier.",
+      },
+      {
+        label: "What you gain",
+        text: "Hands-on Solidity, ZK proofs, DeFi protocols. Build a portfolio of real blockchain projects.",
+      },
     ],
   },
   {
-    name: "Events",
-    lead: { name: "Anej Rozman", image: "/assets/team/anej.jpeg" },
-    description:
-      "Organizing meetups, hackathons, and social events for our community with delicious catering.",
-    members: [
-      { name: "Firas Dridi", image: "/assets/team/firas.png" },
-      { name: "Gökhan", image: "/assets/team/goekhan.jpeg" },
+    id: "acc-2",
+    title: "External Relations",
+    icon: Globe2,
+    subtitle: "Partnerships, industry & ecosystem",
+    content: [
+      {
+        label: "What we do",
+        text: "Manage relationships with industry partners, academic institutions and other Web3 clubs.",
+      },
+      { label: "Why it matters", text: "External connections bring speakers, funding, job opportunities and credibility." },
+      {
+        label: "What you gain",
+        text: "Professional network in Web3, partnership management experience, direct access to industry leaders.",
+      },
     ],
   },
-
-    {
-    name: "Recruiting & Member Organization",
-    lead: { name: "Gustave Charles", image: "/assets/team/gustave.jpeg" },
-    description: "Coordinating leads in cooperation with the president, overseeing day to day and flagship events operations.",
-    members: [],
-  },
-
-    {
-    name: "Marketing",
-    lead: { name: "This could be you!", image: undefined },
-    description:
-      "Leading our marketing initiatives and community outreach efforts.",
-    members: [{ name: "Dominic", image: "/assets/team/dominic.jpg" }],
-  },
-
   {
-    name: "Finances & Legal",
-    lead: { name: "This could be you!", image: undefined },
-    description:
-      "Building connections with universities, industries and the global blockchain community.",
-    members: [],
+    id: "acc-3",
+    title: "Events",
+    icon: CalendarDays,
+    subtitle: "Workshops, panels, hackathons & socials",
+    content: [
+      { label: "What we do", text: "Plan and execute all club events from intimate workshops to large-scale hackathons." },
+      { label: "Why it matters", text: "Events are the heartbeat — where learning, networking and community happen in real life." },
+      { label: "What you gain", text: "Event management, project leadership and the satisfaction of bringing people together." },
+    ],
   },
-
   {
-    name: "Education",
-    lead: { name: "This could be you!", image: undefined },
-    description:
-      "Fostering a culture of continuous learning and knowledge sharing.",
-    members: [],
-  }
-  
-];
+    id: "acc-4",
+    title: "Internal Affairs",
+    icon: Users,
+    subtitle: "Talent, onboarding & internal operations",
+    content: [
+      {
+        label: "What we do",
+        text: "Attract top ETH Zurich talent, run the application process and ensure every member finds their place.",
+      },
+      {
+        label: "Why it matters",
+        text: "The quality of our people is our greatest asset. Recruiting right ensures the club continuously evolves.",
+      },
+      { label: "What you gain", text: "HR and organisational experience, interview skills, deep understanding of team dynamics." },
+    ],
+  },
+  {
+    id: "acc-5",
+    title: "Marketing",
+    icon: MessagesSquare,
+    subtitle: "Brand, content & social media",
+    content: [
+      { label: "What we do", text: "Manage club brand, social media presence, content strategy and visual communications." },
+      { label: "Why it matters", text: "A strong brand attracts better members, more prestigious partners, and amplifies everything we do." },
+      { label: "What you gain", text: "Real-world marketing in Web3, graphic design skills, content strategy expertise." },
+    ],
+  },
+  {
+    id: "acc-6",
+    title: "Finances & Legal",
+    icon: ShieldCheck,
+    subtitle: "Budget, compliance & governance",
+    content: [
+      {
+        label: "What we do",
+        text: "Manage finances, sponsorship contracts and ensure legal compliance with ETH Zurich guidelines.",
+      },
+      { label: "Why it matters", text: "Financial health and legal clarity allow every other committee to operate confidently." },
+      { label: "What you gain", text: "Financial management, contract negotiation, understanding of non-profit governance." },
+    ],
+  },
+  {
+    id: "acc-7",
+    title: "Education",
+    icon: Landmark,
+    subtitle: "Curriculum, resources & learning programs",
+    content: [
+      {
+        label: "What we do",
+        text: "Design and maintain the learning curriculum, from beginner introductions to advanced deep-dives.",
+      },
+      { label: "Why it matters", text: "Education is the club's core purpose — this committee keeps our programs world-class." },
+      {
+        label: "What you gain",
+        text: "Teaching and curriculum design, deep technical knowledge, ability to explain complex concepts.",
+      },
+    ],
+  },
+] as const;
+
+const committeeNodes = [
+  { id: "acc-1", icon: Network, lines: ["Innovation &", "Technology"] },
+  { id: "acc-2", icon: Globe2, lines: ["External", "Relations"] },
+  { id: "acc-3", icon: CalendarDays, lines: ["Events"] },
+  { id: "acc-4", icon: Users, lines: ["Recruiting &", "Member Organisation"] },
+  { id: "acc-5", icon: MessagesSquare, lines: ["Marketing"] },
+  { id: "acc-6", icon: ShieldCheck, lines: ["Finances &", "Legal"] },
+  { id: "acc-7", icon: Landmark, lines: ["Education"] },
+] as const;
+
+const teamMembers = [
+  { name: "Anna Schneider", role: "President", committee: "Board", initials: "AS", filter: "board" },
+  { name: "Luca Müller", role: "Head of Technology", committee: "Innovation & Technology", initials: "LM", filter: "innovation-technology" },
+  { name: "Sara Keller", role: "Head of Events", committee: "Events", initials: "SK", filter: "events" },
+  { name: "Nico Brunner", role: "Head of Marketing", committee: "Marketing", initials: "NB", filter: "marketing" },
+  { name: "Maya Fischer", role: "Head of External Relations", committee: "External Relations", initials: "MF", filter: "external-relations" },
+  { name: "David Weber", role: "Head of Education", committee: "Education", initials: "DW", filter: "education" },
+  { name: "Jana Huber", role: "Head of Internal Affairs", committee: "Internal Affairs", initials: "JH", filter: "recruiting-members" },
+  { name: "Tim Zimmermann", role: "Head of Finance", committee: "Finances & Legal", initials: "TZ", filter: "finances-legal" },
+] as const;
+
+function CommitteeAccordion({
+  section,
+  isOpen,
+  onToggle,
+}: {
+  section: (typeof committeeSections)[number];
+  isOpen: boolean;
+  onToggle: (id: string) => void;
+}) {
+  const Icon = section.icon;
+
+  return (
+    <div id={section.id} className={`acc-item ${isOpen ? "open" : ""}`}>
+      <button type="button" className="acc-header" onClick={() => onToggle(section.id)}>
+        <div className="acc-header-l">
+          <div className="acc-ico">
+            <Icon size={16} className="about-acc-icon" />
+          </div>
+          <div>
+            <div className="acc-title">{section.title}</div>
+            <div className="acc-sub">{section.subtitle}</div>
+          </div>
+        </div>
+        <div className="acc-arrow">⌄</div>
+      </button>
+      <div className="acc-body">
+        {section.content.map((item) => (
+          <div key={item.label} className="acc-sub-card">
+            <div className="label">{item.label}</div>
+            <p>{item.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CommitteeNode({
+  id,
+  icon: Icon,
+  lines,
+  onClick,
+}: {
+  id: string;
+  icon: ComponentType<{ size?: number }>;
+  lines: readonly string[];
+  onClick: (id: string) => void;
+}) {
+  return (
+    <button type="button" className="org-committee-node" onClick={() => onClick(id)} title="Click to explore">
+      <div className="org-committee-icon">
+        <Icon size={13} />
+      </div>
+      <span>
+        {lines.map((line) => (
+          <span key={line}>{line}</span>
+        ))}
+      </span>
+    </button>
+  );
+}
 
 export default function About() {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [openAccordionId, setOpenAccordionId] = useState("acc-1");
+  const [activeStat, setActiveStat] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveStat((prev) => (prev + 1) % heroStats.length);
+    }, 2200);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const visibleTeamMembers = useMemo(() => {
+    if (activeFilter === "all") return teamMembers;
+    return teamMembers.filter((member) => member.filter === activeFilter);
+  }, [activeFilter]);
+
+  const scrollToCommittee = (id: string) => {
+    setOpenAccordionId(id);
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    const top = window.scrollY + element.getBoundingClientRect().top - 84;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
   return (
-    <div className="min-h-screen">
+    <div className="about-page min-h-screen">
+      <div className="page-grid-bg" />
       <Navigation />
 
-      {/* Header */}
-      <section className="pt-32 pb-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <div className="mb-8">
-              <h1 className="text-5xl md:text-7xl font-light-title mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-                About Us
+      <main>
+        <section className="about-hero-shell page-hero-shell">
+          <div className="about-hero-grid">
+            <div className="hero-left about-hero-copy">
+              <div className="hero-top-brand">
+                <span className="hero-top-line" />
+                <span className="hero-top-text">THE CLUB</span>
+              </div>
+
+              <h1 className="hero-title-main">
+                <span>About</span>
+                <span className="outline">Us</span>
               </h1>
-              <div className="w-24 h-1 gradient-primary mx-auto mb-8"></div>
-            </div>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              Pioneering blockchain innovation at Switzerland&apos;s leading
-              technical university
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Separator Line */}
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
+              <p className="hero-subtext">
+                A student-led organisation at ETH Zurich dedicated to education, research, and community in the Web3 space.
+              </p>
 
-      {/* Our Mission */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-                Our Mission
-              </h2>
-              <div className="w-16 h-1 gradient-primary mx-auto"></div>
-            </div>
-            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg text-center md:text-left">
-              <p>
-                We&apos;re the first student blockchain club at ETH
-                Zurich. Started as a student initiative in September 2025, with months of preparation, our goal is simple:
-                plant seeds of knowledge and curiosity about blockchain
-                technology in our peers.
+              <p className="about-hero-subtext">
+                Founded by ETH students, the club operates like a working studio where engineers, economists, and designers
+                ship real outcomes together.
               </p>
-              <p>
-                What drives us? We want to positively shape the industry and empower students to become educators
-                themselves - sharing what they learn with classmates today and
-                colleagues tomorrow. It&apos;s about raising awareness beyond the
-                hype and speculation.
 
-              </p>
-              <p>
-                This is our contribution to a better blockchain space. One with
-                less black sheep, less noise, and more people who actually understand
-                the fundamentals. We believe education is how we get there.
-              </p>
+              <div className="about-hero-points" aria-label="About key focus points">
+                <span>Builder-first culture</span>
+                <span>Public demos each semester</span>
+                <span>Open to all ETH faculties</span>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Who We Are */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-                Who We Are
-              </h2>
-              <div className="w-16 h-1 gradient-primary mx-auto"></div>
-            </div>
-            <div className="space-y-6 text-muted-foreground leading-relaxed text-lg text-center md:text-left">
-              <p>
-                The ETH Blockchain Club is a student-run initiative at ETH Zurich.
-                Our interests lie in blockchain, cryptography, and everything
-                decentralized.
-              </p>
-              <p>
-                Academic research meets industry and real-world building here. Theory isn&apos;t
-                stuck in papers, and projects aren&apos;t built in a vacuum.
-                We believe going the full cycle from Introduction to Theory to Application is key. That&apos;s
-                the space we create.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Executive Team */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-              Board
-            </h2>
-            <div className="w-16 h-1 gradient-primary mx-auto"></div>
-          </div>
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-wrap justify-center gap-6">
-              {executiveMembers.map((member, index) => (
-                <div key={index} className="w-full md:w-1/2 lg:w-1/4 flex justify-center">
-                  <PersonCard
-                    name={member.name}
-                    role={member.role}
-                    description={member.description}
-                    image={member.image}
-                    className="w-full max-w-sm"
-                  />
+            <div className="about-stats-rail" aria-label="Club signals">
+              <div className="about-stats-title">CLUB SIGNALS</div>
+              <div className="about-signals-board">
+                <div className="about-signals-live">
+                  <span className="about-signals-dot" />
+                  Auto-updating snapshot
                 </div>
+
+                {heroStats.map((stat, idx) => (
+                  <button
+                    key={stat.label}
+                    type="button"
+                    className={`about-signal-row ${idx === activeStat ? "active" : ""}`}
+                    onMouseEnter={() => setActiveStat(idx)}
+                    aria-pressed={idx === activeStat}
+                  >
+                    <div className="about-signal-top">
+                      <strong style={{ color: stat.color }}>{stat.value}</strong>
+                      <span>{stat.label}</span>
+                    </div>
+                    <small>{stat.note}</small>
+                    <div className="about-signal-meter" role="presentation">
+                      <div style={{ width: `${stat.meter}%` }} />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="org-section">
+          <div className="org-wrap">
+            <div className="about-org-chart">
+              <PageSectionHeader label="Structure" title="Club Organigram" className="about-section-header-block" />
+
+                <div className="org-chart-3tier">
+                  <div className="org-group-label">External network</div>
+
+                  <div className="org-tier org-tier-top">
+                    <div className="org-node-ext" title="Academic and industry advisors">
+                      <div className="org-node-ext-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M20 21a8 8 0 1 0-16 0" /><path d="M12 12v9" /></svg>
+                      </div>
+                      Advisors
+                    </div>
+                    <div className="org-node-ext" title="Industry and research partners">
+                      <div className="org-node-ext-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                      </div>
+                      Partners
+                    </div>
+                  </div>
+
+                  <div className="org-divider" aria-hidden="true" />
+
+                  <div className="org-core-shell">
+                    <div className="org-group-label">Club core</div>
+
+                    <div className="org-tier org-tier-board">
+                      <div className="org-core-head">
+                        <div className="org-node-president">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                          President
+                        </div>
+                        <div className="org-node-board">
+                          <div className="org-node-board-label">Board</div>
+                          <div className="org-node-board-sub">coordinates all committees</div>
+                        </div>
+                      </div>
+
+                      <div className="org-core-dependency">Board to Committees (execution teams)</div>
+                      <div className="org-micro-vline" />
+                    </div>
+
+                    <div className="org-hspread">
+                      <div className="org-hspread-line" />
+                    </div>
+
+                    <div className="org-tier org-tier-committees">
+                      {committeeNodes.map((node) => (
+                        <CommitteeNode key={node.id} {...node} onClick={scrollToCommittee} />
+                      ))}
+                    </div>
+
+                    <div className="org-hspread">
+                      <div className="org-hspread-line" style={{ opacity: 0.5 }} />
+                    </div>
+                  </div>
+
+                  <div className="org-tier org-tier-members org-tier-members-global">
+                    <div className="org-node-members">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                      500+ Members
+                    </div>
+                  </div>
+                </div>
+
+                <p style={{ textAlign: "center", fontSize: 12, color: "var(--dim)", marginTop: 24, letterSpacing: 0.5 }}>
+                  Click any committee node to jump to its description ↓
+                </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="container section-sm">
+          <ScrollReveal>
+            <PageSectionHeader label="Committees" title="Our Teams" className="about-section-header-block" />
+          </ScrollReveal>
+
+          <ScrollReveal delay={100}>
+            <div>
+              {committeeSections.map((section, index) => (
+                <ScrollReveal key={section.id} delay={80 + index * 70}>
+                  <CommitteeAccordion
+                    section={section}
+                    isOpen={openAccordionId === section.id}
+                    onToggle={(id) => setOpenAccordionId(openAccordionId === id ? "" : id)}
+                  />
+                </ScrollReveal>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
         </div>
-      </section>
 
-      {/* Poles */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-              Our Poles
-            </h2>
-            <div className="w-16 h-1 gradient-primary mx-auto"></div>
-          </div>
-          <div className="max-w-6xl mx-auto space-y-12">
-            {poles.map((pole, index) => (
-              <div key={index}>
-                <h3 className="text-2xl font-semibold text-primary mb-8 text-center">
-                  {pole.name}
-                </h3>
-                {/* Lead Card - Centered */}
-                <div className="flex justify-center mb-8">
-                  <PersonCard
-                    name={pole.lead.name}
-                    role="Head"
-                    description={pole.description}
-                    image={pole.lead.image}
-                    className="max-w-sm"
-                  />
-                </div>
+        <div className="container section-sm">
+          <ScrollReveal>
+            <PageSectionHeader label="Committee Members" title="Meet the People" className="about-section-header-block" />
+          </ScrollReveal>
 
-                {/* Member Cards */}
-                <div className="flex flex-wrap justify-center gap-6">
-                  {pole.members.map((member, memberIndex) => (
-                    <PersonCard
-                      key={memberIndex}
-                      name={member.name}
-                      role="Member"
-                      image={member.image}
-                      className="w-64"
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Location & Context */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-                Location & Context
-              </h2>
-              <div className="w-16 h-1 gradient-primary mx-auto"></div>
+          <ScrollReveal delay={100}>
+            <div className="filter-row team-filter-row">
+              {[
+                { label: "All", value: "all" },
+                { label: "Board", value: "board" },
+                { label: "Innovation & Technology", value: "innovation-technology" },
+                { label: "Events", value: "events" },
+                { label: "Marketing", value: "marketing" },
+                { label: "External Relations", value: "external-relations" },
+                { label: "Education", value: "education" },
+                { label: "Internal Affairs", value: "recruiting-members" },
+                { label: "Finances & Legal", value: "finances-legal" },
+              ].map((filter) => (
+                <button key={filter.value} type="button" className={`fb ${activeFilter === filter.value ? "active" : ""}`} onClick={() => setActiveFilter(filter.value)}>
+                  {filter.label}
+                </button>
+              ))}
             </div>
-            <div className="mb-8 rounded-lg overflow-hidden shadow-elegant">
-              <img
-                src="/eth-zurich-campus.jpg"
-                alt="ETH Zurich Campus - Aerial view of the main building"
-                className="w-full h-auto"
-              />
-            </div>
-            <p className="text-muted-foreground leading-relaxed text-center">
-              Based at ETH Zurich, one of the world&apos;s leading universities
-              for science and technology, we benefit from a rich ecosystem of
-              innovation and research excellence. Our home in Zurich, a global
-              hub for blockchain and cryptocurrency innovation, provides unique
-              opportunities to engage with industry leaders, researchers, and
-              the broader Ethereum community.
-            </p>
-          </div>
-        </div>
-      </section>
+          </ScrollReveal>
 
-      <Footer />
+          <ScrollReveal delay={180}>
+            <div className="team-strip">
+              {visibleTeamMembers.map((member, index) => (
+                <ScrollReveal key={member.name} delay={70 + index * 60}>
+                  <div className="team-card">
+                    <div className="team-av">{member.initials}</div>
+                    <div className="team-name">{member.name}</div>
+                    <div className="team-role">{member.role}</div>
+                    <div className="team-comm">{member.committee}</div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+
+        <Footer />
+      </main>
     </div>
   );
 }
