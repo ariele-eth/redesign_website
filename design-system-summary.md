@@ -67,7 +67,6 @@
 | 56px 3rem 64px | shared second-section top/bottom spacing |
 | 64px | shared hero column gap |
 | 84px 3rem | what-we-do padding |
-| 42px 3rem 32px | legacy hero spacing reference |
 | 20px 18px | pillar card padding |
 | 10px 22px | button padding |
 | 8px 14px | footer pill padding |
@@ -88,4 +87,4 @@
 | Rule | Use |
 | --- | --- |
 | Shared first-section shell | Reuse the same max width, `calc(100svh - 72px)` min-height, `112px 3rem 28px` padding, and `align-items: start` |
-| Do not diverge | New pages should copy the shared hero shell and shared second-section spacing rather than inventing page-specific offsets |
+| Do not diverge | New pages must reuse the shared hero shell and shared second-section spacing; page-specific hero offsets are not allowed |

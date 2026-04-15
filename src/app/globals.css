@@ -18,12 +18,11 @@ All colors in HSL format.
   --glow: rgba(91, 126, 255, 0.15);
   --text: #eef2ff;
   --text-secondary: #7086b8;
-    --button: #16539b;
-    --button-hover: #2eb9ff;
+  --button: #16539b;
+  --button-hover: #2eb9ff;
   --text-tertiary: #6b7fa8;
   --muted: #6b7fa8;
   --dim: #2e3a52;
-    background: var(--button);
   --amber: #fbbf24;
 
   /* Typography scale */
@@ -31,25 +30,24 @@ All colors in HSL format.
   --font-size-h1: clamp(34px, 4.4vw, 62px);
   --font-size-h2: clamp(24px, 3vw, 40px);
   --font-size-h3: 20px;
-    border-color: var(--button);
-    color: var(--button);
-    background: rgba(22, 83, 155, 0.08);
+  --font-size-h4: 18px;
+  --font-size-body: 16px;
+  --font-size-body-sm: 14px;
+  --font-size-meta: 11px;
   --font-size-caption: 12px;
   --font-size-tiny: 10px;
 
-    background: var(--button);
   --line-height-tight: 1;
-    box-shadow: 0 10px 30px rgba(22, 83, 155, 0.3);
+  --line-height-snug: 1.1;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.6;
   --line-height-loose: 1.7;
 
-    background: var(--button-hover);
   --letter-spacing-tight: -3px;
   --letter-spacing-normal: -0.5px;
   --letter-spacing-wide: 0.5px;
-    color: var(--button);
-    border-color: rgba(22, 83, 155, 0.35);
+  --letter-spacing-wider: 1px;
+  --letter-spacing-widest: 2px;
 
   /* Typography */
   --font-head: 'Montserrat', sans-serif;
@@ -60,33 +58,33 @@ All colors in HSL format.
   --rl: 18px;
 
   /* HSL equivalents for Tailwind/design system */
-  --background: 225 72% 3%;
-  --foreground: 225 100% 94%;
+  --tw-background: 225 72% 3%;
+  --tw-foreground: 225 100% 94%;
 
-  --card: 225 69% 7%;
-  --card-foreground: 225 100% 94%;
+  --tw-card: 225 69% 7%;
+  --tw-card-foreground: 225 100% 94%;
 
-  --popover: 225 69% 7%;
-  --popover-foreground: 225 100% 94%;
+  --tw-popover: 225 69% 7%;
+  --tw-popover-foreground: 225 100% 94%;
 
-  --primary: 224 100% 46%;
-  --primary-foreground: 0 0% 100%;
+  --tw-primary: 224 100% 46%;
+  --tw-primary-foreground: 0 0% 100%;
 
-  --secondary: 225 69% 7%;
-  --secondary-foreground: 225 100% 94%;
+  --tw-secondary: 225 69% 7%;
+  --tw-secondary-foreground: 225 100% 94%;
 
-  --muted: 225 26% 58%;
-  --muted-foreground: 225 26% 29%;
+  --tw-muted: 225 26% 58%;
+  --tw-muted-foreground: 225 26% 29%;
 
-  --accent: 224 100% 46%;
-  --accent-foreground: 0 0% 100%;
+  --tw-accent: 224 100% 46%;
+  --tw-accent-foreground: 0 0% 100%;
 
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
+  --tw-destructive: 0 84% 60%;
+  --tw-destructive-foreground: 0 0% 100%;
 
-  --border: 224 100% 46%;
-  --input: 225 69% 7%;
-  --ring: 224 100% 46%;
+  --tw-border: 224 100% 46%;
+  --tw-input: 225 69% 7%;
+  --tw-ring: 224 100% 46%;
 
   --radius: 0.5rem;
 
@@ -109,8 +107,25 @@ All colors in HSL format.
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--tw-background);
+  --color-foreground: var(--tw-foreground);
+  --color-card: var(--tw-card);
+  --color-card-foreground: var(--tw-card-foreground);
+  --color-popover: var(--tw-popover);
+  --color-popover-foreground: var(--tw-popover-foreground);
+  --color-primary: var(--tw-primary);
+  --color-primary-foreground: var(--tw-primary-foreground);
+  --color-secondary: var(--tw-secondary);
+  --color-secondary-foreground: var(--tw-secondary-foreground);
+  --color-muted: var(--tw-muted);
+  --color-muted-foreground: var(--tw-muted-foreground);
+  --color-accent: var(--tw-accent);
+  --color-accent-foreground: var(--tw-accent-foreground);
+  --color-destructive: var(--tw-destructive);
+  --color-destructive-foreground: var(--tw-destructive-foreground);
+  --color-border: var(--tw-border);
+  --color-input: var(--tw-input);
+  --color-ring: var(--tw-ring);
   --font-sans: var(--font-body);
   --font-mono: var(--font-geist-mono);
 }
@@ -625,7 +640,7 @@ hr {
   box-shadow: 0 2px 8px -2px hsl(199 100% 35% / 0.3) !important;
 }
 
-/* Home page redesign */
+/* Home page */
 .hero-section {
   position: relative;
   z-index: 1;
@@ -1227,7 +1242,7 @@ hr {
   line-height: 1.55;
 }
 
-/* About page redesign */
+/* Shared hero shell (used by Home and About) */
 .about-page {
   position: relative;
   overflow: hidden;
@@ -1244,10 +1259,6 @@ hr {
 .about-hero-shell {
   position: relative;
   z-index: 1;
-  min-height: calc(100svh - 72px);
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 112px 3rem 28px;
   display: flex;
   align-items: start;
 }
@@ -1261,6 +1272,8 @@ hr {
   gap: 64px;
   align-items: start;
 }
+
+/* About page */
 
 .about-hero-copy {
   max-width: 460px;
@@ -2348,6 +2361,7 @@ hr {
 }
 
 @media (max-width: 1100px) {
+  /* About/tablet layout */
   .about-hero-grid,
   .about-mission-grid {
     grid-template-columns: 1fr;
@@ -2383,6 +2397,7 @@ hr {
 }
 
 @media (max-width: 700px) {
+  /* About/mobile layout */
   .about-hero-shell {
     padding-left: 1.2rem;
     padding-right: 1.2rem;
@@ -2464,11 +2479,6 @@ hr {
     width: 100%;
   }
 
-  .org-tier-top,
-  .org-tier-committees {
-    grid-template-columns: 1fr;
-  }
-
   .org-core-shell {
     padding: 14px 10px 12px;
     gap: 12px;
@@ -2516,12 +2526,6 @@ hr {
     width: 100%;
     flex-direction: column;
   }
-
-  .hero-cta-primary,
-  .hero-cta-secondary {
-    width: 100%;
-    justify-content: center;
-  }
 }
 
 @keyframes spin {
@@ -2540,6 +2544,7 @@ hr {
 }
 
 @media (max-width: 1100px) {
+  /* Home/tablet layout */
   .hero-section,
   .pillars-section {
     grid-template-columns: 1fr;
@@ -2556,6 +2561,7 @@ hr {
 }
 
 @media (max-width: 700px) {
+  /* Home/mobile layout */
   .hero-section,
   .pillars-section {
     padding-left: 1.2rem;

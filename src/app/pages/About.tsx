@@ -394,7 +394,7 @@ export default function About() {
 
         <div className="container section-sm">
           <ScrollReveal>
-            <PageSectionHeader label="Comittee Members" title="Meet the People" className="about-section-header-block" />
+            <PageSectionHeader label="Committee Members" title="Meet the People" className="about-section-header-block" />
           </ScrollReveal>
 
           <ScrollReveal delay={100}>
