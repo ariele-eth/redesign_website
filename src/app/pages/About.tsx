@@ -248,7 +248,7 @@ export default function About() {
 
               <h1 className="hero-title-main">
                 <span>About</span>
-                <span className="outline">Us</span>
+                <span className="outline">US</span>
               </h1>
 
               <p className="hero-subtext">

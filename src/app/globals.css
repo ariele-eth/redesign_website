@@ -15,6 +15,7 @@ All colors in HSL format.
   --accent: #5b7eff;
   --accent2: #a78bfa;
   --highlight: #2eb9ff;
+  --accent3: var(--highlight);
   --glow: rgba(91, 126, 255, 0.15);
   --text: #eef2ff;
   --text-secondary: #7086b8;
@@ -1780,6 +1781,19 @@ hr {
   font-family: var(--font-head);
   font-size: 13px;
   font-weight: 600;
+}
+
+.org-node-president svg,
+.org-node-members svg,
+.org-node-board svg,
+.org-node-ext svg,
+.org-committee-icon svg,
+.acc-ico svg,
+.about-acc-icon,
+.about-pillar-icon,
+.org-node-ext-icon {
+  color: var(--highlight);
+  stroke: currentColor;
 }
 
 .org-hspread {
