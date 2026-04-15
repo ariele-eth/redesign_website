@@ -1,96 +1,97 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { PageSectionHeader } from "@/components/PageSectionHeader";
 import Link from "next/link";
 import Image from "next/image";
 import { Layers3, Search, BriefcaseBusiness, Users } from "lucide-react";
 
+const partners = [
+  {
+    name: "ETH Zurich",
+    logo: "/assets/partners/eth.png",
+    href: "https://ethz.ch",
+  },
+  {
+    name: "ETH Zurich FinsureTech Hub",
+    logo: "/assets/partners/ETHZ_FinsureTech_Hub.png",
+    href: "https://finsuretech.ethz.ch",
+  },
+  {
+    name: "ETH Student Project House",
+    logo: "/assets/partners/ETH_Student_Project_House.png",
+    href: "https://sph.ethz.ch",
+  },
+  {
+    name: "Blockchain Student Association EPFL",
+    logo: "/assets/partners/Blockchain_Student_Association.svg",
+    href: "https://www.bsaepfl.ch",
+  },
+  {
+    name: "VSETH",
+    logo: "/assets/partners/VSETH.svg",
+    href: "https://vseth.ethz.ch",
+  },
+];
+
+const pillars = [
+  {
+    title: "Education",
+    description:
+      "Structured learning tracks from blockchain basics to advanced protocol development.",
+    icon: Layers3,
+  },
+  {
+    title: "Research",
+    description:
+      "Collaborating with ETH researchers on distributed systems, cryptography and ZK proofs.",
+    icon: Search,
+  },
+  {
+    title: "Industry",
+    description:
+      "Bridging academia and the Web3 industry through partnerships and live projects.",
+    icon: BriefcaseBusiness,
+  },
+  {
+    title: "Community",
+    description:
+      "A vibrant ecosystem of builders, thinkers, and innovators united by Web3.",
+    icon: Users,
+  },
+];
+
+const comingUp = [
+  {
+    dateDay: "12",
+    dateMonth: "APR",
+    title: "ZK Systems Deep Dive",
+    description: "A technical session on practical zero-knowledge systems and how they are deployed at scale.",
+    type: "Workshop",
+  },
+  {
+    dateDay: "19",
+    dateMonth: "APR",
+    title: "Builder Night: ETH x Industry",
+    description: "An evening with partners and founders focused on shipping products from campus to market.",
+    type: "Networking",
+  },
+  {
+    dateDay: "03",
+    dateMonth: "MAY",
+    title: "Research Forum",
+    description: "Open presentations on cryptography, distributed systems and protocol design from student teams.",
+    type: "Research",
+  },
+];
+
 export default function Home() {
-  const partners = [
-    {
-      name: "ETH Zurich",
-      logo: "/assets/partners/eth.png",
-      href: "https://ethz.ch",
-    },
-    {
-      name: "ETH Zurich FinsureTech Hub",
-      logo: "/assets/partners/ETHZ_FinsureTech_Hub.png",
-      href: "https://finsuretech.ethz.ch",
-    },
-    {
-      name: "ETH Student Project House",
-      logo: "/assets/partners/ETH_Student_Project_House.png",
-      href: "https://sph.ethz.ch",
-    },
-    {
-      name: "Blockchain Student Association EPFL",
-      logo: "/assets/partners/Blockchain_Student_Association.svg",
-      href: "https://www.bsaepfl.ch",
-    },
-    {
-      name: "VSETH",
-      logo: "/assets/partners/VSETH.svg",
-      href: "https://vseth.ethz.ch",
-    },
-  ];
-
-  const pillars = [
-    {
-      title: "Education",
-      description:
-        "Structured learning tracks from blockchain basics to advanced protocol development.",
-      icon: Layers3,
-    },
-    {
-      title: "Research",
-      description:
-        "Collaborating with ETH researchers on distributed systems, cryptography and ZK proofs.",
-      icon: Search,
-    },
-    {
-      title: "Industry",
-      description:
-        "Bridging academia and the Web3 industry through partnerships and live projects.",
-      icon: BriefcaseBusiness,
-    },
-    {
-      title: "Community",
-      description:
-        "A vibrant ecosystem of builders, thinkers, and innovators united by Web3.",
-      icon: Users,
-    },
-  ];
-
-  const comingUp = [
-    {
-      dateDay: "12",
-      dateMonth: "APR",
-      title: "ZK Systems Deep Dive",
-      description: "A technical session on practical zero-knowledge systems and how they are deployed at scale.",
-      type: "Workshop",
-    },
-    {
-      dateDay: "19",
-      dateMonth: "APR",
-      title: "Builder Night: ETH x Industry",
-      description: "An evening with partners and founders focused on shipping products from campus to market.",
-      type: "Networking",
-    },
-    {
-      dateDay: "03",
-      dateMonth: "MAY",
-      title: "Research Forum",
-      description: "Open presentations on cryptography, distributed systems and protocol design from student teams.",
-      type: "Research",
-    },
-  ];
-
   return (
     <div style={{ minHeight: "100vh", position: "relative" }}>
       <div className="page-grid-bg" style={{ zIndex: 0 }} />
       <Navigation />
 
-      <section className="hero-section">
+      <section className="hero-section page-hero-shell">
         <div className="hero-left">
           <div className="hero-top-brand">
             <span className="hero-top-line" />
@@ -159,15 +160,19 @@ export default function Home() {
         <div className="vision-bg-word">VISION</div>
         <div className="vision-inner-home">
           <ScrollReveal>
-            <div>
-            <span className="label">Our Vision</span>
-            <h2 className="vision-quote-home">
-              Establishing ETH Zurich as <span className="vision-accent">Europe&apos;s</span> <span className="vision-accent">leading</span> blockchain innovation hub
-            </h2>
-            <p className="vision-copy-home">
-              Where academic excellence meets the decentralised economy — we build the bridge between world-class research and real-world Web3 applications.
-            </p>
-            </div>
+            <PageSectionHeader
+              label="Our Vision"
+              title={
+                <span className="vision-quote-home">
+                  Establishing ETH Zurich as <span className="vision-accent">Europe&apos;s</span> <span className="vision-accent">leading</span> blockchain innovation hub
+                </span>
+              }
+              description={
+                <span className="vision-copy-home">
+                  Where academic excellence meets the decentralised economy — we build the bridge between world-class research and real-world Web3 applications.
+                </span>
+              }
+            />
           </ScrollReveal>
 
           <ScrollReveal delay={120}>
@@ -196,14 +201,14 @@ export default function Home() {
       <section className="pillars-section">
         <ScrollReveal>
           <div className="pillars-left">
-          <span className="label">What We Do</span>
-          <h2>Four pillars, one mission</h2>
-          <p>
-            We connect education, research, industry, and community to establish ETH Zurich as Europe&apos;s leading blockchain hub.
-          </p>
-          <Link href="/about" className="pillars-about-link">
-            About the Club →
-          </Link>
+            <PageSectionHeader
+              label="What We Do"
+              title="Four pillars, one mission"
+              description="We connect education, research, industry, and community to establish ETH Zurich as Europe&apos;s leading blockchain hub."
+            />
+            <Link href="/about" className="pillars-about-link">
+              About the Club →
+            </Link>
           </div>
         </ScrollReveal>
 
@@ -225,11 +230,12 @@ export default function Home() {
 
       <section className="partners-section">
         <ScrollReveal>
-          <div className="partners-header">
-          <span className="label">Trusted By</span>
-          <h2 className="h2">Our Partners</h2>
-          <p className="lead">Partners are core to our impact. Scroll to discover the ecosystem backing our community.</p>
-          </div>
+          <PageSectionHeader
+            label="Trusted By"
+            title="Our Partners"
+            description="Partners are core to our impact. Scroll to discover the ecosystem backing our community."
+            className="partners-header"
+          />
         </ScrollReveal>
 
         <ScrollReveal delay={120}>
@@ -253,10 +259,7 @@ export default function Home() {
 
       <section className="coming-up-section">
         <ScrollReveal>
-          <div className="coming-up-head">
-          <span className="label">Coming Up</span>
-          <h2 className="h2">Upcoming Events</h2>
-          </div>
+          <PageSectionHeader label="Coming Up" title="Upcoming Events" className="coming-up-head" />
         </ScrollReveal>
 
         <div className="coming-up-grid">

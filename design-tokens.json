@@ -19,7 +19,7 @@
       { "name": "--border2", "values": ["rgba(99, 130, 255, 0.22)"] },
       { "name": "--accent", "values": ["#5b7eff", "224 100% 46%"] },
       { "name": "--accent2", "values": ["#a78bfa"] },
-      { "name": "--accent3", "values": ["#38bdf8"] },
+      { "name": "--accent3", "values": ["#2eb9ff"] },
       { "name": "--button", "values": ["#16539b"] },
       { "name": "--button-hover", "values": ["#1e68c0"] },
       { "name": "--glow", "values": ["rgba(91, 126, 255, 0.15)"] },
@@ -182,8 +182,12 @@
     "layout": [
       { "name": "nav-height", "value": "60px" },
       { "name": "nav-padding-x", "value": "2.5rem" },
-      { "name": "hero-min-height", "value": "calc(100vh - 60px)" },
-      { "name": "hero-padding", "value": "60px 3rem 32px" },
+      { "name": "shared-first-section-max-width", "value": "1240px" },
+      { "name": "shared-first-section-min-height", "value": "calc(100svh - 72px)" },
+      { "name": "shared-first-section-padding", "value": "112px 3rem 28px" },
+      { "name": "shared-first-section-align-items", "value": "start" },
+      { "name": "hero-min-height", "value": "calc(100svh - 72px)" },
+      { "name": "hero-padding", "value": "112px 3rem 28px" },
       { "name": "hero-gap", "value": "64px" },
       { "name": "hero-top-brand-gap", "value": "20px" },
       { "name": "hero-top-brand-margin-bottom", "value": "14px" },
@@ -196,6 +200,23 @@
       { "name": "pillars-grid-gap", "value": "12px" },
       { "name": "pillars-card-padding", "value": "20px 18px" },
       { "name": "pillars-card-min-height", "value": "190px" },
+      { "name": "shared-second-section-padding", "value": "56px 3rem 64px" },
+      { "name": "shared-second-section-rule", "value": "Keep the first-to-second section spacing identical across pages" },
+      { "name": "about-hero-subtext-margin", "value": "0 0 16px" },
+      { "name": "about-signals-board-padding", "value": "12px" },
+      { "name": "about-signal-row-padding", "value": "12px" },
+      { "name": "about-signal-row-gap", "value": "8px" },
+      { "name": "about-signal-row-min-height", "value": "98px" },
+      { "name": "org-core-shell-padding", "value": "16px 14px 14px" },
+      { "name": "org-core-gap", "value": "14px" },
+      { "name": "org-group-label-size", "value": "10px" },
+      { "name": "org-node-ext-font-size", "value": "24px" },
+      { "name": "org-node-ext-weight", "value": "700" },
+      { "name": "org-node-board-sub-size", "value": "11px" },
+      { "name": "org-node-members-global-width", "value": "min(1040px, 100%)" },
+      { "name": "committee-node-padding", "value": "12px 10px" },
+      { "name": "committee-node-gap", "value": "8px" },
+      { "name": "committee-node-min-height", "value": "98px" },
       { "name": "footer-top-padding", "value": "64px 0 48px" },
       { "name": "footer-top-gap", "value": "60px" },
       { "name": "footer-nav-gap", "value": "24px" },
@@ -241,12 +262,12 @@
     },
     "hero": {
       "layout": {
-        "minHeight": "calc(100vh - 60px)",
         "maxWidth": "1240px",
-        "padding": "60px 3rem 32px",
+        "minHeight": "calc(100svh - 72px)",
+        "padding": "112px 3rem 28px",
         "gridTemplateColumns": "1fr 1fr",
         "gap": "64px",
-        "alignItems": "center"
+        "alignItems": "start"
       },
       "topBrand": {
         "gap": "20px",
@@ -305,6 +326,65 @@
         "iconColor": "var(--accent3)"
       },
       "background": "linear-gradient(170deg, transparent 45%, rgba(17, 27, 51, 0.72) 45%)"
+    },
+    "aboutHero": {
+      "layout": {
+        "minHeight": "calc(100svh - 72px)",
+        "maxWidth": "1240px",
+        "padding": "112px 3rem 28px",
+        "gridTemplateColumns": "1fr 1fr",
+        "gap": "64px",
+        "alignItems": "start"
+      },
+      "copy": {
+        "subtextMargin": "0 0 16px",
+        "chipGap": "8px",
+        "chipPadding": "6px 10px",
+        "chipBorderRadius": "999px"
+      },
+      "signalsBoard": {
+        "padding": "12px",
+        "borderRadius": "18px",
+        "rowPadding": "12px",
+        "rowGap": "8px",
+        "rowMinHeight": "98px",
+        "meterHeight": "3px",
+        "liveDotSize": "8px"
+      }
+    },
+    "orgChart": {
+      "groupLabel": {
+        "fontSize": "10px",
+        "letterSpacing": "1.5px"
+      },
+      "externalNode": {
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "letterSpacing": "0.35px"
+      },
+      "coreShell": {
+        "padding": "16px 14px 14px",
+        "gap": "14px",
+        "borderRadius": "20px"
+      },
+      "coreHead": {
+        "gap": "12px"
+      },
+      "board": {
+        "fontSize": "14px",
+        "subFontSize": "11px"
+      },
+      "dependency": {
+        "fontSize": "11px"
+      },
+      "committeeNode": {
+        "padding": "12px 10px",
+        "minHeight": "98px",
+        "gap": "8px"
+      },
+      "membersRow": {
+        "width": "min(1040px, 100%)"
+      }
     },
     "footer": {
       "layout": {

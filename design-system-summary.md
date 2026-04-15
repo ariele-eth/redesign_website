@@ -9,7 +9,7 @@
 | #121b30 / rgb(18, 27, 48) | elevated surface |
 | #5b7eff / rgb(91, 126, 255) | accent |
 | #a78bfa / rgb(167, 139, 250) | secondary accent |
-| #38bdf8 / rgb(56, 189, 248) | highlight |
+| #2eb9ff / rgb(46, 185, 255) | highlight |
 | #16539b / rgb(22, 83, 155) | buttons |
 | #eef2ff / rgb(238, 242, 255) | primary text |
 | #7086b8 / rgb(112, 134, 184) | body text |
@@ -62,11 +62,30 @@
 | Value | Used For |
 | --- | --- |
 | 60px | navbar height |
-| 64px | hero gap |
+| calc(100svh - 72px) | shared hero shell minimum height |
+| 112px 3rem 28px | shared hero shell padding |
+| 56px 3rem 64px | shared second-section top/bottom spacing |
+| 64px | shared hero column gap |
 | 84px 3rem | what-we-do padding |
-| 42px 3rem 32px | hero spacing |
+| 42px 3rem 32px | legacy hero spacing reference |
 | 20px 18px | pillar card padding |
 | 10px 22px | button padding |
 | 8px 14px | footer pill padding |
 | 2.5rem | navbar horizontal padding |
 | 3rem | section horizontal padding |
+
+## Page Patterns
+| Pattern | Rule |
+| --- | --- |
+| First section alignment | The first visible section on every page should start at the same height and use the same width/margin rules as the shared hero shell |
+| Shared hero shell | Use the same max width, minimum height, top padding, and top-aligned columns on Home/About |
+| Shared second section | Keep first-to-second section spacing consistent across pages |
+| About hero | Left copy plus right live signal board, no shaded card grid; signals auto-cycle and can be hovered to focus |
+| About organigram | External network is separate from the club core; President sits beside Board, Board coordinates committees, members live below the core |
+| Committee nodes | Compact button-like tiles with centered icon and text, no arrow affordance |
+
+## Implementation Notes
+| Rule | Use |
+| --- | --- |
+| Shared first-section shell | Reuse the same max width, `calc(100svh - 72px)` min-height, `112px 3rem 28px` padding, and `align-items: start` |
+| Do not diverge | New pages should copy the shared hero shell and shared second-section spacing rather than inventing page-specific offsets |
