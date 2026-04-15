@@ -113,7 +113,7 @@ All colors in HSL format.
   --color-card: var(--tw-card);
   --color-card-foreground: var(--tw-card-foreground);
   --color-popover: var(--tw-popover);
-  --color-popover-foreground: var(--tw-popover-foreground);
+  --color-popover-foreground: var(--tw-popovergit-foreground);
   --color-primary: var(--tw-primary);
   --color-primary-foreground: var(--tw-primary-foreground);
   --color-secondary: var(--tw-secondary);
