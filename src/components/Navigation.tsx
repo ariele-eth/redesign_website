@@ -12,7 +12,7 @@ const navLinks = [
   { name: 'Join Us', path: '/join' },
   { name: 'Collaborate', path: '/collaborate' },
   { name: 'Education', path: '/about' },
-  { name: 'News', path: '/events' },
+  { name: 'News', path: '/news' },
 ]
 
 export const Navigation = () => {

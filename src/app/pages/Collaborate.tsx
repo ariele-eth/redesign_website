@@ -1,158 +1,252 @@
-"use client";
-
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Mail, Building, Users, Lightbulb } from "lucide-react";
+import {
+  BadgeDollarSign,
+  CalendarDays,
+  Eye,
+  FlaskConical,
+  GraduationCap,
+  Handshake,
+  Mic,
+  Search,
+  Users,
+} from "lucide-react";
 
-const collaborationTypes = [
+const partnerBenefits = [
   {
-    title: "Industry Partnerships",
-    icon: Building,
+    eyebrow: "01",
+    title: "ETH Talent Access",
+    icon: GraduationCap,
     description:
-      "Partner with us for research projects, internships, and industry insights.",
+      "Direct access to Europe's best CS, mathematics and engineering students with a passion for Web3.",
   },
   {
-    title: "Academic Collaboration",
-    icon: Lightbulb,
+    eyebrow: "02",
+    title: "Ecosystem Visibility",
+    icon: Eye,
     description:
-      "Collaborate on research papers, joint studies, and academic initiatives.",
+      "Be seen by 500+ engaged students and our broader network of alumni, researchers and professionals.",
   },
   {
-    title: "Event Sponsorship",
-    icon: Users,
-    description: "Sponsor our workshops, hackathons, and networking events.",
+    eyebrow: "03",
+    title: "Research Collaboration",
+    icon: Search,
+    description:
+      "Engage with ETH Zurich research groups on blockchain scalability, security and cryptography.",
   },
 ];
 
+const collaborationMethods = [
+  {
+    title: "Co-host Events",
+    icon: CalendarDays,
+    description:
+      "Workshops, panels, or hackathons with your brand front and centre alongside ours.",
+  },
+  {
+    title: "Sponsorships",
+    icon: BadgeDollarSign,
+    description:
+      "Fund our initiatives and gain year-round visibility across our channels and events.",
+  },
+  {
+    title: "Speaker Programs",
+    icon: Mic,
+    description:
+      "Send your experts to share knowledge and build credibility with our community.",
+  },
+  {
+    title: "Research Projects",
+    icon: FlaskConical,
+    description:
+      "Collaborate on applied research with our technical committee and ETH Zurich faculty.",
+  },
+];
+
+const collaborationTypes = [
+  {
+    title: "Event Partnerships",
+    icon: CalendarDays,
+    description: "Co-hosted workshops, panels or hackathons.",
+  },
+  {
+    title: "Sponsorships",
+    icon: Handshake,
+    description: "Year-round brand visibility and funding.",
+  },
+  {
+    title: "Research Collabs",
+    icon: Search,
+    description: "Applied research with faculty and students.",
+  },
+  {
+    title: "Talent Support",
+    icon: Users,
+    description: "Student development and recruiting pipeline.",
+  },
+];
+
+const partnerNames = [
+  "Ethereum Foundation",
+  "Chainlink Labs",
+  "Uniswap Protocol",
+  "Consensys",
+  "Paradigm",
+  "a16z Crypto",
+  "Gnosis",
+  "Polygon Labs",
+  "Aave",
+  "MakerDAO",
+  "Optimism",
+  "Arbitrum",
+];
+
+const marqueePartners = [...partnerNames, ...partnerNames, ...partnerNames];
+
 export default function Collaborate() {
   return (
-    <div className="min-h-screen">
+    <div className="collab-page min-h-screen">
+      <div className="page-grid-bg" />
+      <div className="collab-page-glow" />
       <Navigation />
 
-      {/* Header */}
-      <section className="pt-32 pb-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <div className="mb-8">
-              <h1 className="text-5xl md:text-7xl font-light-title mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-                Collaborate with Us
-              </h1>
-              <div className="w-24 h-1 bg-gradient-to-r gradient-primary mx-auto mb-8"></div>
-            </div>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              Partner with ETH Zurich&apos;s premier blockchain student
-              organization
-            </p>
+      <main>
+        <section className="page-hero-shell collab-hero-shell">
+          <div className="hero-top-brand">
+            <span className="hero-top-line" />
+            <span className="hero-top-text">For Organisations</span>
           </div>
-        </div>
-      </section>
 
-      {/* Separator Line */}
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
+          <h1 className="hero-title-main">
+            <span>Collaborate</span>
+          </h1>
 
-      {/* Collaboration Types */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-              Ways to Collaborate
-            </h2>
-            <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
+          <p className="hero-subtext collab-hero-subtext">
+            Partner with Switzerland&apos;s most engaged student blockchain
+            community — access talent, build visibility, shape the next
+            generation of Web3 builders.
+          </p>
+
+          <div className="collab-hero-actions">
+            <a className="btn btn-primary" href="mailto:partners@ethblockchain.ch">
+              Become a Partner →
+            </a>
+            <a className="btn btn-outline" href="#collab-contact">
+              Contact Us
+            </a>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {collaborationTypes.map((type, index) => {
-              const Icon = type.icon;
+
+          <div className="collab-hero-tags" aria-label="Collaboration focus areas">
+            <span>Event Partnerships</span>
+            <span>Sponsorships</span>
+            <span>Research Collaborations</span>
+          </div>
+        </section>
+
+        <section className="collab-section">
+          <div className="collab-section-head">
+            <div className="label">Why Partner With Us</div>
+          </div>
+
+          <div className="collab-why-grid">
+            {partnerBenefits.map((benefit) => {
+              const Icon = benefit.icon;
+
               return (
-                <Card
-                  key={index}
-                  className="p-8 shadow-glass hover:shadow-elegant transition-smooth group text-center"
-                >
-                  <div className="w-16 h-16 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Icon className="h-8 w-8 text-primary" />
+                <article key={benefit.title} className="collab-card collab-why-card">
+                  <div className="collab-card-index">{benefit.eyebrow}</div>
+                  <div className="collab-card-icon">
+                    <Icon size={22} strokeWidth={1.8} />
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">{type.title}</h3>
-                  <p className="text-muted-foreground">{type.description}</p>
-                </Card>
+                  <h3>{benefit.title}</h3>
+                  <p>{benefit.description}</p>
+                </article>
               );
             })}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Why Collaborate */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-light-title mb-6 text-gray-800">
-                Why Partner with us?
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r gradient-primary mx-auto"></div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-              <div>
-                <h3 className="text-xl font-semibold mb-3">
-                  Access to Top Talent
-                </h3>
-                <p className="text-muted-foreground">
-                  Connect with ETH Zurich&apos;s brightest students in computer
-                  science, mathematics, and engineering who are passionate about
-                  blockchain technology.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-3">
-                  Research Excellence
-                </h3>
-                <p className="text-muted-foreground">
-                  Collaborate on cutting-edge research projects and benefit from
-                  ETH Zurich&apos;s world-class academic environment and
-                  research facilities.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-3">Innovation Hub</h3>
-                <p className="text-muted-foreground">
-                  Tap into Switzerland&apos;s blockchain ecosystem and ETH
-                  Zurich&apos;s position as a global leader in technology and
-                  innovation.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-3">Future Leaders</h3>
-                <p className="text-muted-foreground">
-                  Build relationships with the next generation of blockchain
-                  leaders who will shape the future of decentralized technology.
-                </p>
-              </div>
+        <section className="collab-section">
+          <div className="collab-section-head">
+            <div className="label">How to Work Together</div>
+          </div>
+
+          <div className="collab-how-grid">
+            {collaborationMethods.map((method) => {
+              const Icon = method.icon;
+
+              return (
+                <article key={method.title} className="collab-card collab-how-card">
+                  <div className="collab-how-icon">
+                    <Icon size={20} strokeWidth={1.8} />
+                  </div>
+                  <div>
+                    <h3>{method.title}</h3>
+                    <p>{method.description}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="collab-section">
+          <div className="collab-section-head">
+            <div className="label">Collaboration Types</div>
+          </div>
+
+          <div className="collab-types-grid">
+            {collaborationTypes.map((type) => {
+              const Icon = type.icon;
+
+              return (
+                <article key={type.title} className="collab-card collab-type-card">
+                  <div className="collab-type-icon">
+                    <Icon size={22} strokeWidth={1.8} />
+                  </div>
+                  <div className="h3">{type.title}</div>
+                  <p>{type.description}</p>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="collab-partners-shell">
+          <div className="collab-section-head collab-section-head-center">
+            <div className="label">Current Partners</div>
+          </div>
+
+          <div className="collab-partners-marquee" aria-label="Partner list">
+            <div className="collab-partners-track">
+              {marqueePartners.map((partner, index) => (
+                <span key={`${partner}-${index}`} className="collab-partner-chip">
+                  {partner}
+                </span>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Start a Collaboration */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-light-title mb-4">
-              Start a Collaboration
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Ready to partner with us? Get in touch to discuss collaboration
-              opportunities.
+        <section id="collab-contact" className="collab-cta-section">
+          <div className="collab-cta-card">
+            <div className="label">Get Involved</div>
+            <h2 className="h2">Ready to partner with us?</h2>
+            <p className="lead">
+              Whether you&apos;re a startup, protocol, or established company —
+              let&apos;s build something meaningful together.
             </p>
-            <Button
-              variant="outline"
-              className="border-primary/30 hover:bg-primary/5 transition-calm"
-            >
-              <Mail className="mr-2 h-5 w-5" />
-              collaborate@eth-blockchain.org
-            </Button>
+            <div className="collab-cta-actions">
+              <a className="btn btn-primary" href="mailto:partners@ethblockchain.ch">
+                Become a Partner →
+              </a>
+              <a className="btn btn-outline" href="mailto:contact@ethblockchain.ch">
+                Contact Us
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>
