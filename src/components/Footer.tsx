@@ -17,7 +17,7 @@ const footerCols = {
     { label: "Committees", href: "/join/committee" },
     { label: "Team", href: "/about" },
     { label: "Join Us", href: "/join" },
-    { label: "News", href: "/events" },
+    { label: "News", href: "/news" },
   ],
   participate: [
     { label: "Events", href: "/events" },
