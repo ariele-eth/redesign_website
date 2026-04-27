@@ -182,6 +182,7 @@ function CanvasGraph({ data, selectedId, onSelect }: CanvasGraphProps) {
     const ctx = canvas.getContext('2d')!
 
     function draw() {
+      if (!canvas) return
       pulseRef.current += 0.02
       const pt = pulseRef.current
       const W  = canvas.width
