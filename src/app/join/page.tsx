@@ -1,226 +1,233 @@
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Users,
-  UserCheck,
-  MessageSquare,
-  CalendarCheck,
-  BookOpen,
-  Gavel,
-  Flag,
-  Plane,
-  Award,
-  Handshake,
-  UserPlus,
-} from "lucide-react";
 import Link from "next/link";
+
+import { Footer } from "@/components/Footer";
+import { Navigation } from "@/components/Navigation";
+import { PageSectionHeader } from "@/components/PageSectionHeader";
+import { ScrollReveal } from "@/components/ScrollReveal";
+
+const joinTracks = [
+  {
+    id: "01",
+    badge: "Active Role",
+    title: "Join Committee",
+    description:
+      "Take ownership inside a high-trust team and help drive strategy, events, and partnerships.",
+    perks: [
+      "Lead initiatives with direct impact on the club's direction",
+      "Access exclusive industry and partner networking opportunities",
+      "Build leadership and execution skills in a real organisation",
+      "Receive all regular member benefits by default",
+    ],
+    href: "/join/committee",
+    cta: "Apply for Committee",
+    featured: true,
+  },
+  {
+    id: "02",
+    badge: "General Access",
+    title: "Become a Member",
+    description:
+      "Join a builder-first student network to learn, collaborate, and grow in blockchain with peers at ETH.",
+    perks: [
+      "Priority access to workshops, talks, and community events",
+      "Members-only educational resources and event recordings",
+      "Voting rights on key club initiatives and decisions",
+      "Connect with an ambitious Web3 community on campus",
+    ],
+    href: "/join/member",
+    cta: "Apply as Member",
+    featured: false,
+  },
+];
+
+const openPositions = [
+  {
+    title: "Partnerships Associate",
+    category: "External Relations",
+    description:
+      "Source and manage relationships with protocol teams, funds, and ecosystem partners.",
+  },
+  {
+    title: "Workshop Lead",
+    category: "Education",
+    description:
+      "Design and run technical sessions across Ethereum, DeFi, smart contracts, and ZK.",
+  },
+  {
+    title: "Builder Nights Coordinator",
+    category: "Events",
+    description:
+      "Own the cadence and production of our flagship builder-focused community events.",
+  },
+  {
+    title: "Content & Brand Designer",
+    category: "Marketing",
+    description:
+      "Create visual assets and storytelling formats that elevate our campus and industry presence.",
+  },
+  {
+    title: "Operations Associate",
+    category: "Internal Affairs",
+    description:
+      "Support onboarding, planning cycles, and coordination across all active committees.",
+  },
+  {
+    title: "Finance & Legal Analyst",
+    category: "Finances & Legal",
+    description:
+      "Help manage sponsorship flows, budgeting, and governance documentation.",
+  },
+];
+
+const processSteps = [
+  {
+    id: "1",
+    title: "Submit Application",
+    description:
+      "Pick your track and send your application with your motivation and background.",
+  },
+  {
+    id: "2",
+    title: "Interview Round",
+    description:
+      "Selected candidates are invited for a short conversation with the relevant team.",
+  },
+  {
+    id: "3",
+    title: "Decision & Onboarding",
+    description:
+      "Receive your decision and get onboarded into projects, channels, and upcoming milestones.",
+  },
+];
 
 export default function JoinLanding() {
   return (
-    <div className="min-h-screen">
+    <div className="join-page min-h-screen">
+      <div className="page-grid-bg" />
       <Navigation />
 
-      {/* Header */}
-      <section className="pt-32 pb-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-5xl md:text-7xl font-light-title mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-              Join Us
-            </h1>
-            <div className="w-24 h-1 gradient-primary mx-auto mb-8"></div>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              Become part of the next generation of blockchain innovators at ETH
-              Zurich
-            </p>
-            <div className="mt-6">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Whether you&apos;re a complete beginner or an experienced
-                blockchain developer, ETH Blockchain Club welcomes all students
-                passionate about decentralized technology. Join our community to
-                learn, build, and shape the future of blockchain innovation.
+      <main>
+        <section className="join-hero page-hero-shell page-hero-compact">
+          <div className="join-hero-inner">
+            <ScrollReveal>
+              <div className="hero-top-brand">
+                <span className="hero-top-line" />
+                <span className="hero-top-text">APPLICATIONS OPEN</span>
+              </div>
+
+              <h1 className="hero-title-main">
+                <span>Join</span>
+                <span className="outline">the Club</span>
+              </h1>
+
+              <p className="hero-subtext join-hero-subtext">
+                Choose how you want to contribute to the ETH Blockchain Club,
+                either as a community member or as part of a core committee
+                team.
               </p>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        <div className="join-hero-divider" />
+
+        <section className="join-options-section section-sm">
+          <div className="container">
+            <ScrollReveal>
+              <PageSectionHeader
+                label="Join Us"
+                title="Choose Your Path"
+                description="Both tracks connect you to our ecosystem. Committee roles focus on leadership, while membership gives broad access to learning and events."
+              />
+            </ScrollReveal>
+
+            <ScrollReveal delay={90}>
+              <div className="join-split">
+                {joinTracks.map((track, idx) => (
+                  <article
+                    key={track.id}
+                    className={`join-option ${track.featured ? "join-option-featured" : ""} ${
+                      idx === 0 ? "join-option-left" : ""
+                    }`}
+                  >
+                    <div className="join-option-number">{track.id}</div>
+                    <span className="badge join-option-badge">{track.badge}</span>
+                    <h3>{track.title}</h3>
+                    <p>{track.description}</p>
+
+                    <ul className="join-perks" aria-label={`${track.title} benefits`}>
+                      {track.perks.map((perk) => (
+                        <li key={perk}>{perk}</li>
+                      ))}
+                    </ul>
+
+                    <Link
+                      href={track.href}
+                      className={track.featured ? "hero-cta-primary" : "hero-cta-secondary"}
+                    >
+                      {track.cta}
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        <section className="join-positions-section section-sm">
+          <div className="container">
+            <ScrollReveal>
+              <PageSectionHeader
+                label="Open Positions"
+                title="Help Build What Comes Next"
+                description="Current committee openings where we are actively looking for contributors this semester."
+              />
+            </ScrollReveal>
+
+            <div className="join-positions-grid">
+              {openPositions.map((position, idx) => (
+                <ScrollReveal key={position.title} delay={90 + idx * 60}>
+                  <article className="card join-position-card">
+                    <h3>{position.title}</h3>
+                    <span className="badge">{position.category}</span>
+                    <p>{position.description}</p>
+                    <Link href="/join/committee" className="hero-cta-secondary join-position-link">
+                      Learn More
+                    </Link>
+                  </article>
+                </ScrollReveal>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Options */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-light-title mb-12 text-center">
-              Choose Your Path
-            </h2>
+        <section className="join-process-section section-sm">
+          <div className="container">
+            <ScrollReveal>
+              <PageSectionHeader
+                label="Application Flow"
+                title="Simple, Fast, Transparent"
+                description="Our process is intentionally lightweight so strong candidates can start contributing quickly."
+              />
+            </ScrollReveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Member Application */}
-              <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth text-center group">
-                <div className="w-16 h-16 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-smooth">
-                  <Users className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-2xl font-semibold mb-4">Become a Member</h3>
-                <p className="text-muted-foreground mb-6">
-                  Join our community as a regular member. Participate in events,
-                  workshops, and connect with fellow blockchain enthusiasts.
-                </p>
-                <Link href="/join/member">
-                  <Button className="w-full gradient-primary shadow-elegant transform transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-md hover:brightness-95">
-                    Apply as a Member
-                  </Button>
-                </Link>
-                {/* Member benefits list (same card as the button/image) */}
-                <ul className="mt-10 space-y-4 text-left">
-                  <li className="flex items-start gap-3">
-                    <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
-                      <CalendarCheck className="h-3 w-3" />
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      <strong>Priority Access to Events:</strong> Secure your spot at popular workshops, talks, and networking events with prioritized registration.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
-                      <BookOpen className="h-3 w-3" />
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      <strong>Exclusive Content & Opportunities:</strong> Access a members-only channel with educational resources, event recordings, and curated job or internship postings from our partners.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
-                      <Gavel className="h-3 w-3" />
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      <strong>Shape the Club&apos;s Future:</strong> Exercise your voting rights on important club decisions and initiatives.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                      <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
-                      <Users className="h-4 w-4 text-primary" />
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      <strong>Join a Vibrant Community:</strong> Connect with a passionate community of blockchain developers, researchers, and enthusiasts at exclusive social events.
-                    </span>
-                  </li>
-                </ul>
-              </Card>
-
-              {/* Committee Application */}
-              <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth text-center group">
-                <div className="w-16 h-16 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-smooth">
-                  <UserCheck className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-2xl font-semibold mb-4">
-                  Join the Committee
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  Take on a leadership role in organizing events, managing
-                  projects, and shaping the club&apos;s direction.
-                </p>
-                <Link href="/join/committee">
-                  <Button className="w-full gradient-primary shadow-elegant transform transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-md hover:brightness-95">
-                    Apply as a Committee Member
-                  </Button>
-                </Link>
-                {/* Committee benefits list (same card as the button/image) */}
-                <ul className="mt-10 space-y-4 text-left">
-                  <li className="flex items-start gap-3">
-                    <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
-                      <Flag className="h-3 w-3" />
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      <strong>Lead the Mission:</strong> Directly influence the club&apos;s strategic direction, projects, and impact on the blockchain ecosystem.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
-                      <Plane className="h-3 w-3" />
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      <strong>Exclusive Networking & Sponsored Travel:</strong> Benefit from fully-paid trips to industry partner events and attend exclusive, committee-only gatherings.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
-                      <Award className="h-3 w-3" />
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      <strong>Develop Leadership Skills:</strong> Gain valuable experience in management, strategic planning, and event organization.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
-                      <Handshake className="h-3 w-3" />
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      <strong>Build Industry Connections:</strong> Establish personal relationships with speakers, sponsors, and leaders in the blockchain space.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="flex-none mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/70 text-primary ring-1 ring-primary/30 shadow-md backdrop-blur-sm">
-                      {/* Small version of the UserPlus icon used to indicate membership perk */}
-                      <UserPlus className="h-4 w-4" />
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      <strong>Full Membership Perks:</strong> By joining the committee you also become a member — enjoy all the benefits granted to general members.
-                    </span>
-                  </li>
-                </ul>
-              </Card>
+            <div className="join-process-shell">
+              <div className="join-process-line" aria-hidden="true" />
+              <div className="join-process-grid">
+                {processSteps.map((step, idx) => (
+                  <ScrollReveal key={step.id} delay={90 + idx * 80}>
+                    <article className="card join-process-step">
+                      <span className="join-process-number">{step.id}</span>
+                      <h3>{step.title}</h3>
+                      <p>{step.description}</p>
+                    </article>
+                  </ScrollReveal>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Community Channels */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-light-title mb-12 text-center">
-            Join Our Community
-          </h2>
-          <div className="flex justify-center max-w-4xl mx-auto">
-            <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth text-center group">
-              <div className="w-16 h-16 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-smooth">
-                <MessageSquare className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Telegram Group</h3>
-              <p className="text-muted-foreground mb-6">
-                Join our active Telegram community for daily discussions,
-                announcements, and quick questions.
-              </p>
-              <a
-                href="https://t.me/+CV7HLFRdFUFkNTBk"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button
-                  variant="outline"
-                  className="w-full transform transition-all duration-200 ease-out hover:-translate-y-[2px] hover:shadow-md hover:border-primary/60 active:translate-y-0 active:shadow-sm"
-                >
-                  Join Telegram
-                </Button>
-              </a>
-            </Card>
-
-            {/* Mailing List - Will be reactivated in the future */}
-            {/* <Card className="p-8 shadow-glass hover:shadow-elegant transition-smooth text-center group">
-              <div className="w-16 h-16 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-smooth">
-                <Mail className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Mailing List</h3>
-              <p className="text-muted-foreground mb-6">
-                Subscribe to our newsletter for event updates, research
-                highlights, and opportunities.
-              </p>
-              <Button variant="outline" className="w-full">
-                Subscribe
-              </Button>
-            </Card> */}
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 // Checkbox removed: we no longer collect accept_terms from the UI
-import { Send } from 'lucide-react'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 
@@ -97,33 +96,38 @@ export default function MemberApplication() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="join-page min-h-screen">
+      <div className="page-grid-bg" />
       <Navigation />
 
-      {/* Header */}
-      <section className="pt-32 pb-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-5xl md:text-7xl font-light-title mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-              Member Application
-            </h1>
-            <div className="w-24 h-1 gradient-primary mx-auto mb-8"></div>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              Join our community as a member and participate in our blockchain
-              journey
-            </p>
+      <main>
+        <section className="page-hero-shell application-hero application-hero-tight">
+          <div className="hero-top-brand">
+            <span className="hero-top-line" />
+            <span className="hero-top-text">APPLICATIONS OPEN</span>
           </div>
-        </div>
-      </section>
 
-      {/* Application Form */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="max-w-2xl mx-auto p-8 shadow-elegant">
-            <h2 className="text-2xl font-light-title mb-6">
-              Membership Application
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <h1 className="hero-title-main">
+            <span>Member</span>
+            <span className="outline">Application</span>
+          </h1>
+
+          <p className="hero-subtext">
+            Join our community as a member and help build the ETH Blockchain
+            Club ecosystem.
+          </p>
+        </section>
+
+        <section className="application-section">
+          <Card className="card application-card w-full max-w-5xl p-5 md:p-6">
+            <div className="mb-6">
+              <h2 className="h2">Membership Application</h2>
+              <p className="lead">
+                Tell us a bit about yourself so we can place you in the
+                community track that fits best.
+              </p>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-6 application-form">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="first_name">First Name *</Label>
@@ -132,7 +136,6 @@ export default function MemberApplication() {
                     name="first_name"
                     value={formData.first_name}
                     onChange={handleChange}
-                    placeholder="Your first name"
                     required
                   />
                 </div>
@@ -143,7 +146,6 @@ export default function MemberApplication() {
                     name="last_name"
                     value={formData.last_name}
                     onChange={handleChange}
-                    placeholder="Your last name"
                     required
                   />
                 </div>
@@ -157,7 +159,6 @@ export default function MemberApplication() {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="your.email@ethz.ch"
                   required
                 />
               </div>
@@ -170,7 +171,6 @@ export default function MemberApplication() {
                     name="city"
                     value={formData.city}
                     onChange={handleChange}
-                    placeholder="Zurich"
                     required
                   />
                 </div>
@@ -181,7 +181,6 @@ export default function MemberApplication() {
                     name="university"
                     value={formData.university}
                     onChange={handleChange}
-                    placeholder="ETH Zurich"
                     required
                   />
                 </div>
@@ -196,7 +195,6 @@ export default function MemberApplication() {
                   name="academic_department"
                   value={formData.academic_department}
                   onChange={handleChange}
-                  placeholder="e.g., Computer Science, Mathematics"
                   required
                 />
               </div>
@@ -208,7 +206,6 @@ export default function MemberApplication() {
                   name="company"
                   value={formData.company}
                   onChange={handleChange}
-                  placeholder="Your company name"
                 />
               </div>
 
@@ -219,7 +216,6 @@ export default function MemberApplication() {
                   name="industry"
                   value={formData.industry}
                   onChange={handleChange}
-                  placeholder="e.g., Technology, Finance"
                 />
               </div>
 
@@ -230,7 +226,6 @@ export default function MemberApplication() {
                   name="experience"
                   value={formData.experience}
                   onChange={handleChange}
-                  placeholder="Please tell us about your blockchain/crypto experience."
                   className="min-h-24"
                   required
                 />
@@ -243,7 +238,6 @@ export default function MemberApplication() {
                   name="motivation"
                   value={formData.motivation}
                   onChange={handleChange}
-                  placeholder="Why do you want to join the ETH Blockchain Club?"
                   className="min-h-24"
                   required
                 />
@@ -251,18 +245,19 @@ export default function MemberApplication() {
 
               {/* Terms acceptance removed from UI; stored as true by default */}
 
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full gradient-primary shadow-elegant group"
-              >
-                <Send className="mr-2 h-5 w-5 transition-smooth group-hover:translate-x-1" />
-                {isSubmitting ? 'Submitting...' : 'Submit Application'}
-              </Button>
+              <div className="application-submit-row flex justify-center">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="hero-cta-primary"
+                >
+                  {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                </Button>
+              </div>
             </form>
           </Card>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

@@ -55,7 +55,7 @@ export default function PastEventsPage() {
 
   // Arrange events into rows so that bottom rows are full (`perRow` per row)
   // and the top row may contain fewer items (centered). Events are
-  // already sorted newest -> oldest, so the top row holds the newest items.
+  // already sorted newest to oldest, so the top row holds the newest items.
   const rows = useMemo(() => {
     const per = perRow
     const n = events.length
@@ -78,7 +78,7 @@ export default function PastEventsPage() {
       <Navigation />
 
       <section className="pt-32 pb-12 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
             <div className="mb-8">
               <h1 className="text-5xl md:text-7xl font-light-title mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
@@ -96,7 +96,7 @@ export default function PastEventsPage() {
       <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
           {loading && <p className="text-center text-gray-500">Loading events…</p>}
           {!loading && error && <p className="text-center text-red-600">Error: {error}</p>}
           {!loading && !error && events.length > 0 && (

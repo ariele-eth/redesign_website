@@ -1,35 +1,38 @@
 "use client";
-
+ 
 import { useEffect, useMemo, useState, type ComponentType } from "react";
-
+ 
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CalendarDays, Globe2, Landmark, MessagesSquare, Network, ShieldCheck, Users } from "lucide-react";
-
+ 
 const heroStats = [
   { value: "500+", label: "Members", note: "active contributors this semester", meter: 92, color: "var(--accent)" },
   { value: "7", label: "Committees", note: "delivery teams running in parallel", meter: 74, color: "var(--accent2)" },
   { value: "40+", label: "Events/year", note: "lectures, labs, and builder nights", meter: 81, color: "var(--highlight)" },
   { value: "20+", label: "Partners", note: "industry and academic collaborators", meter: 68, color: "var(--text)" },
 ];
-
+ 
 const committeeSections = [
   {
     id: "acc-1",
     title: "Innovation & Technology",
     icon: Network,
-    subtitle: "Research, development & technical projects",
+    subtitle: "Technical projects, platforms, and infrastructure",
     content: [
-      { label: "What we do", text: "Technical workshops, protocol exploration and PoC builds on Ethereum and L2s." },
       {
-        label: "Why it matters",
-        text: "Technical depth is the foundation of everything — this committee keeps the club at the frontier.",
+        label: "Purpose",
+        text: "Drive the club's technical expertise, build Web3 projects, and maintain reliable infrastructure.",
       },
       {
-        label: "What you gain",
-        text: "Hands-on Solidity, ZK proofs, DeFi protocols. Build a portfolio of real blockchain projects.",
+        label: "Core responsibilities",
+        text: "Manage internal tools and the website, run hackathons and coding sessions, and develop or audit smart contracts and dApps.",
+      },
+      {
+        label: "Goals",
+        text: "Enable the club's technical backbone while growing practical engineering skills across members.",
       },
     ],
   },
@@ -37,16 +40,19 @@ const committeeSections = [
     id: "acc-2",
     title: "External Relations",
     icon: Globe2,
-    subtitle: "Partnerships, industry & ecosystem",
+    subtitle: "Strategic partnerships and outreach",
     content: [
       {
-        label: "What we do",
-        text: "Manage relationships with industry partners, academic institutions and other Web3 clubs.",
+        label: "Purpose",
+        text: "Build and maintain strategic relationships with partners, industry, and academia.",
       },
-      { label: "Why it matters", text: "External connections bring speakers, funding, job opportunities and credibility." },
       {
-        label: "What you gain",
-        text: "Professional network in Web3, partnership management experience, direct access to industry leaders.",
+        label: "Core responsibilities",
+        text: "Acquire sponsors, grow the alumni and university network, and invite guest speakers and industry leaders.",
+      },
+      {
+        label: "Goals",
+        text: "Secure long-term partnerships, expand the club's global network, and grow the operating budget.",
       },
     ],
   },
@@ -54,74 +60,104 @@ const committeeSections = [
     id: "acc-3",
     title: "Events",
     icon: CalendarDays,
-    subtitle: "Workshops, panels, hackathons & socials",
+    subtitle: "Physical and virtual experiences",
     content: [
-      { label: "What we do", text: "Plan and execute all club events from intimate workshops to large-scale hackathons." },
-      { label: "Why it matters", text: "Events are the heartbeat — where learning, networking and community happen in real life." },
-      { label: "What you gain", text: "Event management, project leadership and the satisfaction of bringing people together." },
+      {
+        label: "Purpose",
+        text: "Plan and execute all physical and virtual club events to bring the community together.",
+      },
+      {
+        label: "Core responsibilities",
+        text: "Handle logistics, coordinate on-the-day operations, and collaborate with Marketing and Education on event formats.",
+      },
+      {
+        label: "Goals",
+        text: "Deliver memorable, professional events that run smoothly from start to finish.",
+      },
     ],
   },
   {
     id: "acc-4",
     title: "Internal Affairs",
     icon: Users,
-    subtitle: "Talent, onboarding & internal operations",
+    subtitle: "Culture, processes, and talent",
     content: [
       {
-        label: "What we do",
-        text: "Attract top ETH Zurich talent, run the application process and ensure every member finds their place.",
+        label: "Purpose",
+        text: "Cultivate club culture, optimize internal processes, and manage talent.",
       },
       {
-        label: "Why it matters",
-        text: "The quality of our people is our greatest asset. Recruiting right ensures the club continuously evolves.",
+        label: "Core responsibilities",
+        text: "Recruit and onboard members, organize internal socials, resolve conflicts, and curate tools with the president.",
       },
-      { label: "What you gain", text: "HR and organisational experience, interview skills, deep understanding of team dynamics." },
+      {
+        label: "Goals",
+        text: "Build a cohesive, motivated community and minimize turnover of active members.",
+      },
     ],
   },
   {
     id: "acc-5",
     title: "Marketing",
     icon: MessagesSquare,
-    subtitle: "Brand, content & social media",
+    subtitle: "Brand, content, and growth",
     content: [
-      { label: "What we do", text: "Manage club brand, social media presence, content strategy and visual communications." },
-      { label: "Why it matters", text: "A strong brand attracts better members, more prestigious partners, and amplifies everything we do." },
-      { label: "What you gain", text: "Real-world marketing in Web3, graphic design skills, content strategy expertise." },
+      {
+        label: "Purpose",
+        text: "Increase visibility and strengthen the ETH Blockchain Club brand internally and externally.",
+      },
+      {
+        label: "Core responsibilities",
+        text: "Run social channels, create content for events and education, and manage newsletter and PR.",
+      },
+      {
+        label: "Goals",
+        text: "Grow followers, maintain high engagement, and keep a consistent, professional brand identity.",
+      },
     ],
   },
   {
     id: "acc-6",
     title: "Finances & Legal",
     icon: ShieldCheck,
-    subtitle: "Budget, compliance & governance",
+    subtitle: "Treasury, contracts, and compliance",
     content: [
       {
-        label: "What we do",
-        text: "Manage finances, sponsorship contracts and ensure legal compliance with ETH Zurich guidelines.",
+        label: "Purpose",
+        text: "Ensure the financial health and legal security of the club.",
       },
-      { label: "Why it matters", text: "Financial health and legal clarity allow every other committee to operate confidently." },
-      { label: "What you gain", text: "Financial management, contract negotiation, understanding of non-profit governance." },
+      {
+        label: "Core responsibilities",
+        text: "Own budgeting, treasury management, contract review, and compliance with ETH Zurich and Swiss law.",
+      },
+      {
+        label: "Goals",
+        text: "Maintain transparent finances, sustainable treasury growth, and zero compliance incidents.",
+      },
     ],
   },
   {
     id: "acc-7",
     title: "Education",
     icon: Landmark,
-    subtitle: "Curriculum, resources & learning programs",
+    subtitle: "Learning tracks and education programs",
     content: [
       {
-        label: "What we do",
-        text: "Design and maintain the learning curriculum, from beginner introductions to advanced deep-dives.",
+        label: "Purpose",
+        text: "Promote knowledge building in blockchain and Web3 for members and external learners.",
       },
-      { label: "Why it matters", text: "Education is the club's core purpose — this committee keeps our programs world-class." },
       {
-        label: "What you gain",
-        text: "Teaching and curriculum design, deep technical knowledge, ability to explain complex concepts.",
+        label: "Core responsibilities",
+        text: "Run bootcamps and workshops, maintain learning materials, mentor beginners, and host teach-ins.",
+      },
+      {
+        label: "Goals",
+        text: "Position the club as a leading academic hub and lower the barrier to entry for new members.",
       },
     ],
   },
 ] as const;
-
+ 
 const committeeNodes = [
   { id: "acc-1", icon: Network, lines: ["Innovation &", "Technology"] },
   { id: "acc-2", icon: Globe2, lines: ["External", "Relations"] },
@@ -131,18 +167,20 @@ const committeeNodes = [
   { id: "acc-6", icon: ShieldCheck, lines: ["Finances &", "Legal"] },
   { id: "acc-7", icon: Landmark, lines: ["Education"] },
 ] as const;
-
+ 
 const teamMembers = [
-  { name: "Anna Schneider", role: "President", committee: "Board", initials: "AS", filter: "board" },
-  { name: "Luca Müller", role: "Head of Technology", committee: "Innovation & Technology", initials: "LM", filter: "innovation-technology" },
-  { name: "Sara Keller", role: "Head of Events", committee: "Events", initials: "SK", filter: "events" },
-  { name: "Nico Brunner", role: "Head of Marketing", committee: "Marketing", initials: "NB", filter: "marketing" },
-  { name: "Maya Fischer", role: "Head of External Relations", committee: "External Relations", initials: "MF", filter: "external-relations" },
-  { name: "David Weber", role: "Head of Education", committee: "Education", initials: "DW", filter: "education" },
-  { name: "Jana Huber", role: "Head of Internal Affairs", committee: "Internal Affairs", initials: "JH", filter: "recruiting-members" },
-  { name: "Tim Zimmermann", role: "Head of Finance", committee: "Finances & Legal", initials: "TZ", filter: "finances-legal" },
+  { name: "Jennis Bešić", role: "President", committee: "Board", initials: "JB", filters: ["board"] },
+  { name: "Rafael", role: "Head", committee: "Marketing", initials: "RA", filters: ["board", "marketing"] },
+  { name: "Ariele Marcellino", role: "Head", committee: "Innovation & Technology", initials: "AM", filters: ["board", "innovation-technology"] },
+  { name: "Julian Marx", role: "Head", committee: "Finance & Legal", initials: "JM", filters: ["board", "finances-legal"] },
+  { name: "Cyrill", role: "Member", committee: "Innovation & Technology", initials: "CY", filters: ["innovation-technology"] },
+  { name: "Faizan", role: "Member", committee: "Education", initials: "FA", filters: ["education"] },
+  { name: "Alex Smolders", role: "Member", committee: "Education", initials: "AS", filters: ["education"] },
+  { name: "Gökhan", role: "Member", committee: "Events", initials: "GO", filters: ["events"] },
+  { name: "Firas Dridi", role: "Member", committee: "Events", initials: "FD", filters: ["events"] },
+  { name: "Giovanni Di Nunzio", role: "Member", committee: "Marketing", initials: "GN", filters: ["marketing"] },
 ] as const;
-
+ 
 function CommitteeAccordion({
   section,
   isOpen,
@@ -153,7 +191,7 @@ function CommitteeAccordion({
   onToggle: (id: string) => void;
 }) {
   const Icon = section.icon;
-
+ 
   return (
     <div id={section.id} className={`acc-item ${isOpen ? "open" : ""}`}>
       <button type="button" className="acc-header" onClick={() => onToggle(section.id)}>
@@ -179,7 +217,7 @@ function CommitteeAccordion({
     </div>
   );
 }
-
+ 
 function CommitteeNode({
   id,
   icon: Icon,
@@ -204,69 +242,71 @@ function CommitteeNode({
     </button>
   );
 }
-
+ 
 export default function About() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [openAccordionId, setOpenAccordionId] = useState("acc-1");
   const [activeStat, setActiveStat] = useState(0);
-
+ 
   useEffect(() => {
     const timer = window.setInterval(() => {
       setActiveStat((prev) => (prev + 1) % heroStats.length);
     }, 2200);
-
+ 
     return () => window.clearInterval(timer);
   }, []);
-
+ 
   const visibleTeamMembers = useMemo(() => {
     if (activeFilter === "all") return teamMembers;
-    return teamMembers.filter((member) => member.filter === activeFilter);
+    return teamMembers.filter((member) =>
+      (member.filters as readonly string[]).includes(activeFilter)
+    );
   }, [activeFilter]);
-
+ 
   const scrollToCommittee = (id: string) => {
     setOpenAccordionId(id);
     const element = document.getElementById(id);
     if (!element) return;
-
+ 
     const top = window.scrollY + element.getBoundingClientRect().top - 84;
     window.scrollTo({ top, behavior: "smooth" });
   };
-
+ 
   return (
     <div className="about-page min-h-screen">
       <div className="page-grid-bg" />
       <Navigation />
-
+ 
       <main>
-        <section className="about-hero-shell page-hero-shell">
+        <section className="about-hero-shell page-hero-shell page-hero-compact">
           <div className="about-hero-grid">
             <div className="hero-left about-hero-copy">
               <div className="hero-top-brand">
                 <span className="hero-top-line" />
                 <span className="hero-top-text">THE CLUB</span>
               </div>
-
+ 
               <h1 className="hero-title-main">
                 <span>About</span>
                 <span className="outline">US</span>
               </h1>
-
+ 
               <p className="hero-subtext">
                 A student-led organisation at ETH Zurich dedicated to education, research, and community in the Web3 space.
               </p>
-
+ 
               <p className="about-hero-subtext">
                 Founded by ETH students, the club operates like a working studio where engineers, economists, and designers
                 ship real outcomes together.
               </p>
-
+ 
               <div className="about-hero-points" aria-label="About key focus points">
                 <span>Builder-first culture</span>
                 <span>Public demos each semester</span>
                 <span>Open to all ETH faculties</span>
               </div>
             </div>
-
+ 
             <div className="about-stats-rail" aria-label="Club signals">
               <div className="about-stats-title">CLUB SIGNALS</div>
               <div className="about-signals-board">
@@ -274,7 +314,7 @@ export default function About() {
                   <span className="about-signals-dot" />
                   Auto-updating snapshot
                 </div>
-
+ 
                 {heroStats.map((stat, idx) => (
                   <button
                     key={stat.label}
@@ -297,15 +337,15 @@ export default function About() {
             </div>
           </div>
         </section>
-
+ 
         <div className="org-section">
           <div className="org-wrap">
             <div className="about-org-chart">
               <PageSectionHeader label="Structure" title="Club Organigram" className="about-section-header-block" />
-
+ 
                 <div className="org-chart-3tier">
                   <div className="org-group-label">External network</div>
-
+ 
                   <div className="org-tier org-tier-top">
                     <div className="org-node-ext" title="Academic and industry advisors">
                       <div className="org-node-ext-icon">
@@ -320,12 +360,12 @@ export default function About() {
                       Partners
                     </div>
                   </div>
-
+ 
                   <div className="org-divider" aria-hidden="true" />
-
+ 
                   <div className="org-core-shell">
                     <div className="org-group-label">Club core</div>
-
+ 
                     <div className="org-tier org-tier-board">
                       <div className="org-core-head">
                         <div className="org-node-president">
@@ -337,26 +377,26 @@ export default function About() {
                           <div className="org-node-board-sub">coordinates all committees</div>
                         </div>
                       </div>
-
+ 
                       <div className="org-core-dependency">Board to Committees (execution teams)</div>
                       <div className="org-micro-vline" />
                     </div>
-
+ 
                     <div className="org-hspread">
                       <div className="org-hspread-line" />
                     </div>
-
+ 
                     <div className="org-tier org-tier-committees">
                       {committeeNodes.map((node) => (
                         <CommitteeNode key={node.id} {...node} onClick={scrollToCommittee} />
                       ))}
                     </div>
-
+ 
                     <div className="org-hspread">
                       <div className="org-hspread-line" style={{ opacity: 0.5 }} />
                     </div>
                   </div>
-
+ 
                   <div className="org-tier org-tier-members org-tier-members-global">
                     <div className="org-node-members">
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
@@ -364,19 +404,19 @@ export default function About() {
                     </div>
                   </div>
                 </div>
-
+ 
                 <p style={{ textAlign: "center", fontSize: 12, color: "var(--dim)", marginTop: 24, letterSpacing: 0.5 }}>
                   Click any committee node to jump to its description ↓
                 </p>
             </div>
           </div>
         </div>
-
+ 
         <div className="container section-sm">
           <ScrollReveal>
             <PageSectionHeader label="Committees" title="Our Teams" className="about-section-header-block" />
           </ScrollReveal>
-
+ 
           <ScrollReveal delay={100}>
             <div>
               {committeeSections.map((section, index) => (
@@ -391,12 +431,12 @@ export default function About() {
             </div>
           </ScrollReveal>
         </div>
-
+ 
         <div className="container section-sm">
           <ScrollReveal>
             <PageSectionHeader label="Committee Members" title="Meet the People" className="about-section-header-block" />
           </ScrollReveal>
-
+ 
           <ScrollReveal delay={100}>
             <div className="filter-row team-filter-row">
               {[
@@ -416,7 +456,7 @@ export default function About() {
               ))}
             </div>
           </ScrollReveal>
-
+ 
           <ScrollReveal delay={180}>
             <div className="team-strip">
               {visibleTeamMembers.map((member, index) => (
@@ -432,7 +472,7 @@ export default function About() {
             </div>
           </ScrollReveal>
         </div>
-
+ 
         <Footer />
       </main>
     </div>

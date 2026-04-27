@@ -101,7 +101,7 @@ export default function News() {
                 aria-label="Email address"
               />
               <button type="button" className="btn btn-primary news-subscribe-btn">
-                Subscribe -&gt;
+                Subscribe
               </button>
             </div>
           </aside>
