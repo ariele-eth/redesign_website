@@ -20,16 +20,19 @@ const committeeSections = [
     id: "acc-1",
     title: "Innovation & Technology",
     icon: Network,
-    subtitle: "Research, development & technical projects",
+    subtitle: "Technical projects, platforms, and infrastructure",
     content: [
-      { label: "What we do", text: "Technical workshops, protocol exploration and PoC builds on Ethereum and L2s." },
       {
-        label: "Why it matters",
-        text: "Technical depth is the foundation of everything — this committee keeps the club at the frontier.",
+        label: "Purpose",
+        text: "Drive the club's technical expertise, build Web3 projects, and maintain reliable infrastructure.",
       },
       {
-        label: "What you gain",
-        text: "Hands-on Solidity, ZK proofs, DeFi protocols. Build a portfolio of real blockchain projects.",
+        label: "Core responsibilities",
+        text: "Manage internal tools and the website, run hackathons and coding sessions, and develop or audit smart contracts and dApps.",
+      },
+      {
+        label: "Goals",
+        text: "Enable the club's technical backbone while growing practical engineering skills across members.",
       },
     ],
   },
@@ -37,16 +40,19 @@ const committeeSections = [
     id: "acc-2",
     title: "External Relations",
     icon: Globe2,
-    subtitle: "Partnerships, industry & ecosystem",
+    subtitle: "Strategic partnerships and outreach",
     content: [
       {
-        label: "What we do",
-        text: "Manage relationships with industry partners, academic institutions and other Web3 clubs.",
+        label: "Purpose",
+        text: "Build and maintain strategic relationships with partners, industry, and academia.",
       },
-      { label: "Why it matters", text: "External connections bring speakers, funding, job opportunities and credibility." },
       {
-        label: "What you gain",
-        text: "Professional network in Web3, partnership management experience, direct access to industry leaders.",
+        label: "Core responsibilities",
+        text: "Acquire sponsors, grow the alumni and university network, and invite guest speakers and industry leaders.",
+      },
+      {
+        label: "Goals",
+        text: "Secure long-term partnerships, expand the club's global network, and grow the operating budget.",
       },
     ],
   },
@@ -54,69 +60,99 @@ const committeeSections = [
     id: "acc-3",
     title: "Events",
     icon: CalendarDays,
-    subtitle: "Workshops, panels, hackathons & socials",
+    subtitle: "Physical and virtual experiences",
     content: [
-      { label: "What we do", text: "Plan and execute all club events from intimate workshops to large-scale hackathons." },
-      { label: "Why it matters", text: "Events are the heartbeat — where learning, networking and community happen in real life." },
-      { label: "What you gain", text: "Event management, project leadership and the satisfaction of bringing people together." },
+      {
+        label: "Purpose",
+        text: "Plan and execute all physical and virtual club events to bring the community together.",
+      },
+      {
+        label: "Core responsibilities",
+        text: "Handle logistics, coordinate on-the-day operations, and collaborate with Marketing and Education on event formats.",
+      },
+      {
+        label: "Goals",
+        text: "Deliver memorable, professional events that run smoothly from start to finish.",
+      },
     ],
   },
   {
     id: "acc-4",
     title: "Internal Affairs",
     icon: Users,
-    subtitle: "Talent, onboarding & internal operations",
+    subtitle: "Culture, processes, and talent",
     content: [
       {
-        label: "What we do",
-        text: "Attract top ETH Zurich talent, run the application process and ensure every member finds their place.",
+        label: "Purpose",
+        text: "Cultivate club culture, optimize internal processes, and manage talent.",
       },
       {
-        label: "Why it matters",
-        text: "The quality of our people is our greatest asset. Recruiting right ensures the club continuously evolves.",
+        label: "Core responsibilities",
+        text: "Recruit and onboard members, organize internal socials, resolve conflicts, and curate tools with the president.",
       },
-      { label: "What you gain", text: "HR and organisational experience, interview skills, deep understanding of team dynamics." },
+      {
+        label: "Goals",
+        text: "Build a cohesive, motivated community and minimize turnover of active members.",
+      },
     ],
   },
   {
     id: "acc-5",
     title: "Marketing",
     icon: MessagesSquare,
-    subtitle: "Brand, content & social media",
+    subtitle: "Brand, content, and growth",
     content: [
-      { label: "What we do", text: "Manage club brand, social media presence, content strategy and visual communications." },
-      { label: "Why it matters", text: "A strong brand attracts better members, more prestigious partners, and amplifies everything we do." },
-      { label: "What you gain", text: "Real-world marketing in Web3, graphic design skills, content strategy expertise." },
+      {
+        label: "Purpose",
+        text: "Increase visibility and strengthen the ETH Blockchain Club brand internally and externally.",
+      },
+      {
+        label: "Core responsibilities",
+        text: "Run social channels, create content for events and education, and manage newsletter and PR.",
+      },
+      {
+        label: "Goals",
+        text: "Grow followers, maintain high engagement, and keep a consistent, professional brand identity.",
+      },
     ],
   },
   {
     id: "acc-6",
     title: "Finances & Legal",
     icon: ShieldCheck,
-    subtitle: "Budget, compliance & governance",
+    subtitle: "Treasury, contracts, and compliance",
     content: [
       {
-        label: "What we do",
-        text: "Manage finances, sponsorship contracts and ensure legal compliance with ETH Zurich guidelines.",
+        label: "Purpose",
+        text: "Ensure the financial health and legal security of the club.",
       },
-      { label: "Why it matters", text: "Financial health and legal clarity allow every other committee to operate confidently." },
-      { label: "What you gain", text: "Financial management, contract negotiation, understanding of non-profit governance." },
+      {
+        label: "Core responsibilities",
+        text: "Own budgeting, treasury management, contract review, and compliance with ETH Zurich and Swiss law.",
+      },
+      {
+        label: "Goals",
+        text: "Maintain transparent finances, sustainable treasury growth, and zero compliance incidents.",
+      },
     ],
   },
   {
     id: "acc-7",
     title: "Education",
     icon: Landmark,
-    subtitle: "Curriculum, resources & learning programs",
+    subtitle: "Learning tracks and education programs",
     content: [
       {
-        label: "What we do",
-        text: "Design and maintain the learning curriculum, from beginner introductions to advanced deep-dives.",
+        label: "Purpose",
+        text: "Promote knowledge building in blockchain and Web3 for members and external learners.",
       },
-      { label: "Why it matters", text: "Education is the club's core purpose — this committee keeps our programs world-class." },
       {
-        label: "What you gain",
-        text: "Teaching and curriculum design, deep technical knowledge, ability to explain complex concepts.",
+        label: "Core responsibilities",
+        text: "Run bootcamps and workshops, maintain learning materials, mentor beginners, and host teach-ins.",
+      },
+      {
+        label: "Goals",
+        text: "Position the club as a leading academic hub and lower the barrier to entry for new members.",
       },
     ],
   },
@@ -133,14 +169,16 @@ const committeeNodes = [
 ] as const;
 
 const teamMembers = [
-  { name: "Anna Schneider", role: "President", committee: "Board", initials: "AS", filter: "board" },
-  { name: "Luca Müller", role: "Head of Technology", committee: "Innovation & Technology", initials: "LM", filter: "innovation-technology" },
-  { name: "Sara Keller", role: "Head of Events", committee: "Events", initials: "SK", filter: "events" },
-  { name: "Nico Brunner", role: "Head of Marketing", committee: "Marketing", initials: "NB", filter: "marketing" },
-  { name: "Maya Fischer", role: "Head of External Relations", committee: "External Relations", initials: "MF", filter: "external-relations" },
-  { name: "David Weber", role: "Head of Education", committee: "Education", initials: "DW", filter: "education" },
-  { name: "Jana Huber", role: "Head of Internal Affairs", committee: "Internal Affairs", initials: "JH", filter: "recruiting-members" },
-  { name: "Tim Zimmermann", role: "Head of Finance", committee: "Finances & Legal", initials: "TZ", filter: "finances-legal" },
+  { name: "Jennis Bešić", role: "President", committee: "Board", initials: "JB", filters: ["board"] },
+  { name: "Rafael", role: "Head", committee: "Marketing", initials: "RA", filters: ["board", "marketing"] },
+  { name: "Ariele Marcellino", role: "Head", committee: "Innovation & Technology", initials: "AM", filters: ["board", "innovation-technology"] },
+  { name: "Julian Marx", role: "Head", committee: "Finance & Legal", initials: "JM", filters: ["board", "finances-legal"] },
+  { name: "Cyrill", role: "Member", committee: "Innovation & Technology", initials: "CY", filters: ["innovation-technology"] },
+  { name: "Faizan", role: "Member", committee: "Education", initials: "FA", filters: ["education"] },
+  { name: "Alex Smolders", role: "Member", committee: "Education", initials: "AS", filters: ["education"] },
+  { name: "Gökhan", role: "Member", committee: "Events", initials: "GO", filters: ["events"] },
+  { name: "Firas Dridi", role: "Member", committee: "Events", initials: "FD", filters: ["events"] },
+  { name: "Giovanni Di Nunzio", role: "Member", committee: "Marketing", initials: "GN", filters: ["marketing"] },
 ] as const;
 
 function CommitteeAccordion({
@@ -220,7 +258,7 @@ export default function About() {
 
   const visibleTeamMembers = useMemo(() => {
     if (activeFilter === "all") return teamMembers;
-    return teamMembers.filter((member) => member.filter === activeFilter);
+    return teamMembers.filter((member) => member.filters.includes(activeFilter));
   }, [activeFilter]);
 
   const scrollToCommittee = (id: string) => {
@@ -238,7 +276,7 @@ export default function About() {
       <Navigation />
 
       <main>
-        <section className="about-hero-shell page-hero-shell">
+        <section className="about-hero-shell page-hero-shell page-hero-compact">
           <div className="about-hero-grid">
             <div className="hero-left about-hero-copy">
               <div className="hero-top-brand">

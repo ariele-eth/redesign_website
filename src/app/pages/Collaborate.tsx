@@ -111,7 +111,7 @@ export default function Collaborate() {
       <Navigation />
 
       <main>
-        <section className="page-hero-shell collab-hero-shell">
+        <section className="page-hero-shell page-hero-compact collab-hero-shell">
           <div className="hero-top-brand">
             <span className="hero-top-line" />
             <span className="hero-top-text">For Organisations</span>
@@ -129,7 +129,8 @@ export default function Collaborate() {
 
           <div className="collab-hero-actions">
             <a className="btn btn-primary" href="mailto:partners@ethblockchain.ch">
-              Become a Partner →
+                Become a Partner
+        
             </a>
             <a className="btn btn-outline" href="#collab-contact">
               Contact Us
@@ -238,7 +239,7 @@ export default function Collaborate() {
             </p>
             <div className="collab-cta-actions">
               <a className="btn btn-primary" href="mailto:partners@ethblockchain.ch">
-                Become a Partner →
+                  Become a Partner
               </a>
               <a className="btn btn-outline" href="mailto:contact@ethblockchain.ch">
                 Contact Us

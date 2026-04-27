@@ -110,7 +110,7 @@ export default function Home() {
 
           <div className="hero-actions">
             <Link href="/join" className="hero-cta-primary">
-              Join the Club →
+                Join the Club
             </Link>
             <Link href="/events" className="hero-cta-secondary">
               Explore Events
@@ -206,9 +206,9 @@ export default function Home() {
               title="Four pillars, one mission"
               description="We connect education, research, industry, and community to establish ETH Zurich as Europe&apos;s leading blockchain hub."
             />
-            <Link href="/about" className="pillars-about-link">
-              About the Club →
-            </Link>
+              <Link href="/about" className="pillars-about-link">
+                About the Club
+              </Link>
           </div>
         </ScrollReveal>
 

@@ -107,7 +107,7 @@ export default function JoinLanding() {
       <Navigation />
 
       <main>
-        <section className="join-hero page-hero-shell">
+        <section className="join-hero page-hero-shell page-hero-compact">
           <div className="join-hero-inner">
             <ScrollReveal>
               <div className="hero-top-brand">
@@ -128,6 +128,8 @@ export default function JoinLanding() {
             </ScrollReveal>
           </div>
         </section>
+
+        <div className="join-hero-divider" />
 
         <section className="join-options-section section-sm">
           <div className="container">

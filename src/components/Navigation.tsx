@@ -11,7 +11,7 @@ const navLinks = [
   { name: 'Events', path: '/events' },
   { name: 'Join Us', path: '/join' },
   { name: 'Collaborate', path: '/collaborate' },
-  { name: 'Education', path: '/about' },
+  { name: 'Education', path: '/education' },
   { name: 'News', path: '/news' },
 ]
 

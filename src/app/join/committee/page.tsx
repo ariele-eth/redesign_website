@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { Send } from 'lucide-react'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 
@@ -22,19 +21,38 @@ export default function CommitteeApplication() {
     university: '',
     academic_department: '',
     experience: '',
-    leadership_experience: '', // New field for committee
+    leadership_experience: '',
     motivation: '',
-    committee_role: '', // New field for preferred role
-    time_commitment: '', // New field
+    committee_role: '',
+    time_commitment: '',
     // accept_terms removed from UI; will be submitted as true by default
   })
 
+  const committeeOptions = [
+    'Innovation & Technology',
+    'External Relations',
+    'Events',
+    'Internal Affairs',
+    'Marketing',
+    'Finances & Legal',
+    'Education',
+  ]
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!formData.committee_role) {
+      toast({
+        title: 'Select a committee',
+        description: 'Please choose a preferred committee to continue.',
+        variant: 'destructive',
+      })
+      return
+    }
+
     setIsSubmitting(true)
 
-  // Terms acceptance removed from UI; do NOT send accept_terms so it remains empty by default
-
+    // Terms acceptance removed from UI; do NOT send accept_terms so it remains empty by default
     try {
       const response = await fetch('/api/application', {
         method: 'POST',
@@ -43,8 +61,8 @@ export default function CommitteeApplication() {
         },
         body: JSON.stringify({
           ...formData,
-          application_type: 'committee', // Add this to distinguish
-          registration: 'committee', // Always set to "committee" for committee applications
+          application_type: 'committee',
+          registration: 'committee',
         }),
       })
 
@@ -55,7 +73,6 @@ export default function CommitteeApplication() {
           title: 'Application Submitted',
           description: 'Thank you for your application. We will get back to you soon!.',
         })
-        // Reset form
         setFormData({
           first_name: '',
           last_name: '',
@@ -95,200 +112,193 @@ export default function CommitteeApplication() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleCheckboxChange = (name: string, checked: boolean) => {
-    setFormData({ ...formData, [name]: checked })
-  }
-
   return (
-    <div className="min-h-screen">
+    <div className="join-page min-h-screen">
+      <div className="page-grid-bg" />
       <Navigation />
 
-      {/* Header */}
-      <section className="pt-32 pb-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-5xl md:text-7xl font-light-title mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-              Committee Application
-            </h1>
-            <div className="w-24 h-1 gradient-primary mx-auto mb-8"></div>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              Take on a leadership role and help shape the future of our
-              blockchain community
-            </p>
+      <main>
+        <section className="page-hero-shell application-hero application-hero-tight">
+          <div className="hero-top-brand">
+            <span className="hero-top-line" />
+            <span className="hero-top-text">APPLICATIONS OPEN</span>
           </div>
-        </div>
-      </section>
 
-      {/* Application Form */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="max-w-2xl mx-auto p-8 shadow-elegant">
-            <h2 className="text-2xl font-light-title mb-6">
-              Committee Application
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h1 className="hero-title-main">
+            <span>Committee</span>
+            <span className="outline">Application</span>
+          </h1>
+
+          <p className="hero-subtext">
+            Apply to join one of our committees and help shape the future of
+            the club.
+          </p>
+        </section>
+
+        <section className="application-section">
+          <Card className="card application-card w-full max-w-5xl p-5 md:p-6">
+            <div className="mb-6">
+              <h2 className="h2">Committee Application</h2>
+              <p className="lead">
+                Share your experience and committee preferences to help us
+                place you where you can make the biggest impact.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6 application-form">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="first_name">First Name *</Label>
+                    <Input
+                      id="first_name"
+                      name="first_name"
+                      value={formData.first_name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="last_name">Last Name *</Label>
+                    <Input
+                      id="last_name"
+                      name="last_name"
+                      value={formData.last_name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="first_name">First Name *</Label>
+                  <Label htmlFor="email">Email Address *</Label>
                   <Input
-                    id="first_name"
-                    name="first_name"
-                    value={formData.first_name}
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
                     onChange={handleChange}
-                    placeholder="Your first name"
                     required
                   />
                 </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="city">City *</Label>
+                    <Input
+                      id="city"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="university">University *</Label>
+                    <Input
+                      id="university"
+                      name="university"
+                      value={formData.university}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="last_name">Last Name *</Label>
+                  <Label htmlFor="academic_department">
+                    Academic Department *
+                  </Label>
                   <Input
-                    id="last_name"
-                    name="last_name"
-                    value={formData.last_name}
+                    id="academic_department"
+                    name="academic_department"
+                    value={formData.academic_department}
                     onChange={handleChange}
-                    placeholder="Your last name"
                     required
                   />
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address *</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="your.email@ethz.ch"
-                  required
-                />
-              </div>
+                <div className="space-y-3">
+                  <Label>Preferred Committee *</Label>
+                  <div className="committee-options">
+                    {committeeOptions.map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() =>
+                          setFormData({ ...formData, committee_role: option })
+                        }
+                        className={`committee-option${formData.committee_role === option ? ' is-active' : ''}`}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="city">City *</Label>
+                  <Label htmlFor="time_commitment">Time Commitment *</Label>
                   <Input
-                    id="city"
-                    name="city"
-                    value={formData.city}
+                    id="time_commitment"
+                    name="time_commitment"
+                    value={formData.time_commitment}
                     onChange={handleChange}
-                    placeholder="Zurich"
                     required
                   />
                 </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="university">University *</Label>
-                  <Input
-                    id="university"
-                    name="university"
-                    value={formData.university}
+                  <Label htmlFor="experience">
+                    Blockchain/Crypto Experience *
+                  </Label>
+                  <Textarea
+                    id="experience"
+                    name="experience"
+                    value={formData.experience}
                     onChange={handleChange}
-                    placeholder="ETH Zurich"
+                    className="min-h-24"
                     required
                   />
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="academic_department">
-                  Academic Department *
-                </Label>
-                <Input
-                  id="academic_department"
-                  name="academic_department"
-                  value={formData.academic_department}
-                  onChange={handleChange}
-                  placeholder="e.g., Computer Science, Mathematics"
-                  required
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="leadership_experience">
+                    Leadership Experience *
+                  </Label>
+                  <Textarea
+                    id="leadership_experience"
+                    name="leadership_experience"
+                    value={formData.leadership_experience}
+                    onChange={handleChange}
+                    className="min-h-24"
+                    required
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="committee_role">
-                  Preferred Committee Role *
-                </Label>
-                <Input
-                  id="committee_role"
-                  name="committee_role"
-                  value={formData.committee_role}
-                  onChange={handleChange}
-                  placeholder="e.g., President, Vice President, Treasurer, Event Coordinator"
-                  required
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="motivation">Motivation & Vision *</Label>
+                  <Textarea
+                    id="motivation"
+                    name="motivation"
+                    value={formData.motivation}
+                    onChange={handleChange}
+                    className="min-h-24"
+                    required
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="time_commitment">Time Commitment *</Label>
-                <Input
-                  id="time_commitment"
-                  name="time_commitment"
-                  value={formData.time_commitment}
-                  onChange={handleChange}
-                  placeholder="e.g., 5-10 hours per week"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="experience">
-                  Blockchain/Crypto Experience *
-                </Label>
-                <Textarea
-                  id="experience"
-                  name="experience"
-                  value={formData.experience}
-                  onChange={handleChange}
-                  placeholder="Tell us about your blockchain/crypto experience..."
-                  className="min-h-24"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="leadership_experience">
-                  Leadership Experience *
-                </Label>
-                <Textarea
-                  id="leadership_experience"
-                  name="leadership_experience"
-                  value={formData.leadership_experience}
-                  onChange={handleChange}
-                  placeholder="Describe your leadership experience, previous roles, and achievements..."
-                  className="min-h-24"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="motivation">Motivation & Vision *</Label>
-                <Textarea
-                  id="motivation"
-                  name="motivation"
-                  value={formData.motivation}
-                  onChange={handleChange}
-                  placeholder="Why do you want to join the committee? What's your vision for the club?"
-                  className="min-h-24"
-                  required
-                />
-              </div>
-
-              {/* Terms acceptance removed from UI; stored as true by default */}
-
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full gradient-primary shadow-elegant group"
-              >
-                <Send className="mr-2 h-5 w-5 transition-smooth group-hover:translate-x-1" />
-                {isSubmitting
-                  ? 'Submitting...'
-                  : 'Submit Committee Application'}
-              </Button>
-            </form>
+                <div className="application-submit-row flex justify-center">
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="hero-cta-primary"
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Submit Committee Application'}
+                  </Button>
+                </div>
+              </form>
           </Card>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
-import { Button } from '@/components/ui/button'
 
 type EventRow = {
   id: string
@@ -215,7 +214,7 @@ export default function Events() {
                         className="btn btn-primary btn-sm"
                         aria-label={`Register for ${event.title}`}
                       >
-                        Register -&gt;
+                        Register
                       </a>
                     </div>
                   </div>
@@ -247,10 +246,8 @@ export default function Events() {
           </div>
 
           <div className="events-past-cta-wrap">
-            <Link href="/events/past">
-              <Button variant="outline" className="btn-outline events-past-cta">
-                View All Past Events
-              </Button>
+            <Link href="/events/past" className="hero-cta-secondary events-past-cta">
+              View All Past Events
             </Link>
           </div>
         </section>
