@@ -361,7 +361,6 @@ function AddNodeModal({ onClose, onAdd }: {
       >
         {/* header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
-          <span className="label">Add Node</span>
           <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', display: 'flex' }}>
             <X size={16} />
           </button>
@@ -610,9 +609,6 @@ export default function EducationPage() {
                   ))}
                 </div>
                 {/* add button */}
-                <HoverButton onClick={() => setShowModal(true)}>
-                  <Plus size={13} /> Add Node
-                </HoverButton>
               </div>
             </div>
 
