@@ -388,20 +388,32 @@ h4, h5, h6 {
 .application-form input,
 .application-form textarea,
 .application-form select {
-  background: var(--surface2);
-  border: 0.5px solid var(--border);
+  padding: 12px 16px;
+  line-height: 1.5;
+  background-color: rgba(11, 18, 36, 0.92);
+  border: 0.5px solid rgba(99, 130, 255, 0.18);
   border-radius: 16px;
   color: var(--text);
-  box-shadow: inset 0 0 0 1px rgba(7, 12, 26, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(238, 242, 255, 0.04),
+    inset 0 0 0 1px rgba(91, 126, 255, 0.08);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
-    background 0.2s ease;
+    background-color 0.2s ease;
+}
+
+.application-form input:hover,
+.application-form textarea:hover,
+.application-form select:hover {
+  border-color: rgba(99, 130, 255, 0.32);
 }
 
 .application-form input::placeholder,
 .application-form textarea::placeholder,
-.application-form select::placeholder {
+.application-form select::placeholder,
+.email-input::placeholder,
+.footer-news-input::placeholder {
   color: rgba(112, 134, 184, 0.7);
 }
 
@@ -412,11 +424,11 @@ h4, h5, h6 {
 .application-form textarea:focus-visible,
 .application-form select:focus-visible {
   outline: none;
-  border-color: var(--border2);
-  background: rgba(10, 16, 32, 0.9);
+  border-color: rgba(46, 185, 255, 0.45);
+  background-color: rgba(8, 13, 28, 0.95);
   box-shadow:
-    0 0 0 2px rgba(91, 126, 255, 0.12),
-    inset 0 0 0 1px rgba(91, 126, 255, 0.12);
+    0 0 0 2px rgba(46, 185, 255, 0.18),
+    inset 0 0 0 1px rgba(91, 126, 255, 0.2);
 }
 
 .application-form input:disabled,
@@ -436,6 +448,13 @@ h4, h5, h6 {
     calc(100% - 12px) 52%;
   background-size: 6px 6px, 6px 6px;
   background-repeat: no-repeat;
+}
+
+.application-form input,
+.application-form textarea,
+.email-input,
+.footer-news-input {
+  background-image: linear-gradient(180deg, rgba(91, 126, 255, 0.08), transparent 55%);
 }
 
 .application-submit-row {
@@ -2372,21 +2391,42 @@ hr {
   color: var(--muted);
 }
 
+.news-page .lucide {
+  color: var(--icon-accent);
+}
+
 .email-input {
   width: 100%;
-  padding: 10px 14px;
+  padding: 12px 16px;
   margin-bottom: 10px;
-  background: var(--bg2);
-  border: 0.5px solid var(--border);
-  border-radius: var(--r);
+  background-color: rgba(11, 18, 36, 0.92);
+  border: 0.5px solid rgba(99, 130, 255, 0.18);
+  border-radius: 16px;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 13px;
+  line-height: 1.5;
   outline: none;
+  box-shadow:
+    inset 0 1px 0 rgba(238, 242, 255, 0.04),
+    inset 0 0 0 1px rgba(91, 126, 255, 0.08);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.email-input:hover,
+.footer-news-input:hover {
+  border-color: rgba(99, 130, 255, 0.32);
 }
 
 .email-input:focus {
-  border-color: var(--border2);
+  border-color: rgba(46, 185, 255, 0.45);
+  background-color: rgba(8, 13, 28, 0.95);
+  box-shadow:
+    0 0 0 2px rgba(46, 185, 255, 0.18),
+    inset 0 0 0 1px rgba(91, 126, 255, 0.2);
 }
 
 .news-subscribe-btn {
@@ -3540,12 +3580,29 @@ hr {
 .footer-news-input {
   width: 100%;
   min-width: 210px;
-  border-radius: 12px;
-  border: 1px solid rgba(104, 126, 246, 0.2);
-  background: rgba(14, 24, 49, 0.7);
+  border-radius: 16px;
+  border: 0.5px solid rgba(99, 130, 255, 0.18);
+  background-color: rgba(11, 18, 36, 0.92);
   color: var(--text);
-  padding: 11px 14px;
+  padding: 12px 16px;
   font-size: 13px;
+  line-height: 1.5;
+  outline: none;
+  box-shadow:
+    inset 0 1px 0 rgba(238, 242, 255, 0.04),
+    inset 0 0 0 1px rgba(91, 126, 255, 0.08);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.footer-news-input:focus {
+  border-color: rgba(46, 185, 255, 0.45);
+  background-color: rgba(8, 13, 28, 0.95);
+  box-shadow:
+    0 0 0 2px rgba(46, 185, 255, 0.18),
+    inset 0 0 0 1px rgba(91, 126, 255, 0.2);
 }
 
 .footer-news-btn {
