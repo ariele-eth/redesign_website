@@ -1,42 +1,47 @@
-WEBSITE CMS REQUIREMENTS
-========================
-
+# WEBSITE CMS REQUIREMENTS
 
 1. FRONTEND CHANGES (NO SANITY)
---------------------------------
+
+---
 
 Home page
-The home page should automatically display the same upcoming events shown on the Events page. The data source should be the Events content type in Sanity — no separate data entry required.
+The home page should automatically display the same upcoming events shown on the Events page. The data source should be the Events content type in Sanity — no separate data entry required. Only future events should appear on the home page, ordered by date ascending.
 
 News page
 Remove the newsletter signup box. We do not want newsletter functionality at this time.
 
+1. SANITY CMS CONTENT REQUIREMENTS
 
-2. SANITY CMS CONTENT REQUIREMENTS
-------------------------------------
+---
 
 Home page — our partners section
 Make the partners section fully manageable in Sanity. Each partner entry should include at minimum:
+
 - Name
 - Logo
 - Website link
 - Short description (optional)
+- Order (number) for manual sorting
+- Visibility flag (isVisible)
+- Flags for showing on home page, collaborate page, or both
 
 On the website, only the logo is displayed; clicking it opens the website link. This section uses the shared Partners content type (see section 3).
 
-
 About us page — meet the people
 Make this section fully manageable in Sanity. Each person entry should include at minimum:
+
 - Name
 - Role
 - Image
 - Committee (referenced from the shared Committees content type, see section 6)
 - Social links (optional)
 - Short bio (optional)
-
+- Order (number) for manual sorting
+- Visibility flag (isVisible)
 
 Events page — events
 Make events fully manageable in Sanity. Each event entry should include at minimum:
+
 - Title
 - Date and time
 - Location
@@ -44,63 +49,77 @@ Make events fully manageable in Sanity. Each event entry should include at minim
 - Image
 - Registration link
 - Event type (e.g. Workshop, Panel, Hackathon, Networking — manageable in Sanity, see section 5)
+- Visibility flag (isVisible)
 
-The home page "Upcoming Events" section should reuse this same content type — no duplicate entry is needed.
-
+The home page "Upcoming Events" section should reuse this same content type — no duplicate entry is needed. Only future events should be displayed on the home page.
 
 Join us page — open positions
 Make open positions fully manageable in Sanity. Each position entry should include at minimum:
+
 - Title
 - Committee (referenced from the shared Committees content type, see section 6)
 - Role
 - Description
 - Requirements
+- Visibility flag (isVisible)
+- Order (number) for manual sorting
 
 When a user clicks on an open position, they should be taken to the Committee Application page with the correct committee pre-selected. This should work as follows:
+
 - The committee field on each position entry (e.g. "Innovation & Technology") is used to construct the application link.
 - The backend generates or resolves the correct application URL with the committee pre-selected (e.g. ?committee=innovation-technology), based on the committee's slug or identifier stored in Sanity.
 - Admins do not need to manage the application link manually — it is derived automatically from the committee field.
 - The committee slug or identifier used for this mapping should be stored in Sanity as part of the Committee entry, so no mapping logic is hardcoded in the frontend or backend.
 
-
 Collaborate page — current partners
 This section should use the same shared Partners content type as the home page "Our Partners" section. There should be a single content type for partners, not two separate ones. Each partner entry can be marked to appear on the home page, the collaborate page, or both.
 
-
 Education page — knowledge graph
 Make the knowledge graph fully manageable in Sanity. Each node entry should include at minimum:
+
 - Node label/title
 - Popup/detail content shown when the node is clicked
 - References to connected nodes (edges), if connections also need to be manageable in Sanity
 - Attached files (PDFs and presentations) displayed inside the node popup — the education committee should be able to add and remove these per node (see section 8 for file storage)
+- Order (number) for manual sorting
+- Visibility flag (isVisible)
 
 When a node is deleted in Sanity, its popup content and all associated files should also disappear from the website. There should be no hardcoded node-specific popup content remaining in the codebase.
 
-
 Education page — learning track cards
-Make the learning track cards fully manageable in Sanity. The education committee should be able to add, modify, delete, and reorder cards. Reordering should be supported via Sanity's built-in array ordering or an explicit order field. The committee should be able to control the structure of the education page using these cards.
+Make the learning track cards fully manageable in Sanity. The education committee should be able to add, modify, delete, and reorder cards. Reordering should be supported via Sanity's built-in array ordering or an explicit order field. The committee should be able to control the structure of the education page using these cards. Each card should include at minimum:
 
+- Title
+- Description
+- Image/Icon
+- Link (optional)
+- Order (number)
+- Visibility flag (isVisible)
 
 News page — news cards
 Make news cards fully manageable in Sanity. Each post should include at minimum:
+
 - Title
 - Date
 - Category (e.g. Announcement, Partnership, Community — manageable in Sanity, see section 5)
 - Short preview text
 - Full content or external link
-
+- Visibility flag (isVisible)
+- Slug for stable URL
 
 News page — quick update cards
 Make quick update cards fully manageable in Sanity. Each update should include at minimum:
+
 - Title
 - Date
 - Short text
 - Category (e.g. Research, Events, Club, Industry — manageable in Sanity, see section 5)
 - Link (optional)
+- Visibility flag (isVisible)
+- Slug for stable URL
+1. SHARED CONTENT TYPES
 
-
-3. SHARED CONTENT TYPES
-------------------------
+---
 
 To avoid duplicate content, the following should each be a single shared Sanity content type used across multiple pages:
 
@@ -113,12 +132,12 @@ To avoid duplicate content, the following should each be a single shared Sanity 
 - Education knowledge graph — Education page
 - Learning track cards — Education page
 - Committees — People section, Open Positions, and application form mapping (see section 6)
+1. GENERAL REQUIREMENTS
 
-
-4. GENERAL REQUIREMENTS
-------------------------
+---
 
 All Sanity-managed sections should be fully modular. Admins should be able to:
+
 - Add new entries
 - Modify existing entries
 - Delete entries
@@ -127,9 +146,9 @@ All Sanity-managed sections should be fully modular. Admins should be able to:
 
 No hardcoded content should remain in the frontend or backend for any of these sections.
 
+1. MANAGEABLE TYPES AND CATEGORIES
 
-5. MANAGEABLE TYPES AND CATEGORIES
-------------------------------------
+---
 
 All types, categories, and similar option lists used across the website should be manageable in Sanity. Admins should be able to add, modify, and delete options without any code changes. This applies to, but is not limited to:
 
@@ -137,124 +156,151 @@ All types, categories, and similar option lists used across the website should b
 - News categories (e.g. Announcement, Partnership, Community)
 - Quick update categories (e.g. Research, Events, Club, Industry)
 
-The values shown in the examples above are starting defaults, not fixed values. The frontend should always read these options from Sanity rather than having them hardcoded. If a type or category is removed in Sanity, it should no longer appear as an option anywhere on the website.
+The frontend should always read these options from Sanity rather than having them hardcoded. If a type or category is removed in Sanity, it should no longer appear as an option anywhere on the website.
 
+1. COMMITTEES AS A SHARED CONTENT TYPE
 
-6. COMMITTEES AS A SHARED CONTENT TYPE
-----------------------------------------
+---
 
 Committees should be a dedicated, shared content type in Sanity. This means the list of committees is defined once and referenced wherever committees are used across the site. Each committee entry should include at minimum:
 
 - Name (e.g. Innovation & Technology)
 - Slug or identifier (e.g. innovation-technology) — used by the backend to construct the correct application URL with the committee pre-selected
+- Icon: string, controlled Lucide icon name selected from a fixed dropdown
+- Purpose (text)
+- CoreResponsibilities (array of strings)
+- Goals (array of strings)
+- Order (number)
+- Visibility flag (isVisible)
 
 This content type should be used as the single source of truth in the following places:
+
 - People entries (committee field on About Us page)
 - Open position entries (committee field on Join Us page)
 - Application form URL construction (the slug is used to pre-select the correct committee on the Committee Application page)
 
 The backend should resolve the correct committee identifier from Sanity when constructing application links — no committee names or slugs should be hardcoded in the frontend or backend. If a committee is renamed or its slug is updated in Sanity, this should be reflected automatically everywhere it is used without requiring a code change.
 
+1. ROLE-BASED ACCESS IN SANITY
 
-7. ROLE-BASED ACCESS IN SANITY
---------------------------------
+---
 
 Sanity should be configured with role-based access control so that each committee can only edit the content relevant to them. Roles and their access rights should be set up as follows:
 
 Admin
+
 - Full access to all content types across all pages specified in this document.
 - Can manage roles, committees, types, and categories.
 
 Education
+
 - Education page: Knowledge graph (including attached PDFs and presentations per node), learning track cards.
 
 Marketing / Events
+
 - Events page: Events.
 - News page: News cards, quick update cards.
 - Collaborate page: Partners (shared content type — changes here also affect the home page Our Partners section indirectly).
 
 Innovation & Technology
+
 - No Sanity access beyond what is granted by default.
 - Note: Innovation & Technology does not manage any content through Sanity directly.
 
 Internal Affairs
+
 - About Us page: People (all entries).
 - Join Us page: Open positions (all committees' entries, not scoped to own committee only).
 
 External Relations
+
 - Collaborate page: Partners (shared content type — changes here also affect the home page Our Partners section indirectly).
 
 Notes on home page access:
+
 - No role has direct access to the home page as a standalone section.
 - The home page reflects shared content managed by the relevant committees through their own content types (Events managed by Marketing/Events, Partners managed by Marketing/Events and External Relations).
 - This means committees indirectly influence the home page through the content types they already own.
 
 Notes on open positions access:
+
 - Internal Affairs has full access to all open positions regardless of committee.
 - Innovation & Technology has no access to the Join Us page or open positions in Sanity.
 - The exact permission scoping should be reviewed and confirmed with the developer before implementation, as Sanity's permission model has constraints depending on the plan tier.
 
 Note on Finances & Legal:
+
 - Finances & Legal appears as a committee option on the application form but has not been assigned a Sanity role. This should be clarified and decided before implementation.
+1. FILE STORAGE FOR PDFS AND PRESENTATIONS
 
+---
 
-8. FILE STORAGE FOR PDFS AND PRESENTATIONS
--------------------------------------------
+PDFs and presentations attached to knowledge graph node popups are stored and served from Supabase Storage (managed storage). The bucket is named `educational content`.
 
-PDFs and presentations attached to knowledge graph node popups need to be stored and served from a file storage solution. The storage provider has not yet been decided. The two options currently under consideration are:
+Integration works as follows:
 
-- VSOS server (own infrastructure)
-- Supabase (managed storage)
-
-This decision should be made before development of the knowledge graph file attachment feature begins. Whichever solution is chosen, the integration should work as follows:
 - The education committee uploads files through Sanity.
-- Files are stored in the chosen storage solution.
+- Files are stored in the Supabase bucket.
 - Sanity holds a reference or URL to each file, which the frontend uses to display or link to the file in the node popup.
-- When a file is removed in Sanity, it should no longer appear on the website. Cleanup of the actual file from storage should also be handled to avoid orphaned files accumulating over time.
+- When a file is removed in Sanity, it should no longer appear on the website. Cleanup of the actual file from Supabase should also be handled to avoid orphaned files accumulating over time.
+- No subfolders exist in the bucket initially; they are created automatically when files are transferred from Sanity.
 
+All other content (images, icons) continues to be managed in Sanity as described above.
 
-9. IMPLEMENTATION SPECIFICATION (SITE STATS + COMMITTEES)
----------------------------------------------------------
+1. IMPLEMENTATION SPECIFICATION (SITE STATS + COMMITTEES)
+
+---
 
 Schemas created or extended
+
 - Created a new singleton document type: siteStats
-	- members (number) -> Active Members
-	- events (number) -> Events Per Year
-	- partners (number) -> Industry Partners
-	- committees (number) -> Active Committees
-	- builders (number) -> Active Builders
+    - members (number) -> Active Members
+    - events (number) -> Events Per Year
+    - partners (number) -> Industry Partners
+    - committees (number) -> Active Committees
+    - builders (number) -> Active Builders
 - Extended committee schema with:
-	- purpose (text)
-	- coreResponsibilities (array of strings)
-	- goals (array of strings)
-	- order (number)
-	- icon (image, optional)
+    - Purpose (text)
+    - CoreResponsibilities (array of strings)
+    - Goals (array of strings)
+    - Order (number)
+    - Icon: string, controlled Lucide icon name selected from a fixed dropdown
 
 Pages updated
+
 - Home page: hero stats and vision stats now read from siteStats
 - About page: committee accordion section and organigram now read from committee documents
 
 GROQ queries used
 // Stats
 *[_type == "siteStats"][0] {
-	members, events, partners, committees, builders
+members, events, partners, committees, builders
 }
 
 // Committees
 *[_type == "committee"] | order(order asc) {
-	_id,
-	name,
-	purpose,
-	coreResponsibilities,
-	goals,
-	order,
-	icon
+_id,
+name,
+purpose,
+coreResponsibilities,
+goals,
+order,
+icon
 }
 
 Environment variables
-- No new environment variables required for these updates
+
+- Existing Sanity environment variables are required:
+
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+
+NEXT_PUBLIC_SANITY_DATASET=production
+
+NEXT_PUBLIC_SANITY_API_VERSION=2026-05-10
 
 Implementation notes
+
 - The hero stats keep the "+" suffix on members/events/partners and the committees count stays without a plus, matching the existing display.
 - Committee accordion content uses purpose, responsibilities, and goals from Sanity; responsibilities/goals are rendered as a single inline bullet string to preserve the existing layout.
 - Organigram committee nodes are generated from the ordered committee list; labels are split across two lines by name length to match the existing node layout.
+- Ordering and visibility rules are now included for all shared content types where relevant.
