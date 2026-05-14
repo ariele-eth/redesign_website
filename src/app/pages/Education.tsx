@@ -1,21 +1,22 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { PageSectionHeader } from '@/components/PageSectionHeader'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import {
-  FileText, Monitor, Video, Plus, X,
-  BookOpen, Layers, Zap, Shield, Download,
+  FileText, Monitor, Video,
+  Layers, Zap, Shield, Download,
 } from 'lucide-react'
+import { toPlainText } from '@/sanity/lib/portableText'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Level   = 'Beginner' | 'Intermediate' | 'Advanced'
 type ResType = 'pdf' | 'slides' | 'video'
 
-interface Resource { type: ResType; name: string }
+interface Resource { type: ResType; name: string; url?: string | null }
 
 interface Topic {
   id:        number
@@ -32,6 +33,34 @@ interface Topic {
 
 interface GraphData { topics: Topic[]; edges: [number, number][] }
 
+type KnowledgeNode = {
+  _id: string
+  title: string
+  popupContent?: unknown
+  connections?: Array<{ _id: string; title: string }>
+  resources?: Array<{
+    title: string
+    kind?: string | null
+    fileUrl?: string | null
+    url?: string | null
+    storageUrl?: string | null
+  }>
+}
+
+type LearningTrack = {
+  _id: string
+  title: string
+  summary: string
+  details?: unknown
+  ctaLabel?: string | null
+  ctaLink?: string | null
+}
+
+type EducationProps = {
+  knowledgeNodes: KnowledgeNode[]
+  learningTracks: LearningTrack[]
+}
+
 // ─── Palette ──────────────────────────────────────────────────────────────────
 
 const LEVEL_COLOR: Record<Level, string> = {
@@ -40,102 +69,81 @@ const LEVEL_COLOR: Record<Level, string> = {
   Advanced:     '#38bdf8',
 }
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+const TRACK_COLORS = ['#5b7eff', '#a78bfa', '#38bdf8']
+const TRACK_ICONS = [Layers, Zap, Shield]
 
-const DEFAULT_DATA: GraphData = {
-  topics: [
-    {
-      id: 0, label: 'Blockchain\nFundamentals', num: '01', level: 'Beginner',
-      color: '#5b7eff', x: 0.18, y: 0.5,
-      desc: 'The foundational layer of everything — understand what a blockchain is, how consensus works, and why it matters.',
-      connects: ['Smart Contracts', 'Wallets', 'Consensus'],
-      resources: [
-        { type: 'pdf',    name: 'What is a Blockchain' },
-        { type: 'slides', name: 'How Transactions Work' },
-        { type: 'pdf',    name: 'Consensus Mechanisms' },
-      ],
-    },
-    {
-      id: 1, label: 'Wallets &\nTransactions', num: '02', level: 'Beginner',
-      color: '#5b7eff', x: 0.35, y: 0.22,
-      desc: 'Keys, addresses, signing — the primitives behind every on-chain action.',
-      connects: ['Blockchain Fundamentals', 'Smart Contracts', 'DeFi'],
-      resources: [
-        { type: 'slides', name: 'Keys & Addresses' },
-        { type: 'pdf',    name: 'Transaction Lifecycle' },
-        { type: 'video',  name: 'MetaMask Walkthrough' },
-      ],
-    },
-    {
-      id: 2, label: 'Smart\nContracts', num: '03', level: 'Intermediate',
-      color: '#a78bfa', x: 0.5, y: 0.38,
-      desc: 'Self-executing code on the blockchain. The building block of DeFi, NFTs, and DAOs.',
-      connects: ['Blockchain Fundamentals', 'DeFi', 'DAOs', 'ZK Proofs'],
-      resources: [
-        { type: 'pdf',    name: 'Introduction to Smart Contracts' },
-        { type: 'slides', name: 'Solidity Basics' },
-        { type: 'pdf',    name: 'Example Use Cases' },
-      ],
-    },
-    {
-      id: 3, label: 'DeFi', num: '04', level: 'Intermediate',
-      color: '#a78bfa', x: 0.68, y: 0.22,
-      desc: 'Decentralised finance protocols — lending, borrowing, AMMs, yield, and more.',
-      connects: ['Smart Contracts', 'Wallets & Transactions', 'DAOs', 'Layer 2'],
-      resources: [
-        { type: 'pdf',    name: 'What is DeFi' },
-        { type: 'slides', name: 'Lending & Borrowing' },
-        { type: 'pdf',    name: 'Risks in DeFi' },
-      ],
-    },
-    {
-      id: 4, label: 'DAOs', num: '05', level: 'Intermediate',
-      color: '#a78bfa', x: 0.68, y: 0.72,
-      desc: 'Decentralised autonomous organisations — on-chain governance and collective decision-making.',
-      connects: ['Smart Contracts', 'DeFi', 'Tokenomics'],
-      resources: [
-        { type: 'pdf',    name: 'What is a DAO' },
-        { type: 'slides', name: 'Governance Models' },
-        { type: 'pdf',    name: 'Real-World Examples' },
-      ],
-    },
-    {
-      id: 5, label: 'Layer 2 &\nScaling', num: '06', level: 'Advanced',
-      color: '#38bdf8', x: 0.84, y: 0.38,
-      desc: 'Rollups, channels and sidechains that scale Ethereum without sacrificing security.',
-      connects: ['DeFi', 'ZK Proofs', 'Smart Contracts'],
-      resources: [
-        { type: 'pdf',    name: 'Rollup Architecture' },
-        { type: 'slides', name: 'Optimism vs Arbitrum' },
-        { type: 'video',  name: 'L2 Deep Dive' },
-      ],
-    },
-    {
-      id: 6, label: 'ZK Proofs', num: '07', level: 'Advanced',
-      color: '#38bdf8', x: 0.84, y: 0.65,
-      desc: 'Zero-knowledge cryptography — the backbone of privacy, scalability, and trustless computation.',
-      connects: ['Smart Contracts', 'Layer 2 & Scaling'],
-      resources: [
-        { type: 'pdf',    name: 'ZK Proof Primer' },
-        { type: 'slides', name: 'SNARKs vs STARKs' },
-        { type: 'pdf',    name: 'ZK Applications' },
-      ],
-    },
-    {
-      id: 7, label: 'Tokenomics', num: '08', level: 'Advanced',
-      color: '#38bdf8', x: 0.5, y: 0.78,
-      desc: 'Designing token economies — incentive structures, supply dynamics, and game theory on-chain.',
-      connects: ['DAOs', 'DeFi', 'Smart Contracts'],
-      resources: [
-        { type: 'pdf',    name: 'Token Design Principles' },
-        { type: 'slides', name: 'Incentive Mechanisms' },
-        { type: 'pdf',    name: 'Case Studies' },
-      ],
-    },
-  ],
-  edges: [
-    [0,1],[0,2],[1,2],[1,3],[2,3],[2,4],[2,5],[2,6],[3,4],[3,5],[4,7],[5,6],[3,7],[2,7],
-  ],
+function normalizeResourceType(kind?: string | null, url?: string | null): ResType {
+  const lower = (kind ?? '').toLowerCase()
+  if (lower.includes('slide')) return 'slides'
+  if (lower.includes('video')) return 'video'
+  if (lower.includes('pdf')) return 'pdf'
+
+  if (url) {
+    if (url.endsWith('.pdf')) return 'pdf'
+    if (url.match(/\.(pptx?|key)$/i)) return 'slides'
+    if (url.match(/\.(mp4|mov|webm)$/i)) return 'video'
+  }
+
+  return 'pdf'
+}
+
+function buildGraphData(nodes: KnowledgeNode[]): GraphData {
+  if (!nodes.length) return { topics: [], edges: [] }
+
+  const total = nodes.length
+  const slice = Math.ceil(total / 3)
+  const idToIndex = new Map(nodes.map((node, index) => [node._id, index]))
+  const edgesSet = new Set<string>()
+
+  const topics: Topic[] = nodes.map((node, index) => {
+    const angle = (Math.PI * 2 * index) / total
+    const radius = 0.3 + (index % 2) * 0.08
+    const x = Math.min(0.86, Math.max(0.14, 0.5 + radius * Math.cos(angle)))
+    const y = Math.min(0.82, Math.max(0.18, 0.5 + radius * Math.sin(angle)))
+    const level: Level = index < slice ? 'Beginner' : index < slice * 2 ? 'Intermediate' : 'Advanced'
+
+    const resources = (node.resources ?? []).map((resource) => {
+      const resourceUrl = resource.storageUrl ?? resource.fileUrl ?? resource.url ?? null
+      const type = normalizeResourceType(resource.kind, resourceUrl)
+      return {
+        type,
+        name: resource.title,
+        url: resourceUrl,
+      }
+    })
+
+    const connects = (node.connections ?? []).map((connection) => connection.title)
+
+    return {
+      id: index,
+      num: String(index + 1).padStart(2, '0'),
+      label: node.title,
+      level,
+      color: LEVEL_COLOR[level],
+      x,
+      y,
+      desc: toPlainText(node.popupContent) || 'Details coming soon.',
+      connects,
+      resources,
+    }
+  })
+
+  nodes.forEach((node, index) => {
+    node.connections?.forEach((connection) => {
+      const targetIndex = idToIndex.get(connection._id)
+      if (targetIndex === undefined) return
+      const a = Math.min(index, targetIndex)
+      const b = Math.max(index, targetIndex)
+      edgesSet.add(`${a}-${b}`)
+    })
+  })
+
+  const edges: [number, number][] = Array.from(edgesSet).map((key) => {
+    const [a, b] = key.split('-').map(Number)
+    return [a, b]
+  })
+
+  return { topics, edges }
 }
 
 // ─── Canvas graph component ───────────────────────────────────────────────────
@@ -319,112 +327,6 @@ function ResIcon({ type }: { type: ResType }) {
   return                        <Video    size={14} />
 }
 
-// ─── Add-node modal ───────────────────────────────────────────────────────────
-
-function AddNodeModal({ onClose, onAdd }: {
-  onClose: () => void
-  onAdd:   (t: Omit<Topic, 'id' | 'num'>) => void
-}) {
-  const [label,     setLabel]     = useState('')
-  const [level,     setLevel]     = useState<Level>('Beginner')
-  const [desc,      setDesc]      = useState('')
-  const [resName,   setResName]   = useState('')
-  const [resType,   setResType]   = useState<ResType>('pdf')
-  const [resources, setResources] = useState<Resource[]>([])
-
-  const addRes = () => {
-    if (!resName.trim()) return
-    setResources(r => [...r, { type: resType, name: resName.trim() }])
-    setResName('')
-  }
-
-  const submit = () => {
-    if (!label.trim()) return
-    onAdd({ label, level, color: LEVEL_COLOR[level], x: Math.random() * 0.5 + 0.25, y: Math.random() * 0.5 + 0.25, desc, connects: [], resources })
-    onClose()
-  }
-
-  const inputStyle: React.CSSProperties = {
-    width: '100%', padding: '9px 13px',
-    background: 'var(--bg2)', border: '0.5px solid var(--border)',
-    borderRadius: 'var(--r)', color: 'var(--text)',
-    fontFamily: 'var(--font-body)', fontSize: 14, outline: 'none',
-  }
-
-  return (
-    <div
-      style={{ position: 'fixed', inset: 0, zIndex: 900, background: 'rgba(4,6,15,0.72)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}
-      onClick={onClose}
-    >
-      <div
-        style={{ background: 'var(--surface)', border: '0.5px solid var(--border2)', borderRadius: 'var(--rl)', padding: 28, width: '100%', maxWidth: 480 }}
-        onClick={e => e.stopPropagation()}
-      >
-        {/* header */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', display: 'flex' }}>
-            <X size={16} />
-          </button>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {/* label */}
-          <div>
-            <div className="label-secondary" style={{ marginBottom: 6 }}>Topic label</div>
-            <input value={label} onChange={e => setLabel(e.target.value)} placeholder="e.g. Cross-chain Bridges" style={inputStyle} />
-          </div>
-
-          {/* level */}
-          <div>
-            <div className="label-secondary" style={{ marginBottom: 6 }}>Level</div>
-            <select value={level} onChange={e => setLevel(e.target.value as Level)} style={inputStyle}>
-              <option>Beginner</option>
-              <option>Intermediate</option>
-              <option>Advanced</option>
-            </select>
-          </div>
-
-          {/* desc */}
-          <div>
-            <div className="label-secondary" style={{ marginBottom: 6 }}>Description</div>
-            <textarea value={desc} onChange={e => setDesc(e.target.value)} rows={3} placeholder="Short description…" style={{ ...inputStyle, resize: 'vertical' }} />
-          </div>
-
-          {/* resources */}
-          <div>
-            <div className="label-secondary" style={{ marginBottom: 6 }}>Resources</div>
-            <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
-              <select value={resType} onChange={e => setResType(e.target.value as ResType)} style={{ ...inputStyle, width: 'auto', padding: '8px 10px', fontSize: 13 }}>
-                <option value="pdf">PDF</option>
-                <option value="slides">Slides</option>
-                <option value="video">Video</option>
-              </select>
-              <input value={resName} onChange={e => setResName(e.target.value)} onKeyDown={e => e.key === 'Enter' && addRes()} placeholder="Resource name" style={{ ...inputStyle, flex: 1, padding: '8px 12px', fontSize: 13 }} />
-              <button onClick={addRes} style={{ padding: '8px 12px', background: 'rgba(91,126,255,0.12)', border: '0.5px solid var(--border2)', borderRadius: 'var(--r)', color: 'var(--accent)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                <Plus size={14} />
-              </button>
-            </div>
-            {resources.map((r, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', marginBottom: 6, background: 'var(--bg2)', border: '0.5px solid var(--border)', borderRadius: 'var(--r)', fontSize: 12, color: 'var(--muted)' }}>
-                <span style={{ color: 'var(--accent)', display: 'flex' }}><ResIcon type={r.type} /></span>
-                <span style={{ flex: 1 }}>{r.name}</span>
-                <button onClick={() => setResources(rs => rs.filter((_, j) => j !== i))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--dim)', display: 'flex' }}>
-                  <X size={11} />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', gap: 10, marginTop: 24, justifyContent: 'flex-end' }}>
-          <button onClick={onClose} className="btn btn-outline btn-sm">Cancel</button>
-          <button onClick={submit}  className="btn btn-primary btn-sm">Add to Graph</button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 // ─── Topic detail panel ───────────────────────────────────────────────────────
 
 function TopicPanel({ topic }: { topic: Topic }) {
@@ -474,9 +376,24 @@ function TopicPanel({ topic }: { topic: Topic }) {
                 <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text)', marginBottom: 2 }}>{r.name}</div>
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--dim)' }}>{r.type}</div>
               </div>
-              <button className="btn btn-outline btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-                <Download size={12} /> Open
-              </button>
+              {r.url ? (
+                <a
+                  className="btn btn-outline btn-sm"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexShrink: 0 }}
+                  href={r.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Download size={12} /> Open
+                </a>
+              ) : (
+                <span
+                  className="btn btn-outline btn-sm"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexShrink: 0, opacity: 0.6 }}
+                >
+                  <Download size={12} /> Unavailable
+                </span>
+              )}
             </div>
           ))}
         </div>
@@ -487,31 +404,31 @@ function TopicPanel({ topic }: { topic: Topic }) {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export default function EducationPage() {
-  const [graphData, setGraphData] = useState<GraphData>(DEFAULT_DATA)
-  const [selected,  setSelected]  = useState<number | null>(null)
-  const [showModal, setShowModal] = useState(false)
+export default function EducationPage({ knowledgeNodes, learningTracks }: EducationProps) {
+  const [selected, setSelected] = useState<number | null>(null)
 
+  const graphData = useMemo(() => buildGraphData(knowledgeNodes), [knowledgeNodes])
   const selectedTopic = selected !== null ? (graphData.topics[selected] ?? null) : null
 
-  const handleAddNode = useCallback((partial: Omit<Topic, 'id' | 'num'>) => {
-    setGraphData(prev => ({
-      ...prev,
-      topics: [...prev.topics, { ...partial, id: prev.topics.length, num: String(prev.topics.length + 1).padStart(2, '0') }],
-    }))
-  }, [])
+  const startCards = useMemo(() => {
+    const cards: Array<{ id: string; label: string; meta: string; type: ResType }> = []
 
-  const tracks = [
-    { icon: Layers, color: '#5b7eff', title: 'Beginner Track',    desc: 'Foundations of blockchain, consensus, wallets, and your first transactions on-chain.', count: 3 },
-    { icon: Zap,    color: '#a78bfa', title: 'Intermediate Track', desc: 'Smart contracts, DeFi protocols, DAOs and governance. Build your first dApp.',        count: 3 },
-    { icon: Shield, color: '#38bdf8', title: 'Advanced Track',     desc: 'Layer 2 scaling, ZK proofs, SNARKs/STARKs, and deep tokenomic design.',               count: 2 },
-  ]
+    knowledgeNodes.forEach((node) => {
+      node.resources?.forEach((resource) => {
+        if (cards.length >= 3) return
+        const resourceUrl = resource.storageUrl ?? resource.fileUrl ?? resource.url ?? null
+        const type = normalizeResourceType(resource.kind, resourceUrl)
+        cards.push({
+          id: `${node._id}-${resource.title}`,
+          label: resource.title,
+          meta: `${type.toUpperCase()} · ${node.title}`,
+          type,
+        })
+      })
+    })
 
-  const startCards = [
-    { icon: FileText, label: 'What is Blockchain',    meta: '12 pages · Beginner' },
-    { icon: Monitor,  label: 'Wallets & Transactions', meta: '18 slides · Beginner' },
-    { icon: BookOpen, label: 'Smart Contracts Basics', meta: '8 pages · Beginner' },
-  ]
+    return cards
+  }, [knowledgeNodes])
 
   return (
     <>
@@ -547,8 +464,8 @@ export default function EducationPage() {
                   Explore topics interactively, follow curated learning tracks, and access club-authored resources at every level.
                 </p>
                 <div className="about-hero-points">
-                  <span>8 core topics</span>
-                  <span>3 difficulty levels</span>
+                  <span>{knowledgeNodes.length} core topics</span>
+                  <span>{learningTracks.length} learning tracks</span>
                   <span>Club-authored resources</span>
                 </div>
               </div>
@@ -558,12 +475,16 @@ export default function EducationPage() {
                 <div style={{ position: 'absolute', top: 0, right: 0, width: 110, height: 110, background: 'radial-gradient(circle,rgba(91,126,255,0.08),transparent)', borderRadius: '50%', transform: 'translate(30%,-30%)', pointerEvents: 'none' }} />
                 <div className="label" style={{ marginBottom: 16 }}>Start Here</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {startCards.map((s, i) => {
-                    const Icon = s.icon
-                    return (
-                      <StartItem key={i} icon={<Icon size={14} />} label={s.label} meta={s.meta} />
-                    )
-                  })}
+                  {startCards.length ? (
+                    startCards.map((s) => {
+                      const Icon = s.type === 'slides' ? Monitor : s.type === 'video' ? Video : FileText
+                      return (
+                        <StartItem key={s.id} icon={<Icon size={14} />} label={s.label} meta={s.meta} />
+                      )
+                    })
+                  ) : (
+                    <div style={{ fontSize: 12, color: 'var(--dim)' }}>No resources yet.</div>
+                  )}
                 </div>
               </div>
             </div>
@@ -576,11 +497,19 @@ export default function EducationPage() {
             </ScrollReveal>
             <ScrollReveal delay={80}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
-                {tracks.map((track, i) => {
-                  const Icon = track.icon
+                {learningTracks.map((track, i) => {
+                  const Icon = TRACK_ICONS[i % TRACK_ICONS.length]
+                  const color = TRACK_COLORS[i % TRACK_COLORS.length]
                   return (
-                    <ScrollReveal key={i} delay={80 + i * 80}>
-                      <TrackCard icon={<Icon size={20} strokeWidth={1.5} />} color={track.color} title={track.title} desc={track.desc} count={track.count} />
+                    <ScrollReveal key={track._id} delay={80 + i * 80}>
+                      <TrackCard
+                        icon={<Icon size={20} strokeWidth={1.5} />}
+                        color={color}
+                        title={track.title}
+                        desc={track.summary}
+                        ctaLabel={track.ctaLabel ?? 'Explore'}
+                        ctaLink={track.ctaLink}
+                      />
                     </ScrollReveal>
                   )
                 })}
@@ -632,7 +561,6 @@ export default function EducationPage() {
         <Footer />
       </div>
 
-      {showModal && <AddNodeModal onClose={() => setShowModal(false)} onAdd={handleAddNode} />}
     </>
   )
 }
@@ -658,8 +586,25 @@ function StartItem({ icon, label, meta }: { icon: React.ReactNode; label: string
   )
 }
 
-function TrackCard({ icon, color, title, desc, count }: { icon: React.ReactNode; color: string; title: string; desc: string; count: number }) {
+function TrackCard({
+  icon,
+  color,
+  title,
+  desc,
+  count,
+  ctaLabel,
+  ctaLink,
+}: {
+  icon: React.ReactNode
+  color: string
+  title: string
+  desc: string
+  count?: number
+  ctaLabel?: string
+  ctaLink?: string | null
+}) {
   const [hovered, setHovered] = useState(false)
+  const label = ctaLabel || 'Explore'
   return (
     <div
       style={{ background: 'var(--surface)', border: `0.5px solid ${hovered ? 'var(--border2)' : 'var(--border)'}`, borderRadius: 'var(--rl)', padding: '28px 24px 22px', position: 'relative', overflow: 'hidden', transition: 'border-color 0.2s, transform 0.2s', transform: hovered ? 'translateY(-2px)' : '' }}
@@ -671,25 +616,23 @@ function TrackCard({ icon, color, title, desc, count }: { icon: React.ReactNode;
       <h3 style={{ fontFamily: 'var(--font-head)', fontSize: 16, fontWeight: 600, letterSpacing: '-0.3px', marginBottom: 8, color: 'var(--text)' }}>{title}</h3>
       <p style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.65, marginBottom: 20 }}>{desc}</p>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <span style={{ fontSize: 11, color: 'var(--dim)', letterSpacing: '0.5px' }}>{count} modules</span>
-        <button style={{ background: 'transparent', border: `0.5px solid ${color}`, borderRadius: 'var(--r)', padding: '5px 12px', fontSize: 11, fontWeight: 500, cursor: 'pointer', color, fontFamily: 'var(--font-body)', transition: 'opacity 0.2s' }}>
-          Explore 
-        </button>
+        <span style={{ fontSize: 11, color: 'var(--dim)', letterSpacing: '0.5px' }}>
+          {typeof count === 'number' ? `${count} modules` : 'Curriculum'}
+        </span>
+        {ctaLink ? (
+          <a
+            href={ctaLink}
+            style={{ background: 'transparent', border: `0.5px solid ${color}`, borderRadius: 'var(--r)', padding: '5px 12px', fontSize: 11, fontWeight: 500, cursor: 'pointer', color, fontFamily: 'var(--font-body)', transition: 'opacity 0.2s' }}
+          >
+            {label}
+          </a>
+        ) : (
+          <button style={{ background: 'transparent', border: `0.5px solid ${color}`, borderRadius: 'var(--r)', padding: '5px 12px', fontSize: 11, fontWeight: 500, cursor: 'pointer', color, fontFamily: 'var(--font-body)', transition: 'opacity 0.2s' }}>
+            {label}
+          </button>
+        )}
       </div>
     </div>
   )
 }
 
-function HoverButton({ onClick, children }: { onClick: () => void; children: React.ReactNode }) {
-  const [hovered, setHovered] = useState(false)
-  return (
-    <button
-      onClick={onClick}
-      style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 16px', background: hovered ? 'rgba(91,126,255,0.06)' : 'transparent', border: `0.5px solid ${hovered ? 'var(--accent)' : 'var(--border2)'}`, borderRadius: 'var(--r)', fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500, color: hovered ? 'var(--accent)' : 'var(--text)', cursor: 'pointer', letterSpacing: '0.3px', transition: 'all 0.2s' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {children}
-    </button>
-  )
-}

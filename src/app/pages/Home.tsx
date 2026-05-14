@@ -5,34 +5,35 @@ import { PageSectionHeader } from "@/components/PageSectionHeader";
 import Link from "next/link";
 import Image from "next/image";
 import { Layers3, Search, BriefcaseBusiness, Users } from "lucide-react";
+import { urlFor } from "@/sanity/lib/image";
+import { toPlainText } from "@/sanity/lib/portableText";
 
-const partners = [
-  {
-    name: "ETH Zurich",
-    logo: "/assets/partners/eth.png",
-    href: "https://ethz.ch",
-  },
-  {
-    name: "ETH Zurich FinsureTech Hub",
-    logo: "/assets/partners/ETHZ_FinsureTech_Hub.png",
-    href: "https://finsuretech.ethz.ch",
-  },
-  {
-    name: "ETH Student Project House",
-    logo: "/assets/partners/ETH_Student_Project_House.png",
-    href: "https://sph.ethz.ch",
-  },
-  {
-    name: "Blockchain Student Association EPFL",
-    logo: "/assets/partners/Blockchain_Student_Association.svg",
-    href: "https://www.bsaepfl.ch",
-  },
-  {
-    name: "VSETH",
-    logo: "/assets/partners/VSETH.svg",
-    href: "https://vseth.ethz.ch",
-  },
-];
+type Partner = {
+  _id: string;
+  name: string;
+  website?: string | null;
+  logo?: unknown;
+};
+
+type UpcomingEvent = {
+  _id: string;
+  title: string;
+  startsAt: string;
+  description?: unknown;
+  eventType?: string | null;
+};
+
+type HomeProps = {
+  partners: Partner[];
+  events: UpcomingEvent[];
+  siteStats?: {
+    members?: number;
+    events?: number;
+    partners?: number;
+    committees?: number;
+    builders?: number;
+  } | null;
+};
 
 const pillars = [
   {
@@ -61,31 +62,27 @@ const pillars = [
   },
 ];
 
-const comingUp = [
-  {
-    dateDay: "12",
-    dateMonth: "APR",
-    title: "ZK Systems Deep Dive",
-    description: "A technical session on practical zero-knowledge systems and how they are deployed at scale.",
-    type: "Workshop",
-  },
-  {
-    dateDay: "19",
-    dateMonth: "APR",
-    title: "Builder Night: ETH x Industry",
-    description: "An evening with partners and founders focused on shipping products from campus to market.",
-    type: "Networking",
-  },
-  {
-    dateDay: "03",
-    dateMonth: "MAY",
-    title: "Research Forum",
-    description: "Open presentations on cryptography, distributed systems and protocol design from student teams.",
-    type: "Research",
-  },
-];
+function getDayMonth(iso: string, tz = "Europe/Zurich") {
+  const date = new Date(iso);
+  const swissLocale = "de-CH";
+  const day = new Intl.DateTimeFormat(swissLocale, {
+    timeZone: tz,
+    day: "2-digit",
+  }).format(date);
+  const month = new Intl.DateTimeFormat(swissLocale, {
+    timeZone: tz,
+    month: "short",
+  }).format(date);
 
-export default function Home() {
+  return { day, month };
+}
+
+export default function Home({ partners, events, siteStats }: HomeProps) {
+  const formatPlus = (value?: number) =>
+    typeof value === "number" ? `${value}+` : "--";
+  const formatPlain = (value?: number) =>
+    typeof value === "number" ? String(value) : "--";
+
   return (
     <div style={{ minHeight: "100vh", position: "relative" }}>
       <div className="page-grid-bg" style={{ zIndex: 0 }} />
@@ -119,15 +116,15 @@ export default function Home() {
 
           <div className="hero-stats">
             <div>
-              <strong>500+</strong>
+              <strong>{formatPlus(siteStats?.members)}</strong>
               <span>Members</span>
             </div>
             <div>
-              <strong>40+</strong>
+              <strong>{formatPlus(siteStats?.events)}</strong>
               <span>Events / Year</span>
             </div>
             <div>
-              <strong>20+</strong>
+              <strong>{formatPlus(siteStats?.partners)}</strong>
               <span>Partners</span>
             </div>
           </div>
@@ -178,19 +175,19 @@ export default function Home() {
           <ScrollReveal delay={120}>
             <div className="vision-stats-home">
             <article className="vision-stat-card">
-              <strong>500+</strong>
+              <strong>{formatPlus(siteStats?.builders)}</strong>
               <span>Active Builders</span>
             </article>
             <article className="vision-stat-card">
-              <strong>40+</strong>
+              <strong>{formatPlus(siteStats?.events)}</strong>
               <span>Events Per Year</span>
             </article>
             <article className="vision-stat-card">
-              <strong>20+</strong>
+              <strong>{formatPlus(siteStats?.partners)}</strong>
               <span>Industry Partners</span>
             </article>
             <article className="vision-stat-card">
-              <strong>7</strong>
+              <strong>{formatPlain(siteStats?.committees)}</strong>
               <span>Active Committees</span>
             </article>
             </div>
@@ -241,17 +238,35 @@ export default function Home() {
         <ScrollReveal delay={120}>
           <div className="partner-marquee-wrap">
           <div className="partner-marquee-track">
-            {[...partners, ...partners, ...partners].map((partner, idx) => (
+            {[...partners, ...partners, ...partners].map((partner, idx) => {
+              const logoUrl = partner.logo
+                ? urlFor(partner.logo).width(120).height(48).fit("max").url()
+                : null;
+
+              return (
               <a
                 key={`${partner.name}-${idx}`}
-                href={partner.href}
+                href={partner.website ?? "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="partner-marquee-chip"
               >
-                <Image src={partner.logo} alt={partner.name} width={95} height={28} className="partner-chip-logo" />
+                {logoUrl ? (
+                  <Image
+                    src={logoUrl}
+                    alt={partner.name}
+                    width={95}
+                    height={28}
+                    className="partner-chip-logo"
+                  />
+                ) : (
+                  <span className="partner-chip-logo" style={{ fontSize: 12 }}>
+                    {partner.name}
+                  </span>
+                )}
               </a>
-            ))}
+            );
+            })}
           </div>
           </div>
         </ScrollReveal>
@@ -263,22 +278,27 @@ export default function Home() {
         </ScrollReveal>
 
         <div className="coming-up-grid">
-          {comingUp.map((event, idx) => (
-            <ScrollReveal key={`${event.dateDay}-${event.title}`} delay={80 + idx * 90}>
+          {events.map((event, idx) => {
+            const { day, month } = getDayMonth(event.startsAt);
+            const description = toPlainText(event.description) || "More details coming soon.";
+
+            return (
+            <ScrollReveal key={`${event._id}-${event.title}`} delay={80 + idx * 90}>
               <article className="coming-card">
                 <div className="coming-date">
-                  <strong>{event.dateDay}</strong>
-                  <span>{event.dateMonth}</span>
+                  <strong>{day}</strong>
+                  <span>{month}</span>
                 </div>
 
                 <div className="coming-body">
-                  <p className="coming-type">{event.type}</p>
+                  <p className="coming-type">{event.eventType ?? "Event"}</p>
                   <h3>{event.title}</h3>
-                  <p>{event.description}</p>
+                  <p>{description}</p>
                 </div>
               </article>
             </ScrollReveal>
-          ))}
+            );
+          })}
         </div>
       </section>
 

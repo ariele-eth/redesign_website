@@ -1,14 +1,15 @@
-export const runtime = 'edge' // ✅ Required for Cloudflare Pages
+import { NextResponse } from 'next/server'
 
-import { NextRequest, NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase/server'
 import {
   ApplicationValidationError,
   buildApplicationInsertRow,
   type ApplicationSubmissionPayload,
 } from '@/lib/applications'
 
-export async function POST(request: NextRequest) {
+export const runtime = 'nodejs'
+
+export async function POST(request: Request) {
   try {
     const body = (await request.json()) as ApplicationSubmissionPayload
     const insertRow = buildApplicationInsertRow(body)
@@ -20,22 +21,24 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (error) {
-      console.error('Supabase error:', error)
       return NextResponse.json(
-        { error: 'Failed to submit application' },
+        { success: false, error: error.message },
         { status: 500 }
       )
     }
 
     return NextResponse.json({ success: true, data }, { status: 201 })
   } catch (error) {
-    console.error('API error:', error)
-    if (error instanceof ApplicationValidationError) {
-      return NextResponse.json({ error: error.message }, { status: 400 })
-    }
+    const message =
+      error instanceof ApplicationValidationError
+        ? error.message
+        : typeof error === 'object' && error !== null && 'message' in error
+          ? String((error as { message?: unknown }).message)
+          : 'Invalid request'
+
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { success: false, error: message },
+      { status: 400 }
     )
   }
 }

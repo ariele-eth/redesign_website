@@ -4,6 +4,20 @@ import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { client } from "@/sanity/lib/client";
+import { toPlainText } from "@/sanity/lib/portableText";
+
+export const revalidate = 60;
+
+const openPositionsQuery = `*[_type == "openPosition" && isVisible != false]
+  | order(coalesce(sortOrder, 9999) asc, title asc)
+  {
+    _id,
+    title,
+    role,
+    description,
+    "committee": committee->{ name, "slug": slug.current }
+  }`;
 
 const joinTracks = [
   {
@@ -40,44 +54,13 @@ const joinTracks = [
   },
 ];
 
-const openPositions = [
-  {
-    title: "Partnerships Associate",
-    category: "External Relations",
-    description:
-      "Source and manage relationships with protocol teams, funds, and ecosystem partners.",
-  },
-  {
-    title: "Workshop Lead",
-    category: "Education",
-    description:
-      "Design and run technical sessions across Ethereum, DeFi, smart contracts, and ZK.",
-  },
-  {
-    title: "Builder Nights Coordinator",
-    category: "Events",
-    description:
-      "Own the cadence and production of our flagship builder-focused community events.",
-  },
-  {
-    title: "Content & Brand Designer",
-    category: "Marketing",
-    description:
-      "Create visual assets and storytelling formats that elevate our campus and industry presence.",
-  },
-  {
-    title: "Operations Associate",
-    category: "Internal Affairs",
-    description:
-      "Support onboarding, planning cycles, and coordination across all active committees.",
-  },
-  {
-    title: "Finance & Legal Analyst",
-    category: "Finances & Legal",
-    description:
-      "Help manage sponsorship flows, budgeting, and governance documentation.",
-  },
-];
+type OpenPosition = {
+  _id: string;
+  title: string;
+  role?: string | null;
+  description?: unknown;
+  committee?: { name: string; slug?: string | null } | null;
+};
 
 const processSteps = [
   {
@@ -100,7 +83,9 @@ const processSteps = [
   },
 ];
 
-export default function JoinLanding() {
+export default async function JoinLanding() {
+  const openPositions: OpenPosition[] = await client.fetch(openPositionsQuery);
+
   return (
     <div className="join-page min-h-screen">
       <div className="page-grid-bg" />
@@ -185,18 +170,28 @@ export default function JoinLanding() {
             </ScrollReveal>
 
             <div className="join-positions-grid">
-              {openPositions.map((position, idx) => (
-                <ScrollReveal key={position.title} delay={90 + idx * 60}>
+              {openPositions.map((position, idx) => {
+                const description =
+                  toPlainText(position.description) ||
+                  "Details coming soon.";
+                const committeeSlug = position.committee?.slug;
+                const href = committeeSlug
+                  ? `/join/committee?committee=${encodeURIComponent(committeeSlug)}`
+                  : "/join/committee";
+
+                return (
+                <ScrollReveal key={position._id} delay={90 + idx * 60}>
                   <article className="card join-position-card">
                     <h3>{position.title}</h3>
-                    <span className="badge">{position.category}</span>
-                    <p>{position.description}</p>
-                    <Link href="/join/committee" className="hero-cta-secondary join-position-link">
+                    <span className="badge">{position.committee?.name ?? "Committee"}</span>
+                    <p>{description}</p>
+                    <Link href={href} className="hero-cta-secondary join-position-link">
                       Learn More
                     </Link>
                   </article>
                 </ScrollReveal>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

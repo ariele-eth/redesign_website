@@ -12,6 +12,16 @@ import {
   Users,
 } from "lucide-react";
 
+type Partner = {
+  _id: string;
+  name: string;
+  website?: string | null;
+};
+
+type CollaborateProps = {
+  partners: Partner[];
+};
+
 const partnerBenefits = [
   {
     eyebrow: "01",
@@ -86,24 +96,9 @@ const collaborationTypes = [
   },
 ];
 
-const partnerNames = [
-  "Ethereum Foundation",
-  "Chainlink Labs",
-  "Uniswap Protocol",
-  "Consensys",
-  "Paradigm",
-  "a16z Crypto",
-  "Gnosis",
-  "Polygon Labs",
-  "Aave",
-  "MakerDAO",
-  "Optimism",
-  "Arbitrum",
-];
+export default function Collaborate({ partners }: CollaborateProps) {
+  const marqueePartners = [...partners, ...partners, ...partners];
 
-const marqueePartners = [...partnerNames, ...partnerNames, ...partnerNames];
-
-export default function Collaborate() {
   return (
     <div className="collab-page min-h-screen">
       <div className="page-grid-bg" />
@@ -221,9 +216,15 @@ export default function Collaborate() {
           <div className="collab-partners-marquee" aria-label="Partner list">
             <div className="collab-partners-track">
               {marqueePartners.map((partner, index) => (
-                <span key={`${partner}-${index}`} className="collab-partner-chip">
-                  {partner}
-                </span>
+                <a
+                  key={`${partner._id}-${index}`}
+                  className="collab-partner-chip"
+                  href={partner.website ?? "#"}
+                  target={partner.website ? "_blank" : undefined}
+                  rel={partner.website ? "noopener noreferrer" : undefined}
+                >
+                  {partner.name}
+                </a>
               ))}
             </div>
           </div>

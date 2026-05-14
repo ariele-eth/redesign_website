@@ -9,6 +9,8 @@
 
 'use client'
 
+export const runtime = 'edge'
+
 import dynamic from 'next/dynamic'
 import config from '../../../../sanity.config'
 

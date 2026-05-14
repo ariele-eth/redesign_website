@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-// Checkbox removed: we no longer collect accept_terms from the UI
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 
 export default function MemberApplication() {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -30,19 +30,29 @@ export default function MemberApplication() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-
-  // The terms checkbox was removed from the UI; do NOT send accept_terms so it remains empty by default
+    setErrorMessage(null)
 
     try {
-      const response = await fetch('/api/application', {
+      const response = await fetch('/api/applications/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
-          application_type: 'member', // Add this to distinguish
-          registration: 'external', // Always set to "external" for member applications
+          registration: 'member',
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          email: formData.email,
+          city: formData.city,
+          motivation: formData.motivation,
+          university: formData.university,
+          academic_department: formData.academic_department,
+          company: formData.company,
+          industry: formData.industry,
+          experience: formData.experience,
+          preferred_role: null,
+          time_commit: null,
+          leadership_exp: null,
         }),
       })
 
@@ -67,19 +77,12 @@ export default function MemberApplication() {
           academic_department: '',
         })
       } else {
-        toast({
-          title: 'Error',
-          description:
-            result.error || 'Failed to submit application. Please try again.',
-          variant: 'destructive',
-        })
+        setErrorMessage(
+          result.error || 'Failed to submit application. Please try again.'
+        )
       }
     } catch {
-      toast({
-        title: 'Error',
-        description: 'Failed to submit application. Please try again.',
-        variant: 'destructive',
-      })
+      setErrorMessage('Failed to submit application. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -89,10 +92,6 @@ export default function MemberApplication() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
-
-  const handleCheckboxChange = (name: string, checked: boolean) => {
-    setFormData({ ...formData, [name]: checked })
   }
 
   return (
@@ -128,6 +127,11 @@ export default function MemberApplication() {
               </p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-6 application-form">
+              {errorMessage ? (
+                <p className="text-sm text-red-500" role="alert">
+                  {errorMessage}
+                </p>
+              ) : null}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="first_name">First Name *</Label>
@@ -242,8 +246,6 @@ export default function MemberApplication() {
                   required
                 />
               </div>
-
-              {/* Terms acceptance removed from UI; stored as true by default */}
 
               <div className="application-submit-row flex justify-center">
                 <Button

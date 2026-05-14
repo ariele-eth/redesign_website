@@ -1,54 +1,38 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 
-const headlineStories = [
-  {
-    category: "Announcement",
-    title: "ETH Blockchain Club Launches Spring 2026 Builder Track",
-    summary:
-      "Our new track combines protocol lectures, guided project squads, and mentorship from industry engineers.",
-    meta: "APR 2026 · 4 MIN READ",
-  },
-  {
-    category: "Partnership",
-    title: "New Collaboration with ETH Student Project House",
-    summary:
-      "The partnership expands access to prototyping spaces and interdisciplinary coaching for Web3 initiatives.",
-    meta: "APR 2026 · 3 MIN READ",
-  },
-  {
-    category: "Community",
-    title: "500+ Active Members Across 7 Committees",
-    summary:
-      "From research to events to technical education, our committees continue to grow with strong student leadership.",
-    meta: "MAR 2026 · 2 MIN READ",
-  },
-];
+type NewsItem = {
+  _id: string;
+  title: string;
+  date: string;
+  previewText: string;
+  category?: string | null;
+  externalLink?: string | null;
+};
 
-const sidebarItems = [
-  {
-    category: "Research",
-    title: "ZK Reading Group Recap",
-    meta: "APR 2026",
-  },
-  {
-    category: "Events",
-    title: "Hackathon 2026 Registrations Open",
-    meta: "APR 2026",
-  },
-  {
-    category: "Club",
-    title: "Committee Applications: New Round",
-    meta: "MAR 2026",
-  },
-  {
-    category: "Industry",
-    title: "Builder Night with Protocol Teams",
-    meta: "MAR 2026",
-  },
-];
+type QuickUpdate = {
+  _id: string;
+  title: string;
+  date: string;
+  shortText: string;
+  category?: string | null;
+  link?: string | null;
+};
 
-export default function News() {
+type NewsProps = {
+  news: NewsItem[];
+  quickUpdates: QuickUpdate[];
+};
+
+function formatNewsDate(value: string) {
+  const date = new Date(value);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+  }).format(date).toUpperCase();
+}
+
+export default function News({ news, quickUpdates }: NewsProps) {
   return (
     <div className="news-page min-h-screen">
       <div className="page-grid-bg" />
@@ -66,43 +50,60 @@ export default function News() {
 
         <section className="news-layout">
           <div>
-            {headlineStories.map((story, index) => (
-              <article key={story.title} className="news-card">
-                <div className="label">{story.category}</div>
-                <h2 className={`news-card-title ${index === 0 ? 'news-card-title-featured' : ''}`}>
-                  {story.title}
-                </h2>
-                <p>{story.summary}</p>
-                <div className="news-meta">{story.meta}</div>
-              </article>
-            ))}
+            {news.map((story, index) => {
+              const meta = formatNewsDate(story.date);
+              const content = (
+                <>
+                  <div className="label">{story.category ?? "News"}</div>
+                  <h2 className={`news-card-title ${index === 0 ? "news-card-title-featured" : ""}`}>
+                    {story.title}
+                  </h2>
+                  <p>{story.previewText}</p>
+                  <div className="news-meta">{meta}</div>
+                </>
+              );
+
+              return (
+                <article key={story._id} className="news-card">
+                  {story.externalLink ? (
+                    <a href={story.externalLink} target="_blank" rel="noopener noreferrer">
+                      {content}
+                    </a>
+                  ) : (
+                    content
+                  )}
+                </article>
+              );
+            })}
           </div>
 
           <aside>
             <div className="news-quick-updates">
               <div className="label news-quick-updates-label">Quick Updates</div>
 
-              {sidebarItems.map((item) => (
-                <article key={item.title} className="sidebar-card">
-                  <span className="badge sidebar-badge">{item.category}</span>
-                  <h3 className="sidebar-title">{item.title}</h3>
-                  <div className="sidebar-meta">{item.meta}</div>
-                </article>
-              ))}
-            </div>
+              {quickUpdates.map((item) => {
+                const meta = formatNewsDate(item.date);
+                const body = (
+                  <>
+                    <span className="badge sidebar-badge">{item.category ?? "Update"}</span>
+                    <h3 className="sidebar-title">{item.title}</h3>
+                    <p>{item.shortText}</p>
+                    <div className="sidebar-meta">{meta}</div>
+                  </>
+                );
 
-            <div className="news-widget">
-              <h3 className="h3">Newsletter</h3>
-              <p>Weekly Web3 updates and club news to your inbox.</p>
-              <input
-                type="email"
-                className="email-input"
-                placeholder="you@ethz.ch"
-                aria-label="Email address"
-              />
-              <button type="button" className="btn btn-primary news-subscribe-btn">
-                Subscribe
-              </button>
+                return (
+                  <article key={item._id} className="sidebar-card">
+                    {item.link ? (
+                      <a href={item.link} target="_blank" rel="noopener noreferrer">
+                        {body}
+                      </a>
+                    ) : (
+                      body
+                    )}
+                  </article>
+                );
+              })}
             </div>
           </aside>
         </section>

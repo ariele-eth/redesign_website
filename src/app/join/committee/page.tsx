@@ -7,12 +7,25 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import { client } from '@/sanity/lib/client'
+import { useSearchParams } from 'next/navigation'
+
+const committeesQuery = `*[_type == "committee"] | order(name asc) { _id, name, "slug": slug.current }`
+
+type CommitteeOption = {
+  _id: string
+  name: string
+  slug: string
+}
 
 export default function CommitteeApplication() {
   const { toast } = useToast()
+  const searchParams = useSearchParams()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [committeeOptions, setCommitteeOptions] = useState<CommitteeOption[]>([])
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -25,23 +38,34 @@ export default function CommitteeApplication() {
     motivation: '',
     committee_role: '',
     time_commitment: '',
-    // accept_terms removed from UI; will be submitted as true by default
   })
 
-  const committeeOptions = [
-    'Innovation & Technology',
-    'External Relations',
-    'Events',
-    'Internal Affairs',
-    'Marketing',
-    'Finances & Legal',
-    'Education',
-  ]
+  useEffect(() => {
+    let isActive = true
+    client.fetch(committeesQuery).then((data: CommitteeOption[]) => {
+      if (!isActive) return
+      setCommitteeOptions(data)
+    })
+    return () => {
+      isActive = false
+    }
+  }, [])
+
+  useEffect(() => {
+    const preselect = searchParams.get('committee')
+    if (!preselect || formData.committee_role) return
+    const match = committeeOptions.find((option) => option.slug === preselect)
+    if (!match) return
+    setFormData((prev) => ({ ...prev, committee_role: match.slug }))
+  }, [committeeOptions, formData.committee_role, searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    setErrorMessage(null)
+
     if (!formData.committee_role) {
+      setErrorMessage('Please choose a preferred committee to continue.')
       toast({
         title: 'Select a committee',
         description: 'Please choose a preferred committee to continue.',
@@ -52,17 +76,27 @@ export default function CommitteeApplication() {
 
     setIsSubmitting(true)
 
-    // Terms acceptance removed from UI; do NOT send accept_terms so it remains empty by default
     try {
-      const response = await fetch('/api/application', {
+      const response = await fetch('/api/applications/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
-          application_type: 'committee',
           registration: 'committee',
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          email: formData.email,
+          city: formData.city,
+          motivation: formData.motivation,
+          university: formData.university,
+          academic_department: formData.academic_department,
+          company: null,
+          industry: null,
+          preferred_role: formData.committee_role,
+          time_commit: formData.time_commitment,
+          leadership_exp: formData.leadership_experience,
+          experience: formData.experience,
         }),
       })
 
@@ -85,22 +119,14 @@ export default function CommitteeApplication() {
           motivation: '',
           committee_role: '',
           time_commitment: '',
-          // accept_terms and accept_committee removed from UI; no need to reset
         })
       } else {
-        toast({
-          title: 'Error',
-          description:
-            result.error || 'Failed to submit application. Please try again.',
-          variant: 'destructive',
-        })
+        setErrorMessage(
+          result.error || 'Failed to submit application. Please try again.'
+        )
       }
     } catch {
-      toast({
-        title: 'Error',
-        description: 'Failed to submit application. Please try again.',
-        variant: 'destructive',
-      })
+      setErrorMessage('Failed to submit application. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -146,6 +172,11 @@ export default function CommitteeApplication() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6 application-form">
+                {errorMessage ? (
+                  <p className="text-sm text-red-500" role="alert">
+                    {errorMessage}
+                  </p>
+                ) : null}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="first_name">First Name *</Label>
@@ -222,14 +253,14 @@ export default function CommitteeApplication() {
                   <div className="committee-options">
                     {committeeOptions.map((option) => (
                       <button
-                        key={option}
+                        key={option._id}
                         type="button"
                         onClick={() =>
-                          setFormData({ ...formData, committee_role: option })
+                          setFormData({ ...formData, committee_role: option.slug })
                         }
-                        className={`committee-option${formData.committee_role === option ? ' is-active' : ''}`}
+                        className={`committee-option${formData.committee_role === option.slug ? ' is-active' : ''}`}
                       >
-                        {option}
+                        {option.name}
                       </button>
                     ))}
                   </div>
