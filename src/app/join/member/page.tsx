@@ -180,27 +180,25 @@ export default function MemberApplication() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="university">University *</Label>
+                  <Label htmlFor="university">University</Label>
                   <Input
                     id="university"
                     name="university"
                     value={formData.university}
                     onChange={handleChange}
-                    required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="academic_department">
-                  Academic Department *
+                  Academic Department
                 </Label>
                 <Input
                   id="academic_department"
                   name="academic_department"
                   value={formData.academic_department}
                   onChange={handleChange}
-                  required
                 />
               </div>
 

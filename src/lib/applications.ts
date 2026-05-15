@@ -126,14 +126,15 @@ export function buildApplicationInsertRow(
   }
 
   if (applicationKind === 'member') {
-    requireText(payload.university, 'university')
-    requireText(payload.academic_department, 'academic_department')
+    // used to be restricting uni and acDept
   }
 
   if (applicationKind === 'committee') {
     requireText(preferredRole, 'preferred_role')
     requireText(timeCommit, 'time_commit')
     requireText(leadershipExp, 'leadership_exp')
+    requireText(payload.university, 'university')
+    requireText(payload.academic_department, 'academic_department')
   }
 
   return {
