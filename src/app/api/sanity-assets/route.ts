@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { hasWriteToken, writeClient } from '@/sanity/lib/writeClient'
 
-export const runtime = 'nodejs'
+export const runtime = 'edge'
 
 const bucket =
   process.env.SUPABASE_EDUCATIONAL_CONTENT_BUCKET ||
@@ -126,12 +126,12 @@ export async function POST(request: Request) {
     }
 
     const arrayBuffer = await response.arrayBuffer()
-    const buffer = Buffer.from(arrayBuffer)
+    const fileBody = new Uint8Array(arrayBuffer)
     const contentType = response.headers.get('content-type') || asset.mimeType || 'application/pdf'
 
     const upload = await supabaseAdmin.storage
       .from(bucket)
-      .upload(path, buffer, { contentType, upsert: false })
+      .upload(path, fileBody, { contentType, upsert: false })
 
     if (upload.error && !upload.error.message.toLowerCase().includes('already exists')) {
       return NextResponse.json(

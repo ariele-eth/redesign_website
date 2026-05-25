@@ -4,7 +4,7 @@ import { client } from '@/sanity/lib/client'
 
 export const revalidate = 60
 
-const partnersQuery = `*[_type == "partner" && isVisible == true && showOnCollaborate == true]
+const partnersQuery = `*[_type == "partner" && isVisible != false && showOnCollaborate != false]
   | order(coalesce(sortOrder, 9999) asc, name asc)
   { _id, name, website, logo }`
 

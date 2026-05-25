@@ -7,7 +7,7 @@ import {
   type ApplicationSubmissionPayload,
 } from '@/lib/applications'
 
-export const runtime = 'nodejs'
+export const runtime = 'edge'
 
 export async function POST(request: Request) {
   try {

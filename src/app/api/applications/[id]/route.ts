@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/server'
 import { isReviewStatus } from '@/lib/applications'
 
-export const runtime = 'nodejs'
+export const runtime = 'edge'
 
 type RouteParams = {
   params: Promise<{ id: string }>
