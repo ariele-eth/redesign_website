@@ -24,8 +24,21 @@ Make the partners section fully manageable in Sanity. Each partner entry should 
 - Order (number) for manual sorting
 - Visibility flag (isVisible)
 - Flags for showing on home page, collaborate page, or both
+- Flag for showing on About Us page (showOnAbout)
 
 On the website, only the logo is displayed; clicking it opens the website link. This section uses the shared Partners content type (see section 3).
+
+Home page — advisors section
+Make the advisors section fully manageable in Sanity. Each advisor entry should include at minimum:
+
+- Name
+- Logo or image
+- Short description (optional)
+- Order (number) for manual sorting
+- Visibility flag (isVisible)
+- Flags for showing on home page, collaborate page, and About Us
+
+Advisors use the same structure as Partners except they do not have a website field. On the website, only the logo is displayed and advisors are not linked out.
 
 About us page — meet the people
 Make this section fully manageable in Sanity. Each person entry should include at minimum:
@@ -73,6 +86,9 @@ When a user clicks on an open position, they should be taken to the Committee Ap
 
 Collaborate page — current partners
 This section should use the same shared Partners content type as the home page "Our Partners" section. There should be a single content type for partners, not two separate ones. Each partner entry can be marked to appear on the home page, the collaborate page, or both.
+
+Collaborate page — advisors
+This section should use the shared Advisors content type. Advisors can be shown on the home page, collaborate page, or About Us page depending on their visibility toggles.
 
 Education page — knowledge graph
 Make the knowledge graph fully manageable in Sanity. Each node entry should include at minimum:
@@ -125,6 +141,7 @@ To avoid duplicate content, the following should each be a single shared Sanity 
 
 - Events — Events page and home page Upcoming Events section
 - Partners — Home page Our Partners section and Collaborate page Current Partners section
+- Advisors — Home page Advisors section, Collaborate page Advisors section, and About Us page Advisors section
 - Open positions — Join Us page
 - News — News page
 - Quick updates — News page

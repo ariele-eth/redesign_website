@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { client } from '@/sanity/lib/client'
 import { useSearchParams } from 'next/navigation'
@@ -22,6 +22,77 @@ type CommitteeOption = {
 }
 
 export default function CommitteeApplication() {
+  return (
+    <Suspense fallback={<CommitteeApplicationShell isLoading />}>
+      <CommitteeApplicationContent />
+    </Suspense>
+  )
+}
+
+function CommitteeApplicationShell({ isLoading }: { isLoading?: boolean }) {
+  return (
+    <div className="join-page min-h-screen">
+      <div className="page-grid-bg" />
+      <Navigation />
+
+      <main>
+        <section className="page-hero-shell application-hero application-hero-tight">
+          <div className="hero-top-brand">
+            <span className="hero-top-line" />
+            <span className="hero-top-text">APPLICATIONS OPEN</span>
+          </div>
+
+          <h1 className="hero-title-main">
+            <span>Committee</span>
+            <span className="outline">Application</span>
+          </h1>
+
+          <p className="hero-subtext">
+            Apply to join one of our committees and help shape the future of
+            the club.
+          </p>
+        </section>
+
+        <section className="application-section">
+          <Card className="card application-card w-full max-w-5xl p-5 md:p-6">
+            <div className="mb-6">
+              <h2 className="h2">Committee Application</h2>
+              <p className="lead">
+                {isLoading
+                  ? 'Loading committee options...'
+                  : 'Share your experience and committee preferences to help us place you where you can make the biggest impact.'}
+              </p>
+            </div>
+
+            <div className="space-y-6 application-form">
+              <div className="h-10 rounded-md bg-muted/30" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="h-10 rounded-md bg-muted/30" />
+                <div className="h-10 rounded-md bg-muted/30" />
+              </div>
+              <div className="h-10 rounded-md bg-muted/30" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="h-10 rounded-md bg-muted/30" />
+                <div className="h-10 rounded-md bg-muted/30" />
+              </div>
+              <div className="h-10 rounded-md bg-muted/30" />
+              <div className="h-24 rounded-md bg-muted/30" />
+              <div className="h-24 rounded-md bg-muted/30" />
+              <div className="h-24 rounded-md bg-muted/30" />
+              <div className="flex justify-center">
+                <div className="h-11 w-56 rounded-full bg-muted/30" />
+              </div>
+            </div>
+          </Card>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  )
+}
+
+function CommitteeApplicationContent() {
   const { toast } = useToast()
   const searchParams = useSearchParams()
   const [isSubmitting, setIsSubmitting] = useState(false)

@@ -4,9 +4,13 @@ import { client } from '@/sanity/lib/client'
 
 export const revalidate = 60
 
-const homePartnersQuery = `*[_type == "partner" && isVisible != false && showOnHome == true]
+const homePartnersQuery = `*[_type == "partner" && isVisible != false && showOnHome != false]
   | order(coalesce(sortOrder, 9999) asc, name asc)
   { _id, name, website, logo }`
+
+const homeAdvisorsQuery = `*[_type == "advisor" && isVisible != false && showOnHome != false]
+  | order(coalesce(sortOrder, 9999) asc, name asc)
+  { _id, name, title, description, logo }`
 
 const homeEventsQuery = `*[_type == "event" && isVisible != false && startsAt >= $now]
   | order(coalesce(sortOrder, 9999) asc, startsAt asc)
@@ -23,15 +27,16 @@ const siteStatsQuery = `*[_type == "siteStats"][0] {
 
 export default async function RootPage() {
   const now = new Date().toISOString()
-  const [partners, events, siteStats] = await Promise.all([
+  const [partners, advisors, events, siteStats] = await Promise.all([
     client.fetch(homePartnersQuery),
+    client.fetch(homeAdvisorsQuery),
     client.fetch(homeEventsQuery, { now }),
     client.fetch(siteStatsQuery),
   ])
 
   return (
     <Providers>
-      <Home partners={partners} events={events} siteStats={siteStats} />
+      <Home partners={partners} advisors={advisors} events={events} siteStats={siteStats} />
     </Providers>
   )
 }

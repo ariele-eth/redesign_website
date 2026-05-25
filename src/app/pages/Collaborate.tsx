@@ -1,5 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
 import {
   BadgeDollarSign,
   CalendarDays,
@@ -16,6 +17,7 @@ type Partner = {
   _id: string;
   name: string;
   website?: string | null;
+  logo?: unknown;
 };
 
 type CollaborateProps = {
@@ -97,8 +99,6 @@ const collaborationTypes = [
 ];
 
 export default function Collaborate({ partners }: CollaborateProps) {
-  const marqueePartners = [...partners, ...partners, ...partners];
-
   return (
     <div className="collab-page min-h-screen">
       <div className="page-grid-bg" />
@@ -208,27 +208,17 @@ export default function Collaborate({ partners }: CollaborateProps) {
           </div>
         </section>
 
-        <section className="collab-partners-shell">
-          <div className="collab-section-head collab-section-head-center">
-            <div className="label">Current Partners</div>
-          </div>
-
-          <div className="collab-partners-marquee" aria-label="Partner list">
-            <div className="collab-partners-track">
-              {marqueePartners.map((partner, index) => (
-                <a
-                  key={`${partner._id}-${index}`}
-                  className="collab-partner-chip"
-                  href={partner.website ?? "#"}
-                  target={partner.website ? "_blank" : undefined}
-                  rel={partner.website ? "noopener noreferrer" : undefined}
-                >
-                  {partner.name}
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
+        <LogoMarqueeSection
+          label="Current Partners"
+          title="Current Partners"
+          items={partners}
+          linkItems
+          align="center"
+          sectionClassName="collab-partners-shell"
+          wrapperClassName="collab-partners-marquee"
+          trackClassName="collab-partners-track"
+          chipClassName="collab-partner-chip"
+        />
 
         <section id="collab-contact" className="collab-cta-section">
           <div className="collab-cta-card">

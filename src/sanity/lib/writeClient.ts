@@ -4,9 +4,7 @@ import { apiVersion, dataset, projectId } from '../env'
 
 const token = process.env.SANITY_API_TOKEN
 
-if (!token) {
-  throw new Error('Missing environment variable: SANITY_API_TOKEN')
-}
+export const hasWriteToken = Boolean(token)
 
 export const writeClient = createClient({
   projectId,

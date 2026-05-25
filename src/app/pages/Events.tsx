@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { toPlainText } from '@/sanity/lib/portableText'
@@ -177,9 +176,9 @@ export default function Events({ upcomingEvents, pastEvents, eventTypes }: Event
           </div>
 
           <div className="events-past-cta-wrap">
-            <Link href="/events/past" className="hero-cta-secondary events-past-cta">
+            <a href="https://luma.com/user/ethbclub" className="hero-cta-primary events-past-cta">
               View All Past Events
-            </Link>
+            </a>
           </div>
         </section>
       </main>

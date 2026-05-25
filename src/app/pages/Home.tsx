@@ -2,17 +2,19 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
+import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
 import Link from "next/link";
 import Image from "next/image";
 import { Layers3, Search, BriefcaseBusiness, Users } from "lucide-react";
-import { urlFor } from "@/sanity/lib/image";
 import { toPlainText } from "@/sanity/lib/portableText";
 
-type Partner = {
+type NetworkEntity = {
   _id: string;
   name: string;
+  title?: string | null;
   website?: string | null;
   logo?: unknown;
+  description?: string | null;
 };
 
 type UpcomingEvent = {
@@ -24,7 +26,8 @@ type UpcomingEvent = {
 };
 
 type HomeProps = {
-  partners: Partner[];
+  partners: NetworkEntity[];
+  advisors: NetworkEntity[];
   events: UpcomingEvent[];
   siteStats?: {
     members?: number;
@@ -77,7 +80,7 @@ function getDayMonth(iso: string, tz = "Europe/Zurich") {
   return { day, month };
 }
 
-export default function Home({ partners, events, siteStats }: HomeProps) {
+export default function Home({ partners, advisors, events, siteStats }: HomeProps) {
   const formatPlus = (value?: number) =>
     typeof value === "number" ? `${value}+` : "--";
   const formatPlain = (value?: number) =>
@@ -107,7 +110,7 @@ export default function Home({ partners, events, siteStats }: HomeProps) {
 
           <div className="hero-actions">
             <Link href="/join" className="hero-cta-primary">
-                Join the Club
+              Join the Club
             </Link>
             <Link href="/events" className="hero-cta-secondary">
               Explore Events
@@ -225,52 +228,40 @@ export default function Home({ partners, events, siteStats }: HomeProps) {
         </div>
       </section>
 
-      <section className="partners-section">
-        <ScrollReveal>
-          <PageSectionHeader
-            label="Trusted By"
-            title="Our Partners"
-            description="Partners are core to our impact. Scroll to discover the ecosystem backing our community."
-            className="partners-header"
-          />
-        </ScrollReveal>
+      <LogoMarqueeSection
+        label="Trusted By"
+        title="Advisors"
+        description="Academic and industry advisors supporting the club’s direction and work."
+        items={advisors}
+        linkItems={false}
+        layout="cards"
+        align="center"
+        sectionClassName="partners-section partners-section-advisors"
+        wrapperClassName="advisors-wrap"
+        trackClassName="advisors-grid"
+        chipClassName="advisor-card-visual"
+        itemClassName="advisor-card"
+        descriptionClassName="advisor-card-copy"
+        imageClassName="advisor-card-image"
+        headerClassName="partners-header"
+      />
 
-        <ScrollReveal delay={120}>
-          <div className="partner-marquee-wrap">
-          <div className="partner-marquee-track">
-            {[...partners, ...partners, ...partners].map((partner, idx) => {
-              const logoUrl = partner.logo
-                ? urlFor(partner.logo).width(120).height(48).fit("max").url()
-                : null;
+      <div className="join-hero-divider" aria-hidden="true" />
 
-              return (
-              <a
-                key={`${partner.name}-${idx}`}
-                href={partner.website ?? "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="partner-marquee-chip"
-              >
-                {logoUrl ? (
-                  <Image
-                    src={logoUrl}
-                    alt={partner.name}
-                    width={95}
-                    height={28}
-                    className="partner-chip-logo"
-                  />
-                ) : (
-                  <span className="partner-chip-logo" style={{ fontSize: 12 }}>
-                    {partner.name}
-                  </span>
-                )}
-              </a>
-            );
-            })}
-          </div>
-          </div>
-        </ScrollReveal>
-      </section>
+      <LogoMarqueeSection
+        label="Trusted By"
+        title="Our Partners"
+        description="Partners are core to our impact. Scroll to discover the ecosystem backing our community."
+        items={partners}
+        linkItems
+        align="center"
+        sectionClassName="partners-section partners-section-partners"
+        wrapperClassName="partner-marquee-wrap"
+        trackClassName="partner-marquee-track"
+        chipClassName="partner-marquee-chip"
+        headerClassName="partners-header"
+      />
+
 
       <section className="coming-up-section">
         <ScrollReveal>

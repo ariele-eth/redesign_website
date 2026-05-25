@@ -3,6 +3,7 @@ import committee from './committee'
 import educationResource from './educationResource'
 import event from './event'
 import eventType from './eventType'
+import advisor from './advisor'
 import knowledgeGraphNode from './knowledgeGraphNode'
 import learningTrackCard from './learningTrackCard'
 import news from './news'
@@ -19,6 +20,7 @@ import socialLink from './socialLink'
 export const schemaTypes = [
 	category,
 	committee,
+	advisor,
 	educationResource,
 	event,
 	eventType,

@@ -1,8 +1,8 @@
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'partner',
-  title: 'Partner',
+  name: 'advisor',
+  title: 'Advisor',
   type: 'document',
   fields: [
     defineField({
@@ -12,18 +12,19 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'title',
+      title: 'Title',
+      description: 'Short role or affiliation line shown beneath the advisor name.',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
       name: 'logo',
       title: 'Logo',
       type: 'image',
       options: {
         hotspot: true,
       },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'website',
-      title: 'Website',
-      type: 'url',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -66,7 +67,7 @@ export default defineType({
   preview: {
     select: {
       title: 'name',
-      subtitle: 'website',
+      subtitle: 'title',
       media: 'logo',
     },
   },

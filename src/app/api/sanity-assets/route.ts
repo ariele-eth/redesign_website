@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { supabaseAdmin } from '@/lib/supabase'
-import { writeClient } from '@/sanity/lib/writeClient'
+import { hasWriteToken, writeClient } from '@/sanity/lib/writeClient'
 
 export const runtime = 'nodejs'
 
@@ -65,6 +65,13 @@ export async function POST(request: Request) {
   if (!webhookSecret) {
     return NextResponse.json(
       { error: 'Missing SANITY_WEBHOOK_SECRET' },
+      { status: 500 }
+    )
+  }
+
+  if (!hasWriteToken) {
+    return NextResponse.json(
+      { error: 'Missing SANITY_API_TOKEN' },
       { status: 500 }
     )
   }

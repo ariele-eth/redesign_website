@@ -7,6 +7,7 @@ import { Navigation } from "@/components/Navigation";
 import { Nl2Br } from "@/components/Nl2Br";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
 import { CommitteeIcon } from "@/lib/committeeIcons";
 
 type Committee = {
@@ -31,6 +32,8 @@ type Person = {
 type AboutProps = {
   committees: Committee[];
   people: Person[];
+  partners: Array<{ _id: string; name: string; website?: string | null; logo?: unknown }>;
+  advisors: Array<{ _id: string; name: string; title?: string | null; description?: string | null; logo?: unknown }>;
 };
 
 type CommitteeSection = {
@@ -138,7 +141,7 @@ function CommitteeNode({
   );
 }
 
-export default function About({ committees, people }: AboutProps) {
+export default function About({ committees, people, partners, advisors }: AboutProps) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [openAccordionId, setOpenAccordionId] = useState("");
   const [activeStat, setActiveStat] = useState(0);
@@ -178,6 +181,14 @@ export default function About({ committees, people }: AboutProps) {
       })),
     [orderedCommittees]
   );
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    const top = window.scrollY + element.getBoundingClientRect().top - 84;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -282,18 +293,18 @@ export default function About({ committees, people }: AboutProps) {
                 <div className="org-group-label">External network</div>
 
                 <div className="org-tier org-tier-top">
-                  <div className="org-node-ext" title="Academic and industry advisors">
+                  <button type="button" className="org-node-ext org-node-ext-link" title="Jump to advisors section" onClick={() => scrollToSection("advisors")}>
                     <div className="org-node-ext-icon">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M20 21a8 8 0 1 0-16 0" /><path d="M12 12v9" /></svg>
                     </div>
                     Advisors
-                  </div>
-                  <div className="org-node-ext" title="Industry and research partners">
+                  </button>
+                  <button type="button" className="org-node-ext org-node-ext-link" title="Jump to partners section" onClick={() => scrollToSection("partners")}>
                     <div className="org-node-ext-icon">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
                     </div>
                     Partners
-                  </div>
+                  </button>
                 </div>
 
                 <div className="org-divider" aria-hidden="true" />
@@ -346,6 +357,42 @@ export default function About({ committees, people }: AboutProps) {
             </div>
           </div>
         </div>
+
+        <LogoMarqueeSection
+          id="advisors"
+          label="External Network"
+          title="Advisors"
+          description="Academic and industry advisors contributing experience and direction."
+          items={advisors}
+          linkItems={false}
+          layout="cards"
+          align="left"
+          sectionClassName="partners-section partners-section-advisors"
+          wrapperClassName="advisors-wrap"
+          trackClassName="advisors-grid"
+          chipClassName="advisor-card-visual"
+          itemClassName="advisor-card"
+          descriptionClassName="advisor-card-copy"
+          imageClassName="advisor-card-image"
+          headerClassName="about-section-header-block"
+        />
+
+        <div className="join-hero-divider" aria-hidden="true" />
+
+        <LogoMarqueeSection
+          id="partners"
+          label="External Network"
+          title="Partners"
+          description="Industry and research collaborators backing the club."
+          items={partners}
+          linkItems
+          align="left"
+          sectionClassName="partners-section partners-section-partners"
+          wrapperClassName="partner-marquee-wrap"
+          trackClassName="partner-marquee-track"
+          chipClassName="partner-marquee-chip"
+          headerClassName="about-section-header-block"
+        />
 
         <div className="container section-sm">
           <ScrollReveal>

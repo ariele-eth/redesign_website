@@ -618,6 +618,14 @@ h4, h5, h6 {
   margin-bottom: 48px;
 }
 
+.partners-section .about-section-header-block {
+  max-width: var(--page-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
+}
+
 .partners-header {
   margin-bottom: 24px;
 }
@@ -1193,6 +1201,14 @@ hr {
   padding: 64px 0 86px;
 }
 
+.partners-section-advisors {
+  padding-bottom: 40px;
+}
+
+.partners-section-partners {
+  padding-top: 40px;
+}
+
 .partners-header {
   text-align: center;
   max-width: 900px;
@@ -1207,34 +1223,44 @@ hr {
 
 .partner-marquee-wrap {
   margin-top: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(108, 131, 255, 0.14);
   border-bottom: 1px solid rgba(108, 131, 255, 0.14);
   padding: 14px 0;
+  min-height: 154px;
   background: rgba(7, 12, 28, 0.92);
 }
 
 .partner-marquee-track {
   display: flex;
   align-items: center;
-  gap: 16px;
-  width: fit-content;
-  animation: marquee 44s linear infinite;
+  gap: 11px;
+  width: max-content;
+  flex-shrink: 0;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  animation: marquee 40.78s linear infinite;
+  will-change: transform;
 }
 
 .partner-marquee-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 420px;
-  min-height: 120px;
-  padding: 14px 20px;
+  min-width: 441px;
+  min-height: 126px;
+  padding: 15px 21px;
   border-radius: 999px;
   border: 1px solid rgba(104, 126, 246, 0.22);
   background: rgba(13, 20, 40, 0.85);
   color: #9fb0df;
   text-decoration: none;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.8px;
   text-transform: uppercase;
 }
@@ -1245,12 +1271,90 @@ hr {
 }
 
 .partner-chip-logo {
-  width: 74%;
+  width: 80%;
   height: auto;
   max-height: 70px;
   object-fit: contain;
   filter: brightness(1.55) contrast(1.2) saturate(1.1);
   opacity: 0.84;
+}
+
+.advisors-wrap {
+  margin-top: 14px;
+}
+
+.advisors-grid {
+  width: 100%;
+  max-width: 1008px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.advisor-card {
+  flex: 0 1 calc((100% - 20px) / 3);
+  max-width: calc((100% - 20px) / 3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(104, 126, 246, 0.18);
+  background: rgba(10, 16, 33, 0.88);
+  text-align: center;
+}
+
+.advisor-card-visual {
+  width: min(74px, 100%);
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(104, 126, 246, 0.18);
+  background: rgba(13, 20, 40, 0.88);
+}
+
+.advisor-card-image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.advisor-card-copy h3 {
+  margin: 0;
+  font-family: var(--font-head);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.advisor-card-title {
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: pre-line;
+  font-family: var(--font-body);
+}
+
+.advisor-card-copy .advisor-card-title {
+  color: var(--text);
+  margin-top: 6px;
+}
+
+.advisor-card-copy p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 .coming-up-section {
@@ -1657,6 +1761,21 @@ hr {
   font-weight: 700;
   letter-spacing: 0.35px;
   text-align: center;
+}
+
+.org-node-ext-link {
+  cursor: pointer;
+  appearance: none;
+}
+
+.org-node-ext-link:hover {
+  border-color: rgba(132, 151, 255, 0.5);
+  color: var(--text);
+}
+
+.org-node-ext-link:focus-visible {
+  outline: 2px solid rgba(91, 126, 255, 0.8);
+  outline-offset: 2px;
 }
 
 .org-node-ext-icon {
@@ -2663,23 +2782,33 @@ hr {
   z-index: 1;
   max-width: var(--page-width);
   margin: 0 auto;
-  padding: 0 var(--page-pad-x) 72px;
+  padding: 0 var(--page-pad-x) 36px;
 }
 
 .collab-partners-marquee {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(104, 126, 246, 0.14);
   border-bottom: 1px solid rgba(104, 126, 246, 0.14);
-  padding: 18px 0;
+  padding: 9px 0;
+  min-height: 64px;
   background: rgba(7, 12, 28, 0.92);
 }
 
 .collab-partners-track {
   display: flex;
   align-items: center;
-  gap: 12px;
-  width: fit-content;
-  animation: marquee 40s linear infinite;
+  gap: 8px;
+  width: max-content;
+  flex-shrink: 0;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  animation: marquee 37.11s linear infinite;
+  will-change: transform;
 }
 
 .collab-partner-chip {
@@ -2692,10 +2821,24 @@ hr {
   background: rgba(13, 20, 36, 0.85);
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .advisor-card {
+    flex-basis: calc((100% - 10px) / 2);
+    max-width: calc((100% - 10px) / 2);
+  }
+}
+
+@media (max-width: 640px) {
+  .advisor-card {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 }
 
 .collab-partner-chip:hover {
@@ -2708,7 +2851,7 @@ hr {
   z-index: 1;
   max-width: var(--page-width);
   margin: 0 auto;
-  padding: 0 var(--page-pad-x) 96px;
+  padding: 0 var(--page-pad-x) 48px;
 }
 
 .collab-cta-card {
@@ -2744,8 +2887,8 @@ hr {
 }
 
 .events-past-cta {
-  color: var(--text);
-  border-color: var(--border2);
+  min-width: 260px;
+  justify-content: center;
 }
 
 .team-strip {
@@ -3002,10 +3145,10 @@ hr {
 
 @keyframes marquee {
   from {
-    transform: translateX(0);
+    transform: translate(100vw, -50%);
   }
   to {
-    transform: translateX(-33.333%);
+    transform: translate(-100%, -50%);
   }
 }
 
