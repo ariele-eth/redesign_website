@@ -1,24 +1,15 @@
-/**
- * This route is responsible for the built-in authoring environment using Sanity Studio.
- * All routes under your studio path is handled by this file using Next.js' catch-all routes:
- * https://nextjs.org/docs/routing/dynamic-routes#catch-all-routes
- *
- * You can learn more about the next-sanity package here:
- * https://github.com/sanity-io/next-sanity
- */
-
-'use client'
-
 export const runtime = 'edge'
 
-import dynamic from 'next/dynamic'
-import config from '../../../../sanity.config'
-
-const NextStudio = dynamic(
-  () => import('next-sanity/studio').then((mod) => mod.NextStudio),
-  { ssr: false }
-)
-
 export default function StudioPage() {
-  return <NextStudio config={config} />
+  return (
+    <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: '2rem' }}>
+      <div style={{ maxWidth: 640, textAlign: 'center' }}>
+        <h1 style={{ fontSize: '1.5rem', marginBottom: '0.75rem' }}>Studio Disabled on This Deployment</h1>
+        <p style={{ opacity: 0.8 }}>
+          The Sanity Studio route is disabled on this Cloudflare Pages target to keep the Worker bundle
+          under the free plan size limit.
+        </p>
+      </div>
+    </main>
+  )
 }

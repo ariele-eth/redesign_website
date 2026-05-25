@@ -281,7 +281,6 @@ function CanvasGraph({ data, selectedId, onSelect }: CanvasGraphProps) {
     }
     draw()
     return () => cancelAnimationFrame(rafRef.current)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, selectedId])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
