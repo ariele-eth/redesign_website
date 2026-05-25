@@ -34,6 +34,13 @@ type AboutProps = {
   people: Person[];
   partners: Array<{ _id: string; name: string; website?: string | null; logo?: unknown }>;
   advisors: Array<{ _id: string; name: string; title?: string | null; description?: string | null; logo?: unknown }>;
+  siteStats?: {
+    members?: number;
+    events?: number;
+    partners?: number;
+    committees?: number;
+    builders?: number;
+  } | null;
 };
 
 type CommitteeSection = {
@@ -49,13 +56,6 @@ type CommitteeNodeData = {
   icon?: string | null;
   lines: string[];
 };
-
-const heroStats = [
-  { value: "500+", label: "Members", note: "active contributors this semester", meter: 92, color: "var(--accent)" },
-  { value: "7", label: "Committees", note: "delivery teams running in parallel", meter: 74, color: "var(--accent2)" },
-  { value: "40+", label: "Events/year", note: "lectures, labs, and builder nights", meter: 81, color: "var(--highlight)" },
-  { value: "20+", label: "Partners", note: "industry and academic collaborators", meter: 68, color: "var(--text)" },
-];
 
 function splitCommitteeName(name: string) {
   const parts = name.split(" ").filter(Boolean);
@@ -141,10 +141,46 @@ function CommitteeNode({
   );
 }
 
-export default function About({ committees, people, partners, advisors }: AboutProps) {
+export default function About({ committees, people, partners, advisors, siteStats }: AboutProps) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [openAccordionId, setOpenAccordionId] = useState("");
   const [activeStat, setActiveStat] = useState(0);
+
+  const formatPlus = (value?: number) =>
+    typeof value === "number" ? `${value}+` : "--";
+  const formatPlain = (value?: number) =>
+    typeof value === "number" ? String(value) : "--";
+
+  const heroStats = [
+    {
+      value: formatPlus(siteStats?.members),
+      label: "Members",
+      note: "active contributors this semester",
+      meter: 92,
+      color: "var(--accent)",
+    },
+    {
+      value: formatPlain(committees.length),
+      label: "Committees",
+      note: "delivery teams running in parallel",
+      meter: 74,
+      color: "var(--accent2)",
+    },
+    {
+      value: formatPlus(siteStats?.events),
+      label: "Events/year",
+      note: "lectures, labs, and builder nights",
+      meter: 81,
+      color: "var(--highlight)",
+    },
+    {
+      value: formatPlus(siteStats?.partners),
+      label: "Partners",
+      note: "industry and academic collaborators",
+      meter: 68,
+      color: "var(--text)",
+    },
+  ];
 
   const orderedCommittees = useMemo(
     () =>

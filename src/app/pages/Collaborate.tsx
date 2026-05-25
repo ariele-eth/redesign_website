@@ -214,10 +214,11 @@ export default function Collaborate({ partners }: CollaborateProps) {
           items={partners}
           linkItems
           align="center"
-          sectionClassName="collab-partners-shell"
-          wrapperClassName="collab-partners-marquee"
-          trackClassName="collab-partners-track"
-          chipClassName="collab-partner-chip"
+          sectionClassName="partners-section partners-section-partners"
+          wrapperClassName="partner-marquee-wrap"
+          trackClassName="partner-marquee-track"
+          chipClassName="partner-marquee-chip"
+          headerClassName="partners-header"
         />
 
         <section id="collab-contact" className="collab-cta-section">

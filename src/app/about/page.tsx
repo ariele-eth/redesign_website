@@ -15,6 +15,14 @@ const committeesQuery = `*[_type == "committee"] | order(order asc) {
   "slug": slug.current
 }`
 
+const siteStatsQuery = `*[_type == "siteStats"][0] {
+  members,
+  events,
+  partners,
+  committees,
+  builders
+}`
+
 const partnersQuery = `*[_type == "partner" && isVisible != false && showOnAbout != false]
   | order(coalesce(sortOrder, 9999) asc, name asc)
   { _id, name, website, logo }`
@@ -34,16 +42,23 @@ const peopleQuery = `*[_type == "person" && isVisible != false]
   }`
 
 export default async function AboutPage() {
-  const [committees, people, partners, advisors] = await Promise.all([
+  const [committees, people, partners, advisors, siteStats] = await Promise.all([
     client.fetch(committeesQuery),
     client.fetch(peopleQuery),
     client.fetch(partnersQuery),
     client.fetch(advisorsQuery),
+    client.fetch(siteStatsQuery),
   ])
 
   return (
     <Providers>
-      <About committees={committees} people={people} partners={partners} advisors={advisors} />
+      <About
+        committees={committees}
+        people={people}
+        partners={partners}
+        advisors={advisors}
+        siteStats={siteStats}
+      />
     </Providers>
   )
 }

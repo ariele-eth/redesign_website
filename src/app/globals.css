@@ -1244,7 +1244,7 @@ hr {
   position: absolute;
   left: 0;
   top: 50%;
-  animation: marquee 91.75s linear infinite;
+  animation: marquee 27s linear infinite;
   will-change: transform;
 }
 
