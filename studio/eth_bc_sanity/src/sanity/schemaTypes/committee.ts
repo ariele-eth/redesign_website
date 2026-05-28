@@ -1,0 +1,102 @@
+import { defineField, defineType } from 'sanity'
+
+export default defineType({
+  name: 'committee',
+  title: 'Committee',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'groupType',
+      title: 'Group Type',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Committee', value: 'committee'},
+          {title: 'Board', value: 'board'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'committee',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'name',
+      title: 'Committee Name',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug / Identifier',
+      description: 'Used for application form URLs (e.g., innovation-technology)',
+      type: 'slug',
+      options: {
+        source: 'name',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'purpose',
+      title: 'Your Role',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'coreResponsibilities',
+      title: 'What You Bring',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'goals',
+      title: 'What to Expect',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+    }),
+    defineField({
+      name: 'icon',
+      title: 'Icon',
+      description: 'Select the Lucide icon used for this committee.',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Network', value: 'Network' },
+          { title: 'Globe2', value: 'Globe2' },
+          { title: 'CalendarDays', value: 'CalendarDays' },
+          { title: 'Users', value: 'Users' },
+          { title: 'MessagesSquare', value: 'MessagesSquare' },
+          { title: 'ShieldCheck', value: 'ShieldCheck' },
+          { title: 'Landmark', value: 'Landmark' },
+          { title: 'Handshake', value: 'Handshake' },
+          { title: 'HeartHandshake', value: 'HeartHandshake' },
+          { title: 'Target', value: 'Target' },
+          { title: 'Search', value: 'Search' },
+          { title: 'Rocket', value: 'Rocket' },
+          { title: 'Settings', value: 'Settings' },
+          { title: 'UserRoundCog', value: 'UserRoundCog' },
+          { title: 'Megaphone', value: 'Megaphone' },
+          { title: 'GraduationCap', value: 'GraduationCap' },
+          { title: 'ChartNoAxesCombined', value: 'ChartNoAxesCombined' },
+          { title: 'Leaf', value: 'Leaf' },
+          { title: 'Map', value: 'Map' },
+          { title: 'FolderKanban', value: 'FolderKanban' },
+          { title: 'Palette', value: 'Palette' },
+        ],
+        layout: 'dropdown',
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+  ],
+})

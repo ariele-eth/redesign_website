@@ -1,0 +1,15 @@
+{
+  "name": "eth-bc-studio",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "sanity dev",
+    "preview": "sanity preview",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "sanity": "^5.26.0",
+    "styled-components": "^6.4.2"
+  }
+}
