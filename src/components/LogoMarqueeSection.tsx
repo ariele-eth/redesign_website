@@ -35,12 +35,12 @@ type LogoMarqueeSectionProps = {
 
 function getLogoUrl(logo: unknown) {
   if (!logo) return null
-  return urlFor(logo as never).width(120).height(48).fit('max').url()
+  return urlFor(logo as never).width(320).height(120).fit('max').auto('format').quality(92).url()
 }
 
 function getAdvisorAvatarUrl(logo: unknown) {
   if (!logo) return null
-  return urlFor(logo as never).width(320).height(320).fit('crop').url()
+  return urlFor(logo as never).width(320).height(320).fit('crop').auto('format').quality(88).url()
 }
 
 export function LogoMarqueeSection({
@@ -62,6 +62,7 @@ export function LogoMarqueeSection({
   align = 'left',
 }: LogoMarqueeSectionProps) {
   const hasItems = items.length > 0
+  const marqueeItems = layout === 'marquee' ? [...items, ...items] : items
 
   return (
     <section id={id} className={sectionClassName}>
@@ -117,16 +118,19 @@ export function LogoMarqueeSection({
           ) : (
             <div className={trackClassName}>
               {hasItems ? (
-                items.map((item, idx) => {
+                marqueeItems.map((item, idx) => {
                   const logoUrl = getLogoUrl(item.logo)
                   const content = logoUrl ? (
-                    <Image
-                      src={logoUrl}
-                      alt={item.name}
-                      width={95}
-                      height={28}
-                      className="partner-chip-logo"
-                    />
+                    <span className="partner-chip-logo-shell">
+                      <Image
+                        src={logoUrl}
+                        alt={item.name}
+                        width={240}
+                        height={88}
+                        sizes="240px"
+                        className="partner-chip-logo"
+                      />
+                    </span>
                   ) : (
                     <span className="partner-chip-logo" style={{ fontSize: 12 }}>
                       {item.name}

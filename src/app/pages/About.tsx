@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
@@ -9,14 +10,17 @@ import { PageSectionHeader } from "@/components/PageSectionHeader";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
 import { CommitteeIcon } from "@/lib/committeeIcons";
+import { urlFor } from "@/sanity/lib/image";
 
 type Committee = {
   _id: string;
   name: string;
   slug?: string | null;
-  purpose?: string | null;
-  coreResponsibilities?: string | string[] | null;
-  goals?: string | string[] | null;
+  groupType?: "committee" | "board" | null;
+  description?: string | null;
+  yourRole?: string | null;
+  whatYouBring?: string | string[] | null;
+  whatToExpect?: string | string[] | null;
   order?: number | null;
   icon?: string | null;
 };
@@ -26,6 +30,9 @@ type Person = {
   name: string;
   role: string;
   bio?: string | null;
+  image?: unknown | null;
+  isBoardMember?: boolean | null;
+  groups?: Committee[] | null;
   committee?: Committee | null;
 };
 
@@ -47,7 +54,6 @@ type CommitteeSection = {
   id: string;
   title: string;
   icon?: string | null;
-  subtitle: string;
   content: Array<{ label: string; text: string }>;
 };
 
@@ -81,6 +87,18 @@ function getInitials(name: string) {
   return parts.map((part) => part[0]).join("").slice(0, 3).toUpperCase();
 }
 
+function getPersonImageUrl(image: unknown) {
+  if (!image) return null;
+
+  return urlFor(image as never)
+    .width(240)
+    .height(240)
+    .fit("crop")
+    .auto("format")
+    .quality(92)
+    .url();
+}
+
 function CommitteeAccordion({
   section,
   isOpen,
@@ -97,21 +115,20 @@ function CommitteeAccordion({
           <div className="acc-ico">
             <CommitteeIcon name={section.icon} size={16} className="about-acc-icon" />
           </div>
-          <div>
-            <div className="acc-title">{section.title}</div>
-            <div className="acc-sub">{section.subtitle}</div>
-          </div>
+          <div className="acc-title">{section.title}</div>
         </div>
         <div className="acc-arrow">⌄</div>
       </button>
-      <div className="acc-body">
-        {section.content.map((item) => (
-          <div key={item.label} className="acc-sub-card">
-            <div className="label">{item.label}</div>
-            <p><Nl2Br text={item.text} /></p>
-          </div>
-        ))}
-      </div>
+      {isOpen && (
+        <div className="acc-body">
+          {section.content.map((item) => (
+            <div key={item.label} className="acc-sub-card">
+              <div className="label">{item.label}</div>
+              <p><Nl2Br text={item.text} /></p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -128,7 +145,7 @@ function CommitteeNode({
   onClick: (id: string) => void;
 }) {
   return (
-    <button type="button" className="org-committee-node" onClick={() => onClick(id)} title="Click to explore">
+    <button type="button" className="org-committee-node org-node-interactive" onClick={() => onClick(id)} title="Click to explore">
       <div className="org-committee-icon">
         <CommitteeIcon name={icon} size={13} />
       </div>
@@ -191,17 +208,22 @@ export default function About({ committees, people, partners, advisors, siteStat
   const committeeSections: CommitteeSection[] = useMemo(
     () =>
       orderedCommittees.map((committee) => {
-        const purposeText = formatCommitteeText(committee.purpose)
+        const descriptionText = formatCommitteeText(committee.description)
+        const yourRoleText = formatCommitteeText(committee.yourRole)
+        const whatYouBringText = formatCommitteeText(committee.whatYouBring)
+        const whatToExpectText = formatCommitteeText(committee.whatToExpect)
 
         return {
           id: `committee-${committee._id}`,
           title: committee.name,
           icon: committee.icon,
-          subtitle: purposeText === "--" ? "" : purposeText,
           content: [
-            { label: "Purpose", text: purposeText },
-            { label: "Core responsibilities", text: formatCommitteeText(committee.coreResponsibilities) },
-            { label: "Goals", text: formatCommitteeText(committee.goals) },
+            ...(descriptionText === "--"
+              ? []
+              : [{ label: "Description", text: descriptionText }]),
+            { label: "Your role", text: yourRoleText },
+            { label: "What you bring", text: whatYouBringText },
+            { label: "What to expect", text: whatToExpectText },
           ],
         }
       }),
@@ -217,6 +239,44 @@ export default function About({ committees, people, partners, advisors, siteStat
       })),
     [orderedCommittees]
   );
+
+  const boardCommittee = useMemo(
+    () => orderedCommittees.find((committee) => committee.groupType === "board") ?? null,
+    [orderedCommittees]
+  );
+
+  const teamSectionId = "committee-members-section";
+  const committeeFilters = orderedCommittees.filter((committee) => committee.groupType !== "board");
+
+  const getMemberGroups = (member: Person) => {
+    const memberships = [...(member.groups ?? [])];
+
+    if (member.committee) {
+      memberships.push(member.committee);
+    }
+
+    const deduped: Committee[] = [];
+    const seenKeys = new Set<string>();
+
+    for (const group of memberships) {
+      const key = getGroupKey(group);
+      if (seenKeys.has(key)) continue;
+
+      seenKeys.add(key);
+      deduped.push(group);
+    }
+
+    return deduped;
+  };
+
+  const getGroupKey = (group: Committee) => (group.groupType === "board" ? "board" : group.slug ?? group._id);
+
+  const getGroupLabel = (group: Committee) => (group.groupType === "board" ? "Board" : group.name);
+
+  const focusMemberGroup = (group: Committee) => {
+    setActiveFilter(getGroupKey(group));
+    scrollToSection(teamSectionId);
+  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -234,15 +294,13 @@ export default function About({ committees, people, partners, advisors, siteStat
     return () => window.clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    if (!openAccordionId && committeeSections.length > 0) {
-      setOpenAccordionId(committeeSections[0].id);
-    }
-  }, [committeeSections, openAccordionId]);
-
   const visibleTeamMembers = useMemo(() => {
     if (activeFilter === "all") return people;
-    return people.filter((member) => member.committee?.slug === activeFilter);
+    if (activeFilter === "board") {
+      return people.filter((member) => member.isBoardMember === true);
+    }
+
+    return people.filter((member) => getMemberGroups(member).some((group) => getGroupKey(group) === activeFilter));
   }, [activeFilter, people]);
 
   const scrollToCommittee = (id: string) => {
@@ -329,13 +387,13 @@ export default function About({ committees, people, partners, advisors, siteStat
                 <div className="org-group-label">External network</div>
 
                 <div className="org-tier org-tier-top">
-                  <button type="button" className="org-node-ext org-node-ext-link" title="Jump to advisors section" onClick={() => scrollToSection("advisors")}>
+                  <button type="button" className="org-node-ext org-node-ext-link org-node-interactive" title="Jump to advisors section" onClick={() => scrollToSection("advisors")}>
                     <div className="org-node-ext-icon">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M20 21a8 8 0 1 0-16 0" /><path d="M12 12v9" /></svg>
                     </div>
                     Advisors
                   </button>
-                  <button type="button" className="org-node-ext org-node-ext-link" title="Jump to partners section" onClick={() => scrollToSection("partners")}>
+                  <button type="button" className="org-node-ext org-node-ext-link org-node-interactive" title="Jump to partners section" onClick={() => scrollToSection("partners")}>
                     <div className="org-node-ext-icon">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
                     </div>
@@ -350,14 +408,36 @@ export default function About({ committees, people, partners, advisors, siteStat
 
                   <div className="org-tier org-tier-board">
                     <div className="org-core-head">
-                      <div className="org-node-president">
+                          <button
+                            type="button"
+                            className="org-node-president org-node-president-link org-node-interactive"
+                            onClick={() => {
+                              setActiveFilter("all")
+                              scrollToSection(teamSectionId)
+                            }}
+                            title="Jump to all members"
+                          >
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
                         President
-                      </div>
-                      <div className="org-node-board">
-                        <div className="org-node-board-label">Board</div>
-                        <div className="org-node-board-sub">coordinates all committees</div>
-                      </div>
+                          </button>
+                      <button
+                        type="button"
+                        className="org-node-board org-node-board-link org-node-interactive"
+                        onClick={() => {
+                          if (boardCommittee) {
+                            focusMemberGroup(boardCommittee)
+                            return
+                          }
+
+                          scrollToSection(teamSectionId)
+                        }}
+                        title="Jump to Board members"
+                      >
+                        <div className="org-node-board-label">{boardCommittee ? getGroupLabel(boardCommittee) : "Board"}</div>
+                        <div className="org-node-board-sub">
+                          {boardCommittee?.description ?? "coordinates all committees"}
+                        </div>
+                      </button>
                     </div>
 
                     <div className="org-core-dependency">Board to Committees (execution teams)</div>
@@ -450,17 +530,21 @@ export default function About({ committees, people, partners, advisors, siteStat
           </ScrollReveal>
         </div>
 
-        <div className="container section-sm">
+        <div id={teamSectionId} className="container section-sm">
           <ScrollReveal>
             <PageSectionHeader label="Committee Members" title="Meet the People" className="about-section-header-block" />
           </ScrollReveal>
 
           <ScrollReveal delay={100}>
             <div className="filter-row team-filter-row">
-              {[{ label: "All", value: "all" }, ...orderedCommittees.map((committee) => ({
-                label: committee.name,
-                value: committee.slug ?? committee._id,
-              }))].map((filter) => (
+              {[
+                { label: "All", value: "all" },
+                { label: boardCommittee ? getGroupLabel(boardCommittee) : "Board", value: "board" },
+                ...committeeFilters.map((committee) => ({
+                  label: getGroupLabel(committee),
+                  value: getGroupKey(committee),
+                })),
+              ].map((filter) => (
                 <button
                   key={filter.value}
                   type="button"
@@ -475,16 +559,39 @@ export default function About({ committees, people, partners, advisors, siteStat
 
           <ScrollReveal delay={180}>
             <div className="team-strip">
-              {visibleTeamMembers.map((member, index) => (
-                <ScrollReveal key={member._id} delay={70 + index * 60}>
-                  <div className="team-card">
-                    <div className="team-av">{getInitials(member.name)}</div>
-                    <div className="team-name">{member.name}</div>
-                    <div className="team-role">{member.role}</div>
-                    <div className="team-comm">{member.committee?.name ?? "Committee"}</div>
-                  </div>
-                </ScrollReveal>
-              ))}
+              {visibleTeamMembers.map((member, index) => {
+                const personImageUrl = getPersonImageUrl(member.image);
+
+                return (
+                  <ScrollReveal key={member._id} delay={70 + index * 60}>
+                    <div className="team-card">
+                      <div className="team-av">
+                        {personImageUrl ? (
+                          <Image
+                            src={personImageUrl}
+                            alt={member.name}
+                            fill
+                            sizes="60px"
+                            className="team-av-image"
+                          />
+                        ) : (
+                          <span>{getInitials(member.name)}</span>
+                        )}
+                      </div>
+                      <div className="team-name">{member.name}</div>
+                      <div className="team-role">{member.role}</div>
+                      <div className="team-comm">
+                        {[
+                          ...(member.isBoardMember ? ["Board"] : []),
+                          ...getMemberGroups(member).map((group) => getGroupLabel(group)),
+                        ]
+                          .filter(Boolean)
+                          .join(" · ") || "Committee"}
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                );
+              })}
             </div>
           </ScrollReveal>
         </div>

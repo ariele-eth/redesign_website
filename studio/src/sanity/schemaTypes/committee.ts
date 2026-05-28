@@ -6,6 +6,20 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'groupType',
+      title: 'Group Type',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Committee', value: 'committee'},
+          {title: 'Board', value: 'board'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'committee',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'name',
       title: 'Committee Name',
       type: 'string',
@@ -23,20 +37,26 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
       name: 'purpose',
-      title: 'Purpose',
+      title: 'Your Role',
       type: 'text',
       rows: 3,
     }),
     defineField({
       name: 'coreResponsibilities',
-      title: 'Core Responsibilities',
+      title: 'What You Bring',
       type: 'text',
       rows: 3,
     }),
     defineField({
       name: 'goals',
-      title: 'Goals',
+      title: 'What to Expect',
       type: 'text',
       rows: 3,
     }),

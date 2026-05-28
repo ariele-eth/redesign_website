@@ -6,19 +6,14 @@ export const revalidate = 60
 
 const upcomingEventsQuery = `*[_type == "event" && isVisible != false && startsAt >= $now]
   | order(coalesce(sortOrder, 9999) asc, startsAt asc)
-  { _id, title, startsAt, endsAt, location, description, registrationLink, "eventType": eventType->title }`
+  { _id, title, startsAt, endsAt, location, description, registrationLink, image, "eventType": eventType->{ _id, title, "slug": slug.current } }`
 
-const pastEventsQuery = `*[_type == "event" && isVisible != false && startsAt < $now]
-  | order(startsAt desc)
-  { _id, title, startsAt, endsAt, location, description, registrationLink, "eventType": eventType->title }`
-
-const eventTypesQuery = `*[_type == "eventType"] | order(title asc) { _id, title }`
+const eventTypesQuery = `*[_type == "eventType"] | order(title asc) { _id, title, "slug": slug.current }`
 
 export default async function EventsPage() {
   const now = new Date().toISOString()
-  const [upcomingEvents, pastEvents, eventTypes] = await Promise.all([
+  const [upcomingEvents, eventTypes] = await Promise.all([
     client.fetch(upcomingEventsQuery, { now }),
-    client.fetch(pastEventsQuery, { now }),
     client.fetch(eventTypesQuery),
   ])
 
@@ -26,7 +21,6 @@ export default async function EventsPage() {
     <Providers>
       <Events
         upcomingEvents={upcomingEvents}
-        pastEvents={pastEvents}
         eventTypes={eventTypes}
       />
     </Providers>

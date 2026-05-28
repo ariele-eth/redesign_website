@@ -7,9 +7,11 @@ export const revalidate = 60
 const committeesQuery = `*[_type == "committee"] | order(order asc) {
   _id,
   name,
-  purpose,
-  coreResponsibilities,
-  goals,
+  groupType,
+  description,
+  "yourRole": purpose,
+  "whatYouBring": coreResponsibilities,
+  "whatToExpect": goals,
   order,
   icon,
   "slug": slug.current
@@ -38,7 +40,10 @@ const peopleQuery = `*[_type == "person" && isVisible != false]
     name,
     role,
     bio,
-    "committee": committee->{ name, "slug": slug.current }
+    isBoardMember,
+    image,
+    "groups": groups[]->{ _id, name, "slug": slug.current, groupType },
+    "committee": committee->{ _id, name, "slug": slug.current, groupType }
   }`
 
 export default async function AboutPage() {

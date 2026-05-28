@@ -148,11 +148,59 @@ All colors in HSL format.
   --font-mono: var(--font-geist-mono);
 }
 
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-head);
+    line-height: 1.1;
+    letter-spacing: var(--letter-spacing-normal);
+    margin: 0;
+  }
+
+  h1 {
+    font-size: var(--font-size-h1);
+    font-weight: 800;
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-tight);
+  }
+
+  h2 {
+    font-size: var(--font-size-h2);
+    font-weight: 700;
+    line-height: var(--line-height-snug);
+  }
+
+  h3 {
+    font-size: var(--font-size-h4);
+    font-weight: 600;
+    line-height: var(--line-height-snug);
+  }
+
+  h4, h5, h6 {
+    font-weight: 600;
+  }
+
+  p,
+  a,
+  li,
+  button,
+  input,
+  textarea,
+  label {
+    font-family: var(--font-body), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+  }
+
+  p {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-loose);
+    color: var(--text);
+  }
 }
 
 html {
@@ -197,37 +245,6 @@ body::before {
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   opacity: 0.4;
-}
-
-/* Typography system */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-head);
-  line-height: 1.1;
-  letter-spacing: var(--letter-spacing-normal);
-  margin: 0;
-}
-
-h1 {
-  font-size: var(--font-size-h1);
-  font-weight: 800;
-  line-height: var(--line-height-tight);
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-h2 {
-  font-size: var(--font-size-h2);
-  font-weight: 700;
-  line-height: var(--line-height-snug);
-}
-
-h3 {
-  font-size: var(--font-size-h4);
-  font-weight: 600;
-  line-height: var(--line-height-snug);
-}
-
-h4, h5, h6 {
-  font-weight: 600;
 }
 
 /* Heading utility classes */
@@ -652,12 +669,6 @@ h4, h5, h6 {
     linear-gradient(90deg, rgba(91, 126, 255, 0.025) 1px, transparent 1px);
   background-size: 80px 80px;
 }
-
-/* Spacing utilities */
-.mt-8 { margin-top: 8px; }
-.mt-24 { margin-top: 24px; }
-
-.mb-8 { margin-bottom: 8px; }
 
 .text-center {
   text-align: center;
@@ -1256,6 +1267,7 @@ hr {
   min-height: 126px;
   padding: 15px 21px;
   border-radius: 999px;
+  overflow: hidden;
   border: 1px solid rgba(104, 126, 246, 0.22);
   background: rgba(13, 20, 40, 0.85);
   color: #9fb0df;
@@ -1270,13 +1282,46 @@ hr {
   border-color: rgba(132, 151, 255, 0.55);
 }
 
-.partner-chip-logo {
-  width: 80%;
-  height: auto;
-  max-height: 70px;
+.partner-marquee-chip img.partner-chip-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 240px;
+  max-height: 78px;
   object-fit: contain;
-  filter: brightness(1.55) contrast(1.2) saturate(1.1);
-  opacity: 0.84;
+  object-position: center;
+  background: transparent;
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+.partner-chip-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+}
+
+.partner-chip-logo-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(78%, 240px);
+  height: min(64%, 72px);
+  padding: 10px 14px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.org-node-board-link {
+  appearance: none;
+  cursor: pointer;
+}
+
+.org-node-board-link:hover {
+  border-color: rgba(132, 151, 255, 0.55);
 }
 
 .advisors-wrap {
@@ -1764,13 +1809,17 @@ hr {
 }
 
 .org-node-ext-link {
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
   cursor: pointer;
   appearance: none;
 }
 
 .org-node-ext-link:hover {
-  border-color: rgba(132, 151, 255, 0.5);
+  transform: translateY(-2px);
+  border-color: var(--border2);
+  background: var(--surface2);
   color: var(--text);
+  box-shadow: 0 0 0 1px rgba(91, 126, 255, 0.08), 0 10px 24px rgba(5, 10, 24, 0.18);
 }
 
 .org-node-ext-link:focus-visible {
@@ -1824,6 +1873,51 @@ hr {
   border: 0.5px solid var(--border2);
   background: var(--surface2);
   box-shadow: none;
+}
+
+.org-node-board-link,
+.org-node-president-link {
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.org-node-interactive {
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.org-node-interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--border2);
+  background: var(--surface2);
+  box-shadow: 0 0 0 1px rgba(91, 126, 255, 0.08), 0 10px 24px rgba(5, 10, 24, 0.18);
+}
+
+.org-node-interactive:focus-visible {
+  outline: 2px solid rgba(91, 126, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.org-node-board-link:hover,
+.org-node-president-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--border2);
+  background: var(--surface2);
+  box-shadow: 0 0 0 1px rgba(91, 126, 255, 0.08), 0 10px 24px rgba(5, 10, 24, 0.18);
+}
+
+.org-node-board-link:focus-visible,
+.org-node-president-link:focus-visible {
+  outline: 2px solid rgba(91, 126, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.org-node-ext-link:hover svg,
+.org-node-board-link:hover svg,
+.org-node-president-link:hover svg,
+.org-committee-node:hover svg {
+  transform: scale(1.05);
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .org-node-board-label {
@@ -2817,6 +2911,7 @@ hr {
   justify-content: center;
   padding: 10px 16px;
   border-radius: 999px;
+  overflow: hidden;
   border: 1px solid rgba(104, 126, 246, 0.2);
   background: rgba(13, 20, 36, 0.85);
   color: var(--text-secondary);
@@ -2939,6 +3034,12 @@ hr {
   border: 1.5px solid var(--border2);
   position: relative;
   z-index: 1;
+  overflow: hidden;
+}
+
+.team-av-image {
+  object-fit: cover;
+  object-position: center;
 }
 
 .team-name {
@@ -3145,10 +3246,10 @@ hr {
 
 @keyframes marquee {
   from {
-    transform: translate(100vw, -50%);
+    transform: translate3d(0, -50%, 0);
   }
   to {
-    transform: translate(-100%, -50%);
+    transform: translate3d(-50%, -50%, 0);
   }
 }
 

@@ -1,9 +1,17 @@
 'use client'
 
-import { useState } from 'react'
-import { Navigation } from '@/components/Navigation'
+import Link from 'next/link'
+import { useMemo, useState } from 'react'
+
 import { Footer } from '@/components/Footer'
-import { toPlainText } from '@/sanity/lib/portableText'
+import { Navigation } from '@/components/Navigation'
+import { EventCard } from '@/components/EventCard'
+
+type EventType = {
+  _id: string
+  title: string
+  slug?: string | null
+}
 
 type EventRow = {
   _id: string
@@ -13,63 +21,40 @@ type EventRow = {
   endsAt?: string | null
   location?: string | null
   registrationLink?: string | null
-  eventType?: string | null
-}
-
-type EventType = {
-  _id: string
-  title: string
+  eventType?: EventType | string | null
 }
 
 type EventsProps = {
   upcomingEvents: EventRow[]
-  pastEvents: EventRow[]
   eventTypes: EventType[]
 }
 
-function getDayMonth(iso: string, tz = 'Europe/Zurich') {
-  const date = new Date(iso)
-  const swissLocale = 'de-CH'
-  const day = new Intl.DateTimeFormat(swissLocale, {
-    timeZone: tz,
-    day: '2-digit',
-  }).format(date)
-  const month = new Intl.DateTimeFormat(swissLocale, {
-    timeZone: tz,
-    month: 'short',
-  }).format(date)
-
-  return { day, month }
+function getEventTypeKey(eventType?: EventType | string | null) {
+  if (!eventType) return ''
+  if (typeof eventType === 'string') return eventType.toLowerCase()
+  return eventType.slug ?? eventType.title.toLowerCase().replace(/\s+/g, '-')
 }
 
-function getMetaLine(event: EventRow, tz = 'Europe/Zurich') {
-  const start = new Date(event.startsAt)
-  const time = new Intl.DateTimeFormat('de-CH', {
-    timeZone: tz,
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).format(start)
+export default function Events({ upcomingEvents, eventTypes }: EventsProps) {
+  const [activeFilter, setActiveFilter] = useState('all')
 
-  return `${time}${event.location ? ` · ${event.location}` : ''}`
-}
+  const filters = useMemo(
+    () => [
+      { label: 'All', value: 'all' },
+      ...eventTypes.map((type) => ({ label: type.title, value: getEventTypeKey(type) })),
+    ].filter((filter) => filter.value),
+    [eventTypes]
+  )
 
-function getPastMonthYear(iso: string, tz = 'Europe/Zurich') {
-  const date = new Date(iso)
-  return new Intl.DateTimeFormat('de-CH', {
-    timeZone: tz,
-    month: 'short',
-    year: 'numeric',
-  }).format(date)
-}
+  const filteredUpcoming = useMemo(() => {
+    const list = [...upcomingEvents].sort(
+      (a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()
+    )
 
-export default function Events({ upcomingEvents, pastEvents, eventTypes }: EventsProps) {
-  const categoryOrder = ['All', ...eventTypes.map((type) => type.title)]
-  const [activeFilter, setActiveFilter] = useState<string>('All')
+    if (activeFilter === 'all') return list
 
-  const filteredUpcoming = [...upcomingEvents]
-    .filter((event) => activeFilter === 'All' || event.eventType === activeFilter)
-    .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime())
+    return list.filter((event) => getEventTypeKey(event.eventType) === activeFilter)
+  }, [activeFilter, upcomingEvents])
 
   return (
     <div className="events-page min-h-screen">
@@ -96,89 +81,34 @@ export default function Events({ upcomingEvents, pastEvents, eventTypes }: Event
 
         <section className="events-content-shell">
           <div className="events-upcoming-block">
-            <div className="filter-row events-filter-row">
-              {categoryOrder.map((filter) => (
-                <button
-                  key={filter}
-                  type="button"
-                  className={`fb ${activeFilter === filter ? 'active' : ''}`}
-                  onClick={() => setActiveFilter(filter)}
-                >
-                  {filter}
-                </button>
-              ))}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="filter-row events-filter-row">
+                {filters.map((filter) => (
+                  <button
+                    key={filter.value}
+                    type="button"
+                    className={`fb ${activeFilter === filter.value ? 'active' : ''}`}
+                    onClick={() => setActiveFilter(filter.value)}
+                  >
+                    {filter.label}
+                  </button>
+                ))}
+              </div>
+
+              <a href="https://lu.ma/user/ethbclub" target="_blank" rel="noopener noreferrer" className="hero-cta-secondary btn-sm whitespace-nowrap">
+                Past Events
+              </a>
             </div>
 
             <div className="label events-section-label">Upcoming</div>
           </div>
 
-          <div className="events-upcoming-stack">
-            {filteredUpcoming.map((event) => {
-              const { day, month } = getDayMonth(event.startsAt)
-              const meta = getMetaLine(event)
-              const description = toPlainText(event.description) || 'More details coming soon.'
-
-              return (
-                <article key={event._id} className="events-card-lg">
-                  <div className="events-date-col">
-                    <div className="events-day">{day}</div>
-                    <div className="events-month">{month}</div>
-                  </div>
-
-                  <div className="events-body">
-                    <div className="events-meta-row">
-                      <span className={`badge ${event.eventType === 'Hackathon' ? 'badge-green' : ''}`}>
-                        {event.eventType ?? 'Event'}
-                      </span>
-                      <span className="events-meta-text">{meta}</span>
-                    </div>
-
-                    <h2 className="h2 events-title">{event.title}</h2>
-                    <p>{description}</p>
-
-                    <div className="events-foot">
-                      <a
-                        href={event.registrationLink ?? '#'}
-                        className="btn btn-primary btn-sm"
-                        aria-label={`Register for ${event.title}`}
-                      >
-                        Register
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              )
-            })}
-          </div>
-
-          <div className="events-past-block">
-            <div className="label events-section-label events-section-label-past">Past Events</div>
-
-            <div className="grid-3 events-past-grid">
-            {pastEvents.map((event) => (
-              <article key={event._id} className="events-past-card">
-                <div className="events-past-img">
-                  <span className="events-past-photo-tag">PAST EVENT</span>
-                </div>
-                <div className="events-past-body">
-                  <div className="events-past-meta">
-                    <span className="badge">{event.eventType ?? 'Event'}</span>
-                    <span className="events-meta-text">{getPastMonthYear(event.startsAt)}</span>
-                  </div>
-                  <div className="h3 events-past-title">{event.title}</div>
-                  <p className="events-past-desc">
-                    {toPlainText(event.description) || 'Club event recap and highlights.'}
-                  </p>
-                </div>
-              </article>
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col gap-6">
+            {filteredUpcoming.map((event) => (
+              <EventCard key={event._id} event={event} variant="default" />
             ))}
             </div>
-          </div>
-
-          <div className="events-past-cta-wrap">
-            <a href="https://luma.com/user/ethbclub" className="hero-cta-primary events-past-cta">
-              View All Past Events
-            </a>
           </div>
         </section>
       </main>

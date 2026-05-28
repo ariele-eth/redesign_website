@@ -1,12 +1,12 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { EventCard } from "@/components/EventCard";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
 import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
 import Link from "next/link";
 import Image from "next/image";
 import { Layers3, Search, BriefcaseBusiness, Users } from "lucide-react";
-import { toPlainText } from "@/sanity/lib/portableText";
 
 type NetworkEntity = {
   _id: string;
@@ -21,8 +21,11 @@ type UpcomingEvent = {
   _id: string;
   title: string;
   startsAt: string;
+  endsAt?: string | null;
+  location?: string | null;
+  registrationLink?: string | null;
   description?: unknown;
-  eventType?: string | null;
+  eventType?: { _id: string; title: string; slug?: string | null } | string | null;
 };
 
 type HomeProps = {
@@ -64,21 +67,6 @@ const pillars = [
     icon: Users,
   },
 ];
-
-function getDayMonth(iso: string, tz = "Europe/Zurich") {
-  const date = new Date(iso);
-  const swissLocale = "de-CH";
-  const day = new Intl.DateTimeFormat(swissLocale, {
-    timeZone: tz,
-    day: "2-digit",
-  }).format(date);
-  const month = new Intl.DateTimeFormat(swissLocale, {
-    timeZone: tz,
-    month: "short",
-  }).format(date);
-
-  return { day, month };
-}
 
 export default function Home({ partners, advisors, events, siteStats }: HomeProps) {
   const formatPlus = (value?: number) =>
@@ -177,22 +165,22 @@ export default function Home({ partners, advisors, events, siteStats }: HomeProp
 
           <ScrollReveal delay={120}>
             <div className="vision-stats-home">
-            <article className="vision-stat-card">
-              <strong>{formatPlus(siteStats?.builders)}</strong>
-              <span>Active Builders</span>
-            </article>
-            <article className="vision-stat-card">
-              <strong>{formatPlus(siteStats?.events)}</strong>
-              <span>Events Per Year</span>
-            </article>
-            <article className="vision-stat-card">
-              <strong>{formatPlus(siteStats?.partners)}</strong>
-              <span>Industry Partners</span>
-            </article>
-            <article className="vision-stat-card">
-              <strong>{formatPlain(siteStats?.committees)}</strong>
-              <span>Active Committees</span>
-            </article>
+              <article className="vision-stat-card">
+                <strong>{formatPlus(siteStats?.builders)}</strong>
+                <span>Active Builders</span>
+              </article>
+              <article className="vision-stat-card">
+                <strong>{formatPlus(siteStats?.events)}</strong>
+                <span>Events Per Year</span>
+              </article>
+              <article className="vision-stat-card">
+                <strong>{formatPlus(siteStats?.partners)}</strong>
+                <span>Industry Partners</span>
+              </article>
+              <article className="vision-stat-card">
+                <strong>{formatPlain(siteStats?.committees)}</strong>
+                <span>Active Committees</span>
+              </article>
             </div>
           </ScrollReveal>
         </div>
@@ -206,9 +194,9 @@ export default function Home({ partners, advisors, events, siteStats }: HomeProp
               title="Four pillars, one mission"
               description="We connect education, research, industry, and community to establish ETH Zurich as Europe&apos;s leading blockchain hub."
             />
-              <Link href="/about" className="pillars-about-link">
-                About the Club
-              </Link>
+            <Link href="/about" className="pillars-about-link">
+              About the Club
+            </Link>
           </div>
         </ScrollReveal>
 
@@ -262,34 +250,17 @@ export default function Home({ partners, advisors, events, siteStats }: HomeProp
         headerClassName="partners-header"
       />
 
-
       <section className="coming-up-section">
         <ScrollReveal>
           <PageSectionHeader label="Coming Up" title="Upcoming Events" className="coming-up-head" />
         </ScrollReveal>
 
         <div className="coming-up-grid">
-          {events.map((event, idx) => {
-            const { day, month } = getDayMonth(event.startsAt);
-            const description = toPlainText(event.description) || "More details coming soon.";
-
-            return (
-            <ScrollReveal key={`${event._id}-${event.title}`} delay={80 + idx * 90}>
-              <article className="coming-card">
-                <div className="coming-date">
-                  <strong>{day}</strong>
-                  <span>{month}</span>
-                </div>
-
-                <div className="coming-body">
-                  <p className="coming-type">{event.eventType ?? "Event"}</p>
-                  <h3>{event.title}</h3>
-                  <p>{description}</p>
-                </div>
-              </article>
+          {events.map((event, idx) => (
+            <ScrollReveal key={event._id} delay={80 + idx * 90}>
+              <EventCard event={event} variant="compact" className="h-full" />
             </ScrollReveal>
-            );
-          })}
+          ))}
         </div>
       </section>
 

@@ -26,11 +26,38 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'groups',
+      title: 'Groups',
+      description: 'Assign the person to one or more committees only.',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'committee'}],
+          options: {
+            filter: 'groupType != $boardType',
+            filterParams: {boardType: 'board'},
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'committee',
       title: 'Committee',
+      description: 'Legacy single-group link. Prefer Groups for new entries.',
       type: 'reference',
       to: [{type: 'committee'}],
-      validation: (Rule) => Rule.required(),
+      options: {
+        filter: 'groupType != $boardType',
+        filterParams: {boardType: 'board'},
+      },
+    }),
+    defineField({
+      name: 'isBoardMember',
+      title: 'Board Member',
+      description: 'Enable for people who are part of the Board.',
+      type: 'boolean',
+      initialValue: false,
     }),
     defineField({
       name: 'socialLinks',

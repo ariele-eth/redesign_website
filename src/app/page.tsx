@@ -15,7 +15,7 @@ const homeAdvisorsQuery = `*[_type == "advisor" && isVisible != false && showOnH
 const homeEventsQuery = `*[_type == "event" && isVisible != false && startsAt >= $now]
   | order(coalesce(sortOrder, 9999) asc, startsAt asc)
   [0...3]
-  { _id, title, startsAt, description, "eventType": eventType->title }`
+  { _id, title, startsAt, endsAt, location, description, registrationLink, "eventType": eventType->{ _id, title, "slug": slug.current } }`
 
 const siteStatsQuery = `*[_type == "siteStats"][0] {
   members,
