@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { BriefcaseBusiness } from "lucide-react";
 
+import { CmsEmptyState } from "@/components/CmsEmptyState";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
@@ -169,30 +171,39 @@ export default async function JoinLanding() {
               />
             </ScrollReveal>
 
-            <div className="join-positions-grid">
-              {openPositions.map((position, idx) => {
-                const description =
-                  toPlainText(position.description) ||
-                  "Details coming soon.";
-                const committeeSlug = position.committee?.slug;
-                const href = committeeSlug
-                  ? `/join/committee?committee=${encodeURIComponent(committeeSlug)}`
-                  : "/join/committee";
+            {openPositions.length > 0 ? (
+              <div className="join-positions-grid">
+                {openPositions.map((position, idx) => {
+                  const description =
+                    toPlainText(position.description) ||
+                    "Details coming soon.";
+                  const committeeSlug = position.committee?.slug;
+                  const href = committeeSlug
+                    ? `/join/committee?committee=${encodeURIComponent(committeeSlug)}`
+                    : "/join/committee";
 
-                return (
-                <ScrollReveal key={position._id} delay={90 + idx * 60}>
-                  <article className="card join-position-card">
-                    <h3>{position.title}</h3>
-                    <span className="badge">{position.committee?.name ?? "Committee"}</span>
-                    <p>{description}</p>
-                    <Link href={href} className="hero-cta-secondary join-position-link">
-                      Learn More
-                    </Link>
-                  </article>
-                </ScrollReveal>
-                );
-              })}
-            </div>
+                  return (
+                  <ScrollReveal key={position._id} delay={90 + idx * 60}>
+                    <article className="card join-position-card">
+                      <h3>{position.title}</h3>
+                      <span className="badge">{position.committee?.name ?? "Committee"}</span>
+                      <p>{description}</p>
+                      <Link href={href} className="hero-cta-secondary join-position-link">
+                        Learn More
+                      </Link>
+                    </article>
+                  </ScrollReveal>
+                  );
+                })}
+              </div>
+            ) : (
+              <CmsEmptyState
+                title="No open positions right now."
+                description="New committee openings will appear here once published."
+                icon={BriefcaseBusiness}
+                className="mx-auto mt-8 max-w-4xl"
+              />
+            )}
           </div>
         </section>
 

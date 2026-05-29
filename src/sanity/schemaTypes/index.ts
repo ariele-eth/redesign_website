@@ -2,6 +2,7 @@ import category from './category'
 import committee from './committee'
 import codeOfEthics from './codeOfEthics'
 import educationResource from './educationResource'
+import educationStartHere from './educationStartHere'
 import event from './event'
 import eventType from './eventType'
 import impressum from './impressum'
@@ -28,6 +29,7 @@ export const schemaTypes = [
 	impressum,
 	codeOfEthics,
 	educationResource,
+	educationStartHere,
 	event,
 	eventType,
 	knowledgeGraphNode,

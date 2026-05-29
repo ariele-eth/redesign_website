@@ -2,7 +2,9 @@
 
 import { useMemo, useState } from 'react'
 
+import { CalendarDays } from 'lucide-react'
 import { Footer } from '@/components/Footer'
+import { CmsEmptyState } from '@/components/CmsEmptyState'
 import { Navigation } from '@/components/Navigation'
 import { EventCard } from '@/components/EventCard'
 
@@ -103,11 +105,20 @@ export default function Events({ upcomingEvents, eventTypes }: EventsProps) {
           </div>
 
           <div className="mx-auto max-w-7xl">
-            <div className="flex flex-col gap-6">
-            {filteredUpcoming.map((event) => (
-              <EventCard key={event._id} event={event} variant="default" />
-            ))}
-            </div>
+            {filteredUpcoming.length > 0 ? (
+              <div className="flex flex-col gap-6">
+              {filteredUpcoming.map((event) => (
+                <EventCard key={event._id} event={event} variant="default" />
+              ))}
+              </div>
+            ) : (
+              <CmsEmptyState
+                title={activeFilter === 'all' ? 'No upcoming events right now — stay tuned.' : 'No events in this category yet.'}
+                description={activeFilter === 'all' ? 'New events will appear here once published.' : 'Try another filter or check back later.'}
+                icon={CalendarDays}
+                className="mx-auto max-w-4xl"
+              />
+            )}
           </div>
         </section>
       </main>

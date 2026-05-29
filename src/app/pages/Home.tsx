@@ -2,11 +2,12 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { EventCard } from "@/components/EventCard";
+import { CmsEmptyState } from "@/components/CmsEmptyState";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
 import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
 import Link from "next/link";
 import Image from "next/image";
-import { Layers3, Search, BriefcaseBusiness, Users } from "lucide-react";
+import { Layers3, Search, BriefcaseBusiness, Users, CalendarDays } from "lucide-react";
 
 type NetworkEntity = {
   _id: string;
@@ -232,6 +233,9 @@ export default function Home({ partners, advisors, events, siteStats }: HomeProp
         descriptionClassName="advisor-card-copy"
         imageClassName="advisor-card-image"
         headerClassName="partners-header"
+        emptyStateTitle="No advisors to display yet."
+        emptyStateDescription="Advisor profiles will appear here once they are published."
+        emptyStateIcon={Users}
       />
 
       <div className="join-hero-divider" aria-hidden="true" />
@@ -248,6 +252,9 @@ export default function Home({ partners, advisors, events, siteStats }: HomeProp
         trackClassName="partner-marquee-track"
         chipClassName="partner-marquee-chip"
         headerClassName="partners-header"
+        emptyStateTitle="No partners to display yet."
+        emptyStateDescription="Partner logos will appear here once entries are published."
+        emptyStateIcon={BriefcaseBusiness}
       />
 
       <section className="coming-up-section">
@@ -255,13 +262,22 @@ export default function Home({ partners, advisors, events, siteStats }: HomeProp
           <PageSectionHeader label="Coming Up" title="Upcoming Events" className="coming-up-head" />
         </ScrollReveal>
 
-        <div className="coming-up-grid">
-          {events.map((event, idx) => (
-            <ScrollReveal key={event._id} delay={80 + idx * 90}>
-              <EventCard event={event} variant="compact" className="h-full" />
-            </ScrollReveal>
-          ))}
-        </div>
+        {events.length > 0 ? (
+          <div className="coming-up-grid">
+            {events.map((event, idx) => (
+              <ScrollReveal key={event._id} delay={80 + idx * 90}>
+                <EventCard event={event} variant="compact" className="h-full" />
+              </ScrollReveal>
+            ))}
+          </div>
+        ) : (
+          <CmsEmptyState
+            title="No upcoming events right now — stay tuned."
+            description="New events will appear here as soon as they are published."
+            icon={CalendarDays}
+            className="mx-auto mt-6 max-w-4xl"
+          />
+        )}
       </section>
 
       <Footer />

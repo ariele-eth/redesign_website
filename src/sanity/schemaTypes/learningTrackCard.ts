@@ -24,14 +24,35 @@ export default defineType({
       type: 'richText',
     }),
     defineField({
-      name: 'ctaLabel',
-      title: 'CTA Label',
+      name: 'level',
+      title: 'Level',
       type: 'string',
+      description: 'Difficulty level used for the card styling and label.',
+      options: {
+        list: [
+          {title: 'Beginner', value: 'Beginner'},
+          {title: 'Intermediate', value: 'Intermediate'},
+          {title: 'Advanced', value: 'Advanced'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'Beginner',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'ctaLink',
       title: 'CTA Link',
       type: 'url',
+      description:
+        'Optional external URL for this track. Explore now filters graph nodes, so this link is optional metadata.',
+    }),
+    defineField({
+      name: 'nodes',
+      title: 'Track Nodes',
+      description:
+        'Select the knowledge graph nodes that belong to this track. If empty, frontend falls back to the selected level.',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'knowledgeGraphNode'}]}],
     }),
     defineField({
       name: 'sortOrder',
@@ -49,6 +70,7 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
+      subtitle: 'level',
     },
   },
 })

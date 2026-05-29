@@ -5,12 +5,14 @@ import Image from "next/image";
 
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
+import { CmsEmptyState } from "@/components/CmsEmptyState";
 import { Nl2Br } from "@/components/Nl2Br";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
 import { CommitteeIcon } from "@/lib/committeeIcons";
 import { urlFor } from "@/sanity/lib/image";
+import { Building2, Network, Users } from "lucide-react";
 
 type Committee = {
   _id: string;
@@ -449,9 +451,18 @@ export default function About({ committees, people, partners, advisors, siteStat
                   </div>
 
                   <div className="org-tier org-tier-committees">
-                    {committeeNodes.map((node) => (
-                      <CommitteeNode key={node.id} {...node} onClick={scrollToCommittee} />
-                    ))}
+                    {committeeNodes.length > 0 ? (
+                      committeeNodes.map((node) => (
+                        <CommitteeNode key={node.id} {...node} onClick={scrollToCommittee} />
+                      ))
+                    ) : (
+                      <CmsEmptyState
+                        title="No committees listed yet."
+                        description="Committee nodes will appear once committee entries are published."
+                        icon={Network}
+                        className="mx-auto w-full max-w-2xl"
+                      />
+                    )}
                   </div>
 
                   <div className="org-hspread">
@@ -491,6 +502,9 @@ export default function About({ committees, people, partners, advisors, siteStat
           descriptionClassName="advisor-card-copy"
           imageClassName="advisor-card-image"
           headerClassName="about-section-header-block"
+          emptyStateTitle="No advisors to display yet."
+          emptyStateDescription="Advisor profiles will appear here once they are published."
+          emptyStateIcon={Users}
         />
 
         <div className="join-hero-divider" aria-hidden="true" />
@@ -508,6 +522,9 @@ export default function About({ committees, people, partners, advisors, siteStat
           trackClassName="partner-marquee-track"
           chipClassName="partner-marquee-chip"
           headerClassName="about-section-header-block"
+          emptyStateTitle="No partners to display yet."
+          emptyStateDescription="Partner logos will appear here once they are published."
+          emptyStateIcon={Building2}
         />
 
         <div className="container section-sm">
@@ -516,17 +533,26 @@ export default function About({ committees, people, partners, advisors, siteStat
           </ScrollReveal>
 
           <ScrollReveal delay={100}>
-            <div>
-              {committeeSections.map((section, index) => (
-                <ScrollReveal key={section.id} delay={80 + index * 70}>
-                  <CommitteeAccordion
-                    section={section}
-                    isOpen={openAccordionId === section.id}
-                    onToggle={(id) => setOpenAccordionId(openAccordionId === id ? "" : id)}
-                  />
-                </ScrollReveal>
-              ))}
-            </div>
+            {committeeSections.length > 0 ? (
+              <div>
+                {committeeSections.map((section, index) => (
+                  <ScrollReveal key={section.id} delay={80 + index * 70}>
+                    <CommitteeAccordion
+                      section={section}
+                      isOpen={openAccordionId === section.id}
+                      onToggle={(id) => setOpenAccordionId(openAccordionId === id ? "" : id)}
+                    />
+                  </ScrollReveal>
+                ))}
+              </div>
+            ) : (
+              <CmsEmptyState
+                title="No committees listed yet."
+                description="Committee details will appear here once entries are published."
+                icon={Network}
+                className="mx-auto mt-8 max-w-4xl"
+              />
+            )}
           </ScrollReveal>
         </div>
 
@@ -558,6 +584,7 @@ export default function About({ committees, people, partners, advisors, siteStat
           </ScrollReveal>
 
           <ScrollReveal delay={180}>
+            {visibleTeamMembers.length > 0 ? (
             <div className="team-strip">
               {visibleTeamMembers.map((member, index) => {
                 const personImageUrl = getPersonImageUrl(member.image);
@@ -593,6 +620,14 @@ export default function About({ committees, people, partners, advisors, siteStat
                 );
               })}
             </div>
+            ) : (
+              <CmsEmptyState
+                title="No members listed yet."
+                description="Team member profiles will appear here once they are published."
+                icon={Users}
+                className="mx-auto mt-8 max-w-4xl"
+              />
+            )}
           </ScrollReveal>
         </div>
 

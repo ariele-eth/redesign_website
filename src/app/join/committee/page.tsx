@@ -8,10 +8,12 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { CmsEmptyState } from '@/components/CmsEmptyState'
 import { Suspense, useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { client } from '@/sanity/lib/client'
 import { useSearchParams } from 'next/navigation'
+import { Network } from 'lucide-react'
 
 const committeesQuery = `*[_type == "committee"] | order(name asc) { _id, name, "slug": slug.current }`
 
@@ -96,6 +98,7 @@ function CommitteeApplicationContent() {
   const { toast } = useToast()
   const searchParams = useSearchParams()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isLoadingCommittees, setIsLoadingCommittees] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [committeeOptions, setCommitteeOptions] = useState<CommitteeOption[]>([])
   const [formData, setFormData] = useState({
@@ -114,10 +117,17 @@ function CommitteeApplicationContent() {
 
   useEffect(() => {
     let isActive = true
-    client.fetch(committeesQuery).then((data: CommitteeOption[]) => {
-      if (!isActive) return
-      setCommitteeOptions(data)
-    })
+    setIsLoadingCommittees(true)
+    client
+      .fetch(committeesQuery)
+      .then((data: CommitteeOption[]) => {
+        if (!isActive) return
+        setCommitteeOptions(data)
+      })
+      .finally(() => {
+        if (!isActive) return
+        setIsLoadingCommittees(false)
+      })
     return () => {
       isActive = false
     }
@@ -322,20 +332,32 @@ function CommitteeApplicationContent() {
 
                 <div className="space-y-3">
                   <Label>Preferred Committee *</Label>
-                  <div className="committee-options">
-                    {committeeOptions.map((option) => (
-                      <button
-                        key={option._id}
-                        type="button"
-                        onClick={() =>
-                          setFormData({ ...formData, committee_role: option.slug })
-                        }
-                        className={`committee-option${formData.committee_role === option.slug ? ' is-active' : ''}`}
-                      >
-                        {option.name}
-                      </button>
-                    ))}
-                  </div>
+                  {isLoadingCommittees ? (
+                    <p className="text-sm" style={{ color: 'var(--dim)' }}>
+                      Loading committee options...
+                    </p>
+                  ) : committeeOptions.length > 0 ? (
+                    <div className="committee-options">
+                      {committeeOptions.map((option) => (
+                        <button
+                          key={option._id}
+                          type="button"
+                          onClick={() =>
+                            setFormData({ ...formData, committee_role: option.slug })
+                          }
+                          className={`committee-option${formData.committee_role === option.slug ? ' is-active' : ''}`}
+                        >
+                          {option.name}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <CmsEmptyState
+                      title="No committees listed yet."
+                      description="Committee options will appear once they are published."
+                      icon={Network}
+                    />
+                  )}
                 </div>
 
                 <div className="space-y-2">

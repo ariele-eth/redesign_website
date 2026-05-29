@@ -216,10 +216,13 @@ export default function Collaborate({ partners }: CollaborateProps) {
           align="center"
           sectionClassName="partners-section partners-section-partners"
           wrapperClassName="partner-marquee-wrap"
-          trackClassName="partner-marquee-track"
-          chipClassName="partner-marquee-chip"
-          headerClassName="partners-header"
-        />
+        trackClassName="partner-marquee-track"
+        chipClassName="partner-marquee-chip"
+        headerClassName="partners-header"
+        emptyStateTitle="No partners to display yet."
+        emptyStateDescription="Current partner logos will appear here once published."
+        emptyStateIcon={Handshake}
+      />
 
         <section id="collab-contact" className="collab-cta-section">
           <div className="collab-cta-card">

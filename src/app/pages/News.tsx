@@ -1,5 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { CmsEmptyState } from "@/components/CmsEmptyState";
+import { Bell, Newspaper } from "lucide-react";
 
 type NewsItem = {
   _id: string;
@@ -50,60 +52,77 @@ export default function News({ news, quickUpdates }: NewsProps) {
 
         <section className="news-layout">
           <div>
-            {news.map((story, index) => {
-              const meta = formatNewsDate(story.date);
-              const content = (
-                <>
-                  <div className="label">{story.category ?? "News"}</div>
-                  <h2 className={`news-card-title ${index === 0 ? "news-card-title-featured" : ""}`}>
-                    {story.title}
-                  </h2>
-                  <p>{story.previewText}</p>
-                  <div className="news-meta">{meta}</div>
-                </>
-              );
+            {news.length > 0 ? (
+              news.map((story, index) => {
+                const meta = formatNewsDate(story.date);
+                const content = (
+                  <>
+                    <div className="label">{story.category ?? "News"}</div>
+                    <h2 className={`news-card-title ${index === 0 ? "news-card-title-featured" : ""}`}>
+                      {story.title}
+                    </h2>
+                    <p>{story.previewText}</p>
+                    <div className="news-meta">{meta}</div>
+                  </>
+                );
 
-              return (
-                <article key={story._id} className="news-card">
-                  {story.externalLink ? (
-                    <a href={story.externalLink} target="_blank" rel="noopener noreferrer">
-                      {content}
-                    </a>
-                  ) : (
-                    content
-                  )}
-                </article>
-              );
-            })}
+                return (
+                  <article key={story._id} className="news-card">
+                    {story.externalLink ? (
+                      <a href={story.externalLink} target="_blank" rel="noopener noreferrer">
+                        {content}
+                      </a>
+                    ) : (
+                      content
+                    )}
+                  </article>
+                );
+              })
+            ) : (
+              <CmsEmptyState
+                title="No news posts yet."
+                description="Published updates from the club will appear here."
+                icon={Newspaper}
+                className="mx-auto max-w-4xl"
+              />
+            )}
           </div>
 
           <aside>
             <div className="news-quick-updates">
               <div className="label news-quick-updates-label">Quick Updates</div>
 
-              {quickUpdates.map((item) => {
-                const meta = formatNewsDate(item.date);
-                const body = (
-                  <>
-                    <span className="badge sidebar-badge">{item.category ?? "Update"}</span>
-                    <h3 className="sidebar-title">{item.title}</h3>
-                    <p>{item.shortText}</p>
-                    <div className="sidebar-meta">{meta}</div>
-                  </>
-                );
+              {quickUpdates.length > 0 ? (
+                quickUpdates.map((item) => {
+                  const meta = formatNewsDate(item.date);
+                  const body = (
+                    <>
+                      <span className="badge sidebar-badge">{item.category ?? "Update"}</span>
+                      <h3 className="sidebar-title">{item.title}</h3>
+                      <p>{item.shortText}</p>
+                      <div className="sidebar-meta">{meta}</div>
+                    </>
+                  );
 
-                return (
-                  <article key={item._id} className="sidebar-card">
-                    {item.link ? (
-                      <a href={item.link} target="_blank" rel="noopener noreferrer">
-                        {body}
-                      </a>
-                    ) : (
-                      body
-                    )}
-                  </article>
-                );
-              })}
+                  return (
+                    <article key={item._id} className="sidebar-card">
+                      {item.link ? (
+                        <a href={item.link} target="_blank" rel="noopener noreferrer">
+                          {body}
+                        </a>
+                      ) : (
+                        body
+                      )}
+                    </article>
+                  );
+                })
+              ) : (
+                <CmsEmptyState
+                  title="No quick updates yet."
+                  description="Short updates will appear here once they are published."
+                  icon={Bell}
+                />
+              )}
             </div>
           </aside>
         </section>

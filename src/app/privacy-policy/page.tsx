@@ -1,5 +1,7 @@
 import {PortableText, type PortableTextComponents} from 'next-sanity'
+import {FileText} from 'lucide-react'
 
+import {CmsEmptyState} from '@/components/CmsEmptyState'
 import {Footer} from '@/components/Footer'
 import {Navigation} from '@/components/Navigation'
 import {client} from '@/sanity/lib/client'
@@ -65,7 +67,12 @@ export default async function PrivacyPolicyPage() {
             </div>
           ) : (
             <div className="legal-section">
-              <p>Content coming soon.</p>
+              <CmsEmptyState
+                title="Content coming soon."
+                description="This document will appear here once it is published in the CMS."
+                icon={FileText}
+                className="mx-auto max-w-4xl"
+              />
             </div>
           )}
         </section>

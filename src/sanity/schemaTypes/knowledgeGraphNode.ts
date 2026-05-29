@@ -27,6 +27,22 @@ export default defineType({
       type: 'richText',
     }),
     defineField({
+      name: 'level',
+      title: 'Level',
+      type: 'string',
+      description: 'Controls the node difficulty label and color in the graph.',
+      options: {
+        list: [
+          {title: 'Beginner', value: 'Beginner'},
+          {title: 'Intermediate', value: 'Intermediate'},
+          {title: 'Advanced', value: 'Advanced'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'Beginner',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'connections',
       title: 'Connected Nodes',
       type: 'array',
@@ -54,7 +70,7 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'slug.current',
+      subtitle: 'level',
     },
   },
 })

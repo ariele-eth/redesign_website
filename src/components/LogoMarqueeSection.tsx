@@ -1,6 +1,9 @@
 import Image from 'next/image'
 import type { ReactNode } from 'react'
+import type { LucideIcon } from 'lucide-react'
+import { Grid3X3 } from 'lucide-react'
 
+import { CmsEmptyState } from '@/components/CmsEmptyState'
 import { PageSectionHeader } from '@/components/PageSectionHeader'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { urlFor } from '@/sanity/lib/image'
@@ -31,6 +34,9 @@ type LogoMarqueeSectionProps = {
   imageClassName?: string
   headerClassName?: string
   align?: 'left' | 'center'
+  emptyStateTitle?: string
+  emptyStateDescription?: string
+  emptyStateIcon?: LucideIcon
 }
 
 function getLogoUrl(logo: unknown) {
@@ -60,6 +66,9 @@ export function LogoMarqueeSection({
   imageClassName,
   headerClassName,
   align = 'left',
+  emptyStateTitle = 'No items to display yet.',
+  emptyStateDescription,
+  emptyStateIcon = Grid3X3,
 }: LogoMarqueeSectionProps) {
   const hasItems = items.length > 0
   const marqueeItems = layout === 'marquee' ? [...items, ...items] : items
@@ -108,11 +117,12 @@ export function LogoMarqueeSection({
                   )
                 })
               ) : (
-                <div className={itemClassName}>
-                  <div className={chipClassName}>
-                    <span className={imageClassName}>No published entries yet</span>
-                  </div>
-                </div>
+                <CmsEmptyState
+                  title={emptyStateTitle}
+                  description={emptyStateDescription}
+                  icon={emptyStateIcon}
+                  className="mx-auto w-full max-w-4xl"
+                />
               )}
             </div>
           ) : (
@@ -158,11 +168,12 @@ export function LogoMarqueeSection({
                   )
                 })
               ) : (
-                <div className={chipClassName}>
-                  <span className="partner-chip-logo" style={{ fontSize: 12 }}>
-                    No published entries yet
-                  </span>
-                </div>
+                <CmsEmptyState
+                  title={emptyStateTitle}
+                  description={emptyStateDescription}
+                  icon={emptyStateIcon}
+                  className="mx-auto w-full max-w-4xl"
+                />
               )}
             </div>
           )}
