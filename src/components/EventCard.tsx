@@ -46,7 +46,6 @@ function formatEventDate(startISO: string, endISO?: string | null, tz = 'Europe/
     day: '2-digit',
   }).formatToParts(start)
 
-  const month = parts.find((part) => part.type === 'month')?.value ?? '00'
   const day = parts.find((part) => part.type === 'day')?.value ?? '00'
 
   const hourFormatter = new Intl.DateTimeFormat('en-GB', {

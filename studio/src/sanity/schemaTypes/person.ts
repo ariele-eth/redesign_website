@@ -60,12 +60,6 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
-      name: 'socialLinks',
-      title: 'Social Links',
-      type: 'array',
-      of: [{type: 'socialLink'}],
-    }),
-    defineField({
       name: 'bio',
       title: 'Short Bio',
       type: 'text',

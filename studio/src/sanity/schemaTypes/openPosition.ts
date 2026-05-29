@@ -31,13 +31,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'requirements',
-      title: 'Requirements',
-      type: 'array',
-      of: [{type: 'string'}],
-      validation: (Rule) => Rule.required().min(1),
-    }),
-    defineField({
       name: 'sortOrder',
       title: 'Sort Order',
       description: 'Lower numbers show first.',
