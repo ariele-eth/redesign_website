@@ -36,6 +36,7 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "studio/eth_bc_sanity"
   ]
 }

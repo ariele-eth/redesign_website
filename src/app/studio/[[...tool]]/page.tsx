@@ -1,7 +1,8 @@
-import StudioClient from './StudioClient'
+import { permanentRedirect } from 'next/navigation'
 
 export const runtime = 'edge'
 
 export default function StudioPage() {
-  return <StudioClient />
+  // Keep the main Cloudflare worker small by hosting Studio separately.
+  permanentRedirect('https://eth-bc-portal-studio.sanity.studio/')
 }
