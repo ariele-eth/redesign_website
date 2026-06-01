@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
@@ -140,19 +140,19 @@ function getSocialIcon(platform?: string | null) {
 
   switch (key) {
     case "linkedin":
-      return <Linkedin size={13} strokeWidth={2} />;
+      return <Linkedin size={20} strokeWidth={2} />;
     case "x":
-      return <Twitter size={13} strokeWidth={2} />;
+      return <Twitter size={20} strokeWidth={2} />;
     case "github":
-      return <Github size={13} strokeWidth={2} />;
+      return <Github size={20} strokeWidth={2} />;
     case "telegram":
-      return <Send size={13} strokeWidth={2} />;
+      return <Send size={20} strokeWidth={2} />;
     case "instagram":
-      return <Instagram size={13} strokeWidth={2} />;
+      return <Instagram size={20} strokeWidth={2} />;
     case "website":
-      return <Globe size={13} strokeWidth={2} />;
+      return <Globe size={20} strokeWidth={2} />;
     default:
-      return <Globe size={13} strokeWidth={2} />;
+      return <Globe size={20} strokeWidth={2} />;
   }
 }
 
@@ -174,7 +174,7 @@ function CommitteeAccordion({
           </div>
           <div className="acc-title">{section.title}</div>
         </div>
-        <div className="acc-arrow">⌄</div>
+        <div className="acc-arrow">&#8964;</div>
       </button>
       {isOpen && (
         <div className="acc-body">
@@ -534,7 +534,7 @@ export default function About({ committees, people, advisors, siteStats }: About
               </div>
 
               <p style={{ textAlign: "center", fontSize: 12, color: "var(--dim)", marginTop: 24, letterSpacing: 0.5 }}>
-                Click any committee node to jump to its description ↓
+                Click any committee node to jump to its description below
               </p>
             </div>
           </div>
@@ -652,7 +652,7 @@ export default function About({ committees, people, advisors, siteStats }: About
                             src={personImageUrl}
                             alt={member.name}
                             fill
-                            sizes="60px"
+                            sizes="120px"
                             className="team-av-image"
                           />
                         ) : (
@@ -667,11 +667,11 @@ export default function About({ committees, people, advisors, siteStats }: About
                           ...getMemberGroups(member).map((group) => getGroupLabel(group)),
                         ]
                           .filter(Boolean)
-                          .join(" � ") || "Committee"}
+                          .join(" - ") || "Committee"}
                       </div>
-                      {socials.length > 0 ? (
-                        <div className="team-socials" aria-label={`${member.name} social links`}>
-                          {socials.map((social, socialIndex) => (
+                      <div className="team-socials" aria-label={socials.length > 0 ? `${member.name} social links` : undefined}>
+                        {socials.length > 0 ? (
+                          socials.map((social, socialIndex) => (
                             <a
                               key={`${member._id}-${social.platform ?? "social"}-${socialIndex}`}
                               href={social.url}
@@ -683,9 +683,11 @@ export default function About({ committees, people, advisors, siteStats }: About
                             >
                               {getSocialIcon(social.platform)}
                             </a>
-                          ))}
-                        </div>
-                      ) : null}
+                          ))
+                        ) : (
+                          <span className="team-social-placeholder" aria-hidden="true" />
+                        )}
+                      </div>
                     </div>
                   </ScrollReveal>
                 );
@@ -707,3 +709,4 @@ export default function About({ committees, people, advisors, siteStats }: About
     </div>
   );
 }
+

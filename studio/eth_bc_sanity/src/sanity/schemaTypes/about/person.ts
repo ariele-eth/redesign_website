@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'person',
@@ -64,6 +64,59 @@ export default defineType({
       title: 'Short Bio',
       type: 'text',
       rows: 4,
+    }),
+    defineField({
+      name: 'socials',
+      title: 'Social Links',
+      description: 'Add platform links that will appear as clickable icons on the person card.',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'platform',
+              title: 'Platform',
+              type: 'string',
+              options: {
+                list: [
+                  {title: 'LinkedIn', value: 'linkedin'},
+                  {title: 'X', value: 'x'},
+                  {title: 'GitHub', value: 'github'},
+                  {title: 'Telegram', value: 'telegram'},
+                  {title: 'Instagram', value: 'instagram'},
+                  {title: 'Website', value: 'website'},
+                  {title: 'Other', value: 'other'},
+                ],
+                layout: 'dropdown',
+              },
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (Rule) =>
+                Rule.required().uri({
+                  scheme: ['http', 'https'],
+                }),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'platform',
+              subtitle: 'url',
+            },
+            prepare({title, subtitle}) {
+              const label = typeof title === 'string' && title.trim() ? title : 'social'
+              return {
+                title: label.charAt(0).toUpperCase() + label.slice(1),
+                subtitle: subtitle ?? '',
+              }
+            },
+          },
+        }),
+      ],
     }),
     defineField({
       name: 'sortOrder',

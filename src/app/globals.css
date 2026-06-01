@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+﻿@import 'tailwindcss';
 
 /* Dark theme design system matching the mockup.
 All colors in HSL format.
@@ -2866,8 +2866,8 @@ hr {
 }
 
 .collab-type-icon {
-  width: 52px;
-  height: 52px;
+  width: 26px;
+  height: 26px;
   margin-bottom: 18px;
 }
 
@@ -3019,17 +3019,17 @@ hr {
 }
 
 .team-av {
-  width: 60px;
-  height: 60px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: var(--surface2);
-  margin: 0 auto 14px;
+  margin: 0 auto 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 18px;
+  font-size: 34px;
   color: var(--accent);
   border: 1.5px solid var(--border2);
   position: relative;
@@ -3063,6 +3063,7 @@ hr {
 
 .team-socials {
   margin-top: 12px;
+  padding-top: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3071,9 +3072,16 @@ hr {
   z-index: 1;
 }
 
+.team-social-placeholder {
+  width: 39px;
+  height: 39px;
+  display: inline-block;
+  visibility: hidden;
+}
+
 .team-social-link {
-  width: 26px;
-  height: 26px;
+  width: 39px;
+  height: 39px;
   border-radius: 9999px;
   display: inline-flex;
   align-items: center;
@@ -4009,3 +4017,4 @@ hr {
     letter-spacing: 1.5px;
   }
 }
+
