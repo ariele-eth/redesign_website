@@ -6,20 +6,6 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'groupType',
-      title: 'Group Type',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Committee', value: 'committee'},
-          {title: 'Board', value: 'board'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'committee',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'name',
       title: 'Committee Name',
       type: 'string',

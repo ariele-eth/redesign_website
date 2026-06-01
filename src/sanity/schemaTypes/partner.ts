@@ -15,6 +15,8 @@ export default defineType({
       name: 'logo',
       title: 'Logo',
       type: 'image',
+      description:
+        'Please upload a version of the logo with a transparent background (PNG or SVG preferred). Logos with white or dark filled backgrounds will look broken on the website. Landscape or square format preferred.',
       options: {
         hotspot: true,
       },

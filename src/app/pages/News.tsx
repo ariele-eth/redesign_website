@@ -42,9 +42,14 @@ export default function News({ news, quickUpdates }: NewsProps) {
       <Navigation />
 
       <main>
-        <section className="news-hero">
-          <div className="label">Updates</div>
-          <h1 className="h1">News</h1>
+        <section className="page-hero-shell page-hero-compact">
+          <div className="hero-top-brand">
+            <span className="hero-top-line" />
+            <span className="hero-top-text">Updates</span>
+          </div>
+          <h1 className="hero-title-main">
+            <span>News</span>
+          </h1>
           <p className="lead news-hero-lead">
             The latest from the club, the DeFi ecosystem, and our advisor network.
           </p>

@@ -5,9 +5,10 @@ import { EventCard } from "@/components/EventCard";
 import { CmsEmptyState } from "@/components/CmsEmptyState";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
 import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
+import { PartnersSection } from "@/components/PartnersSection";
 import Link from "next/link";
 import Image from "next/image";
-import { Layers3, Search, BriefcaseBusiness, Users, CalendarDays } from "lucide-react";
+import { Layers3, BriefcaseBusiness, Users, CalendarDays } from "lucide-react";
 
 type NetworkEntity = {
   _id: string;
@@ -30,7 +31,6 @@ type UpcomingEvent = {
 };
 
 type HomeProps = {
-  partners: NetworkEntity[];
   advisors: NetworkEntity[];
   events: UpcomingEvent[];
   siteStats?: {
@@ -46,30 +46,30 @@ const pillars = [
   {
     title: "Education",
     description:
-      "Structured learning tracks from blockchain basics to advanced protocol development.",
+      "Structured learning tracks, curated resources, and a growing knowledge hub - all available on our dedicated Education page.",
     icon: Layers3,
-  },
-  {
-    title: "Research",
-    description:
-      "Collaborating with ETH researchers on distributed systems, cryptography and ZK proofs.",
-    icon: Search,
   },
   {
     title: "Industry",
     description:
-      "Bridging academia and the Web3 industry through partnerships and live projects.",
+      "Long-term partnerships with leading Web3 companies, translated into workshops, office visits, and live collaborations for our members.",
     icon: BriefcaseBusiness,
+  },
+  {
+    title: "Events",
+    description:
+      "From workshops and hackathons to panel discussions and builders meetups  - a programme that keeps the community active every few weeks.",
+    icon: CalendarDays,
   },
   {
     title: "Community",
     description:
-      "A vibrant ecosystem of builders, thinkers, and innovators united by Web3.",
+      "A tight-knit group of ETH students building together across faculties - connected by a shared interest in the decentralised economy.",
     icon: Users,
   },
 ];
 
-export default function Home({ partners, advisors, events, siteStats }: HomeProps) {
+export default function Home({ advisors, events, siteStats }: HomeProps) {
   const formatPlus = (value?: number) =>
     typeof value === "number" ? `${value}+` : "--";
   const formatPlain = (value?: number) =>
@@ -193,7 +193,7 @@ export default function Home({ partners, advisors, events, siteStats }: HomeProp
             <PageSectionHeader
               label="What We Do"
               title="Four pillars, one mission"
-              description="We connect education, research, industry, and community to establish ETH Zurich as Europe&apos;s leading blockchain hub."
+              description="We connect education, events, industry, and community to establish ETH Zurich as Europe&apos;s leading blockchain hub."
             />
             <Link href="/about" className="pillars-about-link">
               About the Club
@@ -240,21 +240,14 @@ export default function Home({ partners, advisors, events, siteStats }: HomeProp
 
       <div className="join-hero-divider" aria-hidden="true" />
 
-      <LogoMarqueeSection
-        label="Trusted By"
-        title="Our Partners"
+      <PartnersSection
+        placement="home"
+        eyebrow="Trusted By"
+        heading="Our Partners"
         description="Partners are core to our impact. Scroll to discover the ecosystem backing our community."
-        items={partners}
-        linkItems
         align="center"
         sectionClassName="partners-section partners-section-partners"
-        wrapperClassName="partner-marquee-wrap"
-        trackClassName="partner-marquee-track"
-        chipClassName="partner-marquee-chip"
         headerClassName="partners-header"
-        emptyStateTitle="No partners to display yet."
-        emptyStateDescription="Partner logos will appear here once entries are published."
-        emptyStateIcon={BriefcaseBusiness}
       />
 
       <section className="coming-up-section">

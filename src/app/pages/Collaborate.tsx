@@ -1,28 +1,17 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
+import { PartnersSection } from "@/components/PartnersSection";
 import {
   BadgeDollarSign,
+  BriefcaseBusiness,
   CalendarDays,
   Eye,
-  FlaskConical,
   GraduationCap,
   Handshake,
   Mic,
-  Search,
+  Trophy,
   Users,
 } from "lucide-react";
-
-type Partner = {
-  _id: string;
-  name: string;
-  website?: string | null;
-  logo?: unknown;
-};
-
-type CollaborateProps = {
-  partners: Partner[];
-};
 
 const partnerBenefits = [
   {
@@ -30,75 +19,77 @@ const partnerBenefits = [
     title: "ETH Talent Access",
     icon: GraduationCap,
     description:
-      "Direct access to Europe's best CS, mathematics and engineering students with a passion for Web3.",
+      "Direct access to ETH Zurich students in computer science, mathematics, and engineering with a strong interest in Web3.",
   },
   {
     eyebrow: "02",
     title: "Ecosystem Visibility",
     icon: Eye,
     description:
-      "Be seen by 500+ engaged students and our broader network of alumni, researchers and professionals.",
+      "Reach our student community as well as a broader network of alumni, researchers, and Web3 professionals.",
   },
   {
     eyebrow: "03",
-    title: "Research Collaboration",
-    icon: Search,
+    title: "Hiring Pipeline",
+    icon: Users,
     description:
-      "Engage with ETH Zurich research groups on blockchain scalability, security and cryptography.",
+      "Connect with motivated candidates looking for internships, working student roles, and full-time positions in Web3.",
   },
 ];
 
 const collaborationMethods = [
   {
-    title: "Co-host Events",
+    title: "Co-create Events",
     icon: CalendarDays,
     description:
-      "Workshops, panels, or hackathons with your brand front and centre alongside ours.",
+      "Run workshops, panels, or technical sessions with us and engage directly with the ETH Web3 community.",
   },
   {
-    title: "Sponsorships",
+    title: "Annual Sponsorship",
     icon: BadgeDollarSign,
     description:
-      "Fund our initiatives and gain year-round visibility across our channels and events.",
+      "Support our initiatives and gain recurring visibility across our events, content, and community channels.",
   },
   {
     title: "Speaker Programs",
     icon: Mic,
     description:
-      "Send your experts to share knowledge and build credibility with our community.",
+      "Share expertise through talks or workshops and build credibility with students interested in Web3.",
   },
   {
-    title: "Research Projects",
-    icon: FlaskConical,
+    title: "Talent Introductions",
+    icon: Users,
     description:
-      "Collaborate on applied research with our technical committee and ETH Zurich faculty.",
+      "Get introduced to selected ETH Zurich students whose interests match your hiring needs.",
   },
 ];
 
 const collaborationTypes = [
   {
-    title: "Event Partnerships",
+    title: "Event Partnership",
     icon: CalendarDays,
-    description: "Co-hosted workshops, panels or hackathons.",
+    description: "Co-host a single workshop, panel, or community event with shared branding and promotion.",
   },
   {
-    title: "Sponsorships",
+    title: "Sponsorship Package",
     icon: Handshake,
-    description: "Year-round brand visibility and funding.",
+    description: "Support selected initiatives or the annual program through a defined visibility package.",
   },
   {
-    title: "Research Collabs",
-    icon: Search,
-    description: "Applied research with faculty and students.",
+    title: "Hackathon Partner",
+    icon: Trophy,
+    description:
+      "Define a Web3 challenge and co-host a focused hackathon with builders from our community.",
   },
   {
-    title: "Talent Support",
-    icon: Users,
-    description: "Student development and recruiting pipeline.",
+    title: "Job Board Access",
+    icon: BriefcaseBusiness,
+    description:
+      "Post internships, working student roles, or full-time positions to our curated ETH Web3 talent network.",
   },
 ];
 
-export default function Collaborate({ partners }: CollaborateProps) {
+export default function Collaborate() {
   return (
     <div className="collab-page min-h-screen">
       <div className="page-grid-bg" />
@@ -208,21 +199,14 @@ export default function Collaborate({ partners }: CollaborateProps) {
           </div>
         </section>
 
-        <LogoMarqueeSection
-          label="Current Partners"
-          title="Current Partners"
-          items={partners}
-          linkItems
+        <PartnersSection
+          placement="collaborate"
+          eyebrow="Current Partners"
+          heading="Current Partners"
           align="center"
           sectionClassName="partners-section partners-section-partners"
-          wrapperClassName="partner-marquee-wrap"
-        trackClassName="partner-marquee-track"
-        chipClassName="partner-marquee-chip"
-        headerClassName="partners-header"
-        emptyStateTitle="No partners to display yet."
-        emptyStateDescription="Current partner logos will appear here once published."
-        emptyStateIcon={Handshake}
-      />
+          headerClassName="partners-header"
+        />
 
         <section id="collab-contact" className="collab-cta-section">
           <div className="collab-cta-card">

@@ -10,9 +10,10 @@ import { Nl2Br } from "@/components/Nl2Br";
 import { PageSectionHeader } from "@/components/PageSectionHeader";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
+import { PartnersSection } from "@/components/PartnersSection";
 import { CommitteeIcon } from "@/lib/committeeIcons";
 import { urlFor } from "@/sanity/lib/image";
-import { Building2, Network, Users } from "lucide-react";
+import { Network, Users } from "lucide-react";
 
 type Committee = {
   _id: string;
@@ -41,7 +42,6 @@ type Person = {
 type AboutProps = {
   committees: Committee[];
   people: Person[];
-  partners: Array<{ _id: string; name: string; website?: string | null; logo?: unknown }>;
   advisors: Array<{ _id: string; name: string; title?: string | null; description?: string | null; logo?: unknown }>;
   siteStats?: {
     members?: number;
@@ -160,7 +160,7 @@ function CommitteeNode({
   );
 }
 
-export default function About({ committees, people, partners, advisors, siteStats }: AboutProps) {
+export default function About({ committees, people, advisors, siteStats }: AboutProps) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [openAccordionId, setOpenAccordionId] = useState("");
   const [activeStat, setActiveStat] = useState(0);
@@ -509,22 +509,15 @@ export default function About({ committees, people, partners, advisors, siteStat
 
         <div className="join-hero-divider" aria-hidden="true" />
 
-        <LogoMarqueeSection
+        <PartnersSection
+          placement="about"
           id="partners"
-          label="External Network"
-          title="Partners"
+          eyebrow="External Network"
+          heading="Partners"
           description="Industry and research collaborators backing the club."
-          items={partners}
-          linkItems
           align="left"
           sectionClassName="partners-section partners-section-partners"
-          wrapperClassName="partner-marquee-wrap"
-          trackClassName="partner-marquee-track"
-          chipClassName="partner-marquee-chip"
           headerClassName="about-section-header-block"
-          emptyStateTitle="No partners to display yet."
-          emptyStateDescription="Partner logos will appear here once they are published."
-          emptyStateIcon={Building2}
         />
 
         <div className="container section-sm">

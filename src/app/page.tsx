@@ -4,10 +4,6 @@ import { client } from '@/sanity/lib/client'
 
 export const revalidate = 60
 
-const homePartnersQuery = `*[_type == "partner" && isVisible != false && showOnHome != false]
-  | order(coalesce(sortOrder, 9999) asc, name asc)
-  { _id, name, website, logo }`
-
 const homeAdvisorsQuery = `*[_type == "advisor" && isVisible != false && showOnHome != false]
   | order(coalesce(sortOrder, 9999) asc, name asc)
   { _id, name, title, description, logo }`
@@ -17,7 +13,10 @@ const homeEventsQuery = `*[_type == "event" && isVisible != false && startsAt >=
   [0...3]
   { _id, title, startsAt, endsAt, location, description, registrationLink, "eventType": eventType->{ _id, title, "slug": slug.current } }`
 
-const siteStatsQuery = `*[_type == "siteStats"][0] {
+const siteStatsQuery = `coalesce(
+  *[_type == "siteStats" && _id == "siteStats"][0],
+  *[_type == "siteStats"][0]
+) {
   members,
   events,
   partners,
@@ -27,8 +26,7 @@ const siteStatsQuery = `*[_type == "siteStats"][0] {
 
 export default async function RootPage() {
   const now = new Date().toISOString()
-  const [partners, advisors, events, siteStats] = await Promise.all([
-    client.fetch(homePartnersQuery),
+  const [advisors, events, siteStats] = await Promise.all([
     client.fetch(homeAdvisorsQuery),
     client.fetch(homeEventsQuery, { now }),
     client.fetch(siteStatsQuery),
@@ -36,7 +34,7 @@ export default async function RootPage() {
 
   return (
     <Providers>
-      <Home partners={partners} advisors={advisors} events={events} siteStats={siteStats} />
+      <Home advisors={advisors} events={events} siteStats={siteStats} />
     </Providers>
   )
 }
