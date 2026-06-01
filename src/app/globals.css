@@ -1349,7 +1349,7 @@ hr {
   padding: 10px;
   border-radius: 16px;
   border: 1px solid rgba(104, 126, 246, 0.18);
-  background: rgba(10, 16, 33, 0.88);
+  background: var(--surface);
   text-align: center;
 }
 
@@ -3059,6 +3059,35 @@ hr {
 .team-comm {
   font-size: 11px;
   color: var(--dim);
+}
+
+.team-socials {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.team-social-link {
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--icon-accent);
+  border: 1px solid rgba(132, 151, 255, 0.3);
+  background: rgba(18, 27, 48, 0.65);
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.team-social-link:hover {
+  color: var(--text);
+  border-color: rgba(132, 151, 255, 0.55);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 1100px) {

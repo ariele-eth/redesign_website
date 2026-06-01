@@ -1,22 +1,26 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 
 import { PageSectionHeader } from "@/components/PageSectionHeader";
-import { ScrollReveal } from "@/components/ScrollReveal";
 import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
+import { dataset, projectId } from "@/sanity/env";
 
 type PartnerPlacement = "home" | "about" | "collaborate";
+
+type PartnerLogo = {
+  asset?: {
+    _id?: string;
+    url?: string | null;
+  } | null;
+} | null;
 
 type PartnerItem = {
   _id: string;
   name: string;
-  website?: string | null;
-  logo?: unknown;
-  invertLogo?: boolean | null;
-  logoClassName?: string | null;
+  logo?: PartnerLogo;
+  url?: string | null;
 };
 
 type PartnersSectionProps = {
@@ -30,40 +34,86 @@ type PartnersSectionProps = {
   headerClassName?: string;
 };
 
-const LOGO_BOX_WIDTH = 280;
-const LOGO_BOX_HEIGHT = 64;
-const LOGO_CDN_HEIGHT = LOGO_BOX_HEIGHT * 2;
+const imageBuilder = createImageUrlBuilder({ projectId, dataset });
 
-const partnerQueryByPlacement: Record<PartnerPlacement, string> = {
-  home: `*[_type == "partner" && isVisible != false && showOnHome != false]
-    | order(coalesce(sortOrder, 9999) asc, name asc)
-    { _id, name, website, logo, invertLogo, logoClassName }`,
-  about: `*[_type == "partner" && isVisible != false && showOnAbout != false]
-    | order(coalesce(sortOrder, 9999) asc, name asc)
-    { _id, name, website, logo, invertLogo, logoClassName }`,
-  collaborate: `*[_type == "partner" && isVisible != false && showOnCollaborate != false]
-    | order(coalesce(sortOrder, 9999) asc, name asc)
-    { _id, name, website, logo, invertLogo, logoClassName }`,
+const partnerQuery = `*[_type == "partner"] {
+  _id,
+  name,
+  logo { asset->{ url } },
+  "url": coalesce(url, website)
+}`;
+
+function getLogoUrl(logo: PartnerLogo | undefined) {
+  if (!logo) return null;
+
+  try {
+    return imageBuilder
+      .image(logo as SanityImageSource)
+      .width(280)
+      .height(96)
+      .fit("max")
+      .auto("format")
+      .quality(92)
+      .url();
+  } catch {
+    return logo.asset?.url ?? null;
+  }
+}
+
+type PartnerCardModel = {
+  _id: string;
+  name: string;
+  logoUrl: string;
+  url?: string | null;
 };
 
-function getLogoUrl(logo: unknown) {
-  if (!logo) return null;
-  return urlFor(logo as never)
-    .width(LOGO_BOX_WIDTH * 2)
-    .height(LOGO_CDN_HEIGHT)
-    .fit("max")
-    .auto("format")
-    .quality(92)
-    .url();
+function normalizeExternalUrl(url?: string | null) {
+  if (!url) return null;
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+  if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(trimmed)) return trimmed;
+  if (trimmed.startsWith("//")) return `https:${trimmed}`;
+  return `https://${trimmed}`;
+}
+
+function PartnerCard({ partner }: { partner: PartnerCardModel }) {
+  const cardClasses =
+    "group flex h-[100px] flex-col items-center justify-center rounded-[10px] border border-[1px] border-[rgba(104,126,246,0.18)] bg-[var(--surface)] px-8 py-6 transition-colors duration-200 hover:bg-[#1a2435] hover:border-[rgba(78,142,247,0.35)]";
+  const normalizedUrl = normalizeExternalUrl(partner.url);
+
+  const cardContent = (
+    <img
+      src={partner.logoUrl}
+      alt={partner.name}
+      loading="lazy"
+      decoding="async"
+      className="block h-auto w-auto max-h-[56px] max-w-full object-contain opacity-75 [filter:brightness(0)_invert(1)] transition duration-200 group-hover:opacity-100"
+    />
+  );
+
+  if (normalizedUrl) {
+    return (
+      <a
+        href={normalizedUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cardClasses}
+      >
+        {cardContent}
+      </a>
+    );
+  }
+
+  return <div className={cardClasses}>{cardContent}</div>;
 }
 
 export function PartnersSection({
   id,
-  placement,
-  eyebrow = "Trusted By",
-  heading = "Our Partners",
-  description,
-  align = "center",
+  placement: _placement,
+  eyebrow = "EXTERNAL NETWORK",
+  heading = "Partners",
+  description = "Industry and research collaborators backing the club.",
+  align = "left",
   sectionClassName,
   headerClassName,
 }: PartnersSectionProps) {
@@ -73,7 +123,7 @@ export function PartnersSection({
     let cancelled = false;
 
     void client
-      .fetch<PartnerItem[]>(partnerQueryByPlacement[placement])
+      .fetch<PartnerItem[]>(partnerQuery)
       .then((result) => {
         if (cancelled) return;
         setPartners(Array.isArray(result) ? result : []);
@@ -86,81 +136,90 @@ export function PartnersSection({
     return () => {
       cancelled = true;
     };
-  }, [placement]);
+  }, [_placement]);
 
-  if (partners === null || partners.length === 0) {
+  const resolvedHeaderClassName = (headerClassName ?? "")
+    .split(/\s+/)
+    .filter((token) => token && token !== "partners-header" && token !== "about-section-header-block")
+    .join(" ");
+
+  if (partners === null) {
+    return (
+      <section id={id} className={`${sectionClassName ?? ""} py-16 md:py-20`}>
+        <div className="container">
+          <PageSectionHeader
+            label={eyebrow}
+            title={heading}
+            description={description}
+            align={align}
+            className={resolvedHeaderClassName}
+          />
+
+          <div className="mt-8 grid items-stretch grid-cols-1 gap-3 md:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div
+                key={`partner-skeleton-${index}`}
+                className="h-[100px] animate-pulse rounded-[10px] border border-[0.5px] border-[rgba(255,255,255,0.09)] bg-[#131a26]"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const partnerCards = partners.reduce<PartnerCardModel[]>((acc, partner) => {
+    const logoUrl = getLogoUrl(partner.logo);
+    if (!logoUrl) return acc;
+
+    acc.push({
+      _id: partner._id,
+      name: partner.name,
+      logoUrl,
+      url: partner.url,
+    });
+
+    return acc;
+  }, []);
+
+  if (partnerCards.length === 0) {
     return null;
   }
 
-  const normalizedLabel = eyebrow.trim().toLowerCase();
-  const normalizedTitle = heading.trim().toLowerCase();
-  const resolvedLabel =
-    normalizedTitle === normalizedLabel ? "Trusted By" : eyebrow;
-  const largeGridClass = partners.length % 4 === 1 ? "lg:grid-cols-3" : "lg:grid-cols-4";
+  const remainder = partnerCards.length % 3;
+  const fullRowCount = remainder === 0 ? partnerCards.length : partnerCards.length - remainder;
+  const fullRows = partnerCards.slice(0, fullRowCount);
+  const lastRow = partnerCards.slice(fullRowCount);
 
   return (
-    <section id={id} className={`${sectionClassName ?? ""} bg-transparent`}>
-      <ScrollReveal>
+    <section id={id} className={`${sectionClassName ?? ""} py-16 md:py-20`}>
+      <div className="container">
         <PageSectionHeader
-          label={resolvedLabel}
+          label={eyebrow}
           title={heading}
           description={description}
           align={align}
-          className={headerClassName}
+          className={resolvedHeaderClassName}
         />
-      </ScrollReveal>
 
-      <ScrollReveal delay={120}>
-        <div
-          className={`mx-auto mt-4 grid w-full max-w-[var(--page-width)] grid-cols-2 gap-[var(--r)] px-[var(--page-pad-x)] md:grid-cols-3 ${largeGridClass}`}
-        >
-          {partners.map((partner) => {
-            const logoUrl = getLogoUrl(partner.logo);
-            const isSvgLogo = logoUrl ? /\.svg(\?|$)/i.test(logoUrl) : false;
-            const cardClasses =
-              "group flex items-center justify-center rounded-[var(--rl)] border border-[var(--border)] bg-[var(--surface)] px-[calc(var(--r)*2)] py-[calc(var(--r)*0.8)] transition-[var(--transition-smooth)] hover:scale-[1.01] hover:border-[var(--accent)]";
-            const partnerLogoClass = partner.logoClassName?.trim() ?? "";
-            const contrastClass = partner.invertLogo ? "brightness-0 invert opacity-80" : "opacity-95";
+        {fullRows.length > 0 && (
+          <div className="mt-8 grid items-stretch grid-cols-1 gap-3 md:grid-cols-3">
+            {fullRows.map((partner) => (
+              <PartnerCard key={partner._id} partner={partner} />
+            ))}
+          </div>
+        )}
 
-            const cardContent = logoUrl ? (
-              <div className="flex w-full items-center justify-center">
-                <div className="relative h-16 w-full max-w-[80%]">
-                <Image
-                  src={logoUrl}
-                  alt={partner.name}
-                  fill
-                  unoptimized={isSvgLogo}
-                  sizes="(max-width: 768px) 42vw, (max-width: 1200px) 30vw, 280px"
-                  className={`object-contain transition-[var(--transition-smooth)] group-hover:opacity-100 ${contrastClass}${partnerLogoClass ? ` ${partnerLogoClass}` : ""}`}
-                />
-                </div>
+        {lastRow.length > 0 && (
+          <div className={`${fullRows.length > 0 ? "mt-3" : "mt-8"} flex flex-wrap items-stretch justify-center gap-3`}>
+            {lastRow.map((partner) => (
+              <div key={partner._id} className="w-full md:w-[calc((100%-24px)/3)]">
+                <PartnerCard partner={partner} />
               </div>
-            ) : (
-              <span className="text-center text-sm text-[var(--text-secondary)]">{partner.name}</span>
-            );
-
-            if (partner.website) {
-              return (
-                <a
-                  key={partner._id}
-                  href={partner.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cardClasses}
-                >
-                  {cardContent}
-                </a>
-              );
-            }
-
-            return (
-              <div key={partner._id} className={cardClasses}>
-                {cardContent}
-              </div>
-            );
-          })}
-        </div>
-      </ScrollReveal>
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

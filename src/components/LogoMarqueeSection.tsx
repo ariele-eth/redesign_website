@@ -72,18 +72,24 @@ export function LogoMarqueeSection({
 }: LogoMarqueeSectionProps) {
   const hasItems = items.length > 0
   const marqueeItems = layout === 'marquee' ? [...items, ...items] : items
+  const resolvedHeaderClassName = (headerClassName ?? '')
+    .split(/\s+/)
+    .filter((token) => token && token !== 'partners-header' && token !== 'about-section-header-block')
+    .join(' ')
 
   return (
     <section id={id} className={sectionClassName}>
-      <ScrollReveal>
-        <PageSectionHeader
-          label={label}
-          title={title}
-          description={description}
-          align={align}
-          className={headerClassName}
-        />
-      </ScrollReveal>
+      <div className="container">
+        <ScrollReveal>
+          <PageSectionHeader
+            label={label}
+            title={title}
+            description={description}
+            align={align}
+            className={resolvedHeaderClassName}
+          />
+        </ScrollReveal>
+      </div>
 
       <ScrollReveal delay={120}>
         <div className={wrapperClassName}>

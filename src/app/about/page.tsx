@@ -38,6 +38,10 @@ const peopleQuery = `*[_type == "person" && isVisible != false]
     bio,
     isBoardMember,
     image,
+    socials[]{
+      platform,
+      url
+    },
     "groups": groups[]->{ _id, name, "slug": slug.current, groupType },
     "committee": committee->{ _id, name, "slug": slug.current, groupType }
   }`

@@ -13,7 +13,7 @@ import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
 import { PartnersSection } from "@/components/PartnersSection";
 import { CommitteeIcon } from "@/lib/committeeIcons";
 import { urlFor } from "@/sanity/lib/image";
-import { Network, Users } from "lucide-react";
+import { Github, Globe, Instagram, Linkedin, Network, Send, Twitter, Users } from "lucide-react";
 
 type Committee = {
   _id: string;
@@ -35,6 +35,10 @@ type Person = {
   bio?: string | null;
   image?: unknown | null;
   isBoardMember?: boolean | null;
+  socials?: Array<{
+    platform?: string | null;
+    url?: string | null;
+  }> | null;
   groups?: Committee[] | null;
   committee?: Committee | null;
 };
@@ -99,6 +103,57 @@ function getPersonImageUrl(image: unknown) {
     .auto("format")
     .quality(92)
     .url();
+}
+
+function normalizeExternalUrl(url?: string | null) {
+  if (!url) return null;
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+  if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(trimmed)) return trimmed;
+  if (trimmed.startsWith("//")) return `https:${trimmed}`;
+  return `https://${trimmed}`;
+}
+
+function getSocialLabel(platform?: string | null) {
+  const key = (platform ?? "").trim().toLowerCase();
+
+  switch (key) {
+    case "linkedin":
+      return "LinkedIn";
+    case "x":
+      return "X";
+    case "github":
+      return "GitHub";
+    case "telegram":
+      return "Telegram";
+    case "instagram":
+      return "Instagram";
+    case "website":
+      return "Website";
+    default:
+      return "Social";
+  }
+}
+
+function getSocialIcon(platform?: string | null) {
+  const key = (platform ?? "").trim().toLowerCase();
+
+  switch (key) {
+    case "linkedin":
+      return <Linkedin size={13} strokeWidth={2} />;
+    case "x":
+      return <Twitter size={13} strokeWidth={2} />;
+    case "github":
+      return <Github size={13} strokeWidth={2} />;
+    case "telegram":
+      return <Send size={13} strokeWidth={2} />;
+    case "instagram":
+      return <Instagram size={13} strokeWidth={2} />;
+    case "website":
+      return <Globe size={13} strokeWidth={2} />;
+    default:
+      return <Globe size={13} strokeWidth={2} />;
+  }
 }
 
 function CommitteeAccordion({
@@ -581,6 +636,12 @@ export default function About({ committees, people, advisors, siteStats }: About
             <div className="team-strip">
               {visibleTeamMembers.map((member, index) => {
                 const personImageUrl = getPersonImageUrl(member.image);
+                const socials = (member.socials ?? [])
+                  .map((social) => ({
+                    platform: social?.platform ?? null,
+                    url: normalizeExternalUrl(social?.url ?? null),
+                  }))
+                  .filter((social): social is { platform: string | null; url: string } => Boolean(social.url));
 
                 return (
                   <ScrollReveal key={member._id} delay={70 + index * 60}>
@@ -606,8 +667,25 @@ export default function About({ committees, people, advisors, siteStats }: About
                           ...getMemberGroups(member).map((group) => getGroupLabel(group)),
                         ]
                           .filter(Boolean)
-                          .join(" Â· ") || "Committee"}
+                          .join(" · ") || "Committee"}
                       </div>
+                      {socials.length > 0 ? (
+                        <div className="team-socials" aria-label={`${member.name} social links`}>
+                          {socials.map((social, socialIndex) => (
+                            <a
+                              key={`${member._id}-${social.platform ?? "social"}-${socialIndex}`}
+                              href={social.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="team-social-link"
+                              aria-label={`${member.name} on ${getSocialLabel(social.platform)}`}
+                              title={getSocialLabel(social.platform)}
+                            >
+                              {getSocialIcon(social.platform)}
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
                   </ScrollReveal>
                 );
