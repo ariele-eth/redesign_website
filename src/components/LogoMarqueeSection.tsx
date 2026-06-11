@@ -107,7 +107,7 @@ export function LogoMarqueeSection({
                             src={logoUrl}
                             alt={item.name}
                             fill
-                            sizes="(max-width: 980px) 105px, 105px"
+                            sizes="(max-width: 980px) 210px, 210px"
                             className={imageClassName}
                           />
                         ) : (
@@ -141,9 +141,9 @@ export function LogoMarqueeSection({
                       <Image
                         src={logoUrl}
                         alt={item.name}
-                        width={240}
-                        height={88}
-                        sizes="240px"
+                        width={480}
+                        height={156}
+                        sizes="480px"
                         className="partner-chip-logo"
                       />
                     </span>

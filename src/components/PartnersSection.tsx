@@ -1,25 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
+import Image from "next/image";
 
 import { PageSectionHeader } from "@/components/PageSectionHeader";
-import { client } from "@/sanity/lib/client";
-import { dataset, projectId } from "@/sanity/env";
 
 type PartnerPlacement = "home" | "about" | "collaborate";
-
-type PartnerLogo = {
-  asset?: {
-    _id?: string;
-    url?: string | null;
-  } | null;
-} | null;
 
 type PartnerItem = {
   _id: string;
   name: string;
-  logo?: PartnerLogo;
+  logoUrl?: string | null;
   url?: string | null;
 };
 
@@ -33,32 +24,6 @@ type PartnersSectionProps = {
   sectionClassName?: string;
   headerClassName?: string;
 };
-
-const imageBuilder = createImageUrlBuilder({ projectId, dataset });
-
-const partnerQuery = `*[_type == "partner"] {
-  _id,
-  name,
-  logo { asset->{ url } },
-  "url": coalesce(url, website)
-}`;
-
-function getLogoUrl(logo: PartnerLogo | undefined) {
-  if (!logo) return null;
-
-  try {
-    return imageBuilder
-      .image(logo as SanityImageSource)
-      .width(280)
-      .height(96)
-      .fit("max")
-      .auto("format")
-      .quality(92)
-      .url();
-  } catch {
-    return logo.asset?.url ?? null;
-  }
-}
 
 type PartnerCardModel = {
   _id: string;
@@ -78,17 +43,19 @@ function normalizeExternalUrl(url?: string | null) {
 
 function PartnerCard({ partner }: { partner: PartnerCardModel }) {
   const cardClasses =
-    "group flex h-[100px] flex-col items-center justify-center rounded-[10px] border border-[1px] border-[rgba(104,126,246,0.18)] bg-[var(--surface)] px-8 py-6 transition-colors duration-200 hover:bg-[#1a2435] hover:border-[rgba(78,142,247,0.35)]";
+    "group partner-card flex flex-col items-center justify-center rounded-[10px] border border-[1px] border-[rgba(104,126,246,0.18)] bg-[var(--surface)] px-8 py-6 transition-colors duration-200 hover:bg-[#1a2435] hover:border-[rgba(78,142,247,0.35)]";
   const normalizedUrl = normalizeExternalUrl(partner.url);
 
   const cardContent = (
-    <img
-      src={partner.logoUrl}
-      alt={partner.name}
-      loading="lazy"
-      decoding="async"
-      className="block h-auto w-auto max-h-[56px] max-w-full object-contain opacity-75 [filter:brightness(0)_invert(1)] transition duration-200 group-hover:opacity-100"
-    />
+    <div className="partner-card-logo-shell">
+      <Image
+        src={partner.logoUrl}
+        alt={partner.name}
+        fill
+        sizes="(max-width: 640px) 420px, 540px"
+        className="partner-card-logo opacity-75 transition duration-200 group-hover:opacity-100"
+      />
+    </div>
   );
 
   if (normalizedUrl) {
@@ -122,8 +89,14 @@ export function PartnersSection({
   useEffect(() => {
     let cancelled = false;
 
-    void client
-      .fetch<PartnerItem[]>(partnerQuery)
+    void fetch(`/api/partners?placement=${_placement}`)
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Partners request failed with ${response.status}`);
+        }
+
+        return (await response.json()) as PartnerItem[];
+      })
       .then((result) => {
         if (cancelled) return;
         setPartners(Array.isArray(result) ? result : []);
@@ -169,13 +142,12 @@ export function PartnersSection({
   }
 
   const partnerCards = partners.reduce<PartnerCardModel[]>((acc, partner) => {
-    const logoUrl = getLogoUrl(partner.logo);
-    if (!logoUrl) return acc;
+    if (!partner.logoUrl) return acc;
 
     acc.push({
       _id: partner._id,
       name: partner.name,
-      logoUrl,
+      logoUrl: partner.logoUrl,
       url: partner.url,
     });
 

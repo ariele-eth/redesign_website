@@ -27,7 +27,7 @@ const siteStatsQuery = `*[_type == "siteStats"][0] {
 
 const advisorsQuery = `*[_type == "advisor" && isVisible != false && showOnAbout != false]
   | order(coalesce(sortOrder, 9999) asc, name asc)
-  { _id, name, title, logo }`
+  { _id, name, title, description, logo }`
 
 const peopleQuery = `*[_type == "person" && isVisible != false]
   | order(coalesce(sortOrder, 9999) asc, name asc)
