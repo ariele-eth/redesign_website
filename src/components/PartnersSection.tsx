@@ -52,7 +52,7 @@ function PartnerCard({ partner }: { partner: PartnerCardModel }) {
         src={partner.logoUrl}
         alt={partner.name}
         fill
-        sizes="(max-width: 640px) 420px, 540px"
+        sizes="(max-width: 640px) 280px, 360px"
         className="partner-card-logo opacity-75 transition duration-200 group-hover:opacity-100"
       />
     </div>
