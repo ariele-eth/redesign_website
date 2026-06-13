@@ -2,6 +2,15 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
+const XIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path
+      fill="currentColor"
+      d="M18.244 2H21l-6.56 7.497L22 22h-5.828l-4.563-6.247L6.14 22H3.38l7.016-8.018L2 2h5.976l4.124 5.659L18.244 2Zm-.968 18h1.527L7.148 3.898H5.51z"
+    />
+  </svg>
+)
+
 const TelegramIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
     <path
@@ -64,7 +73,7 @@ export const Footer = () => {
                 <Linkedin size={15} /> LinkedIn
               </a>
               <a href="https://x.com/ethbclub" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
-                X Twitter
+                <XIcon /> X
               </a>
               <a href="https://t.me/ethbclub" target="_blank" rel="noopener noreferrer" className="footer-social-pill">
                 <TelegramIcon /> Telegram
