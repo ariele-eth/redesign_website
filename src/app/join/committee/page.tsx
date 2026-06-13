@@ -11,11 +11,8 @@ import { Label } from '@/components/ui/label'
 import { CmsEmptyState } from '@/components/CmsEmptyState'
 import { Suspense, useEffect, useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
-import { client } from '@/sanity/lib/client'
 import { useSearchParams } from 'next/navigation'
 import { Network } from 'lucide-react'
-
-const committeesQuery = `*[_type == "committee"] | order(name asc) { _id, name, "slug": slug.current }`
 
 type CommitteeOption = {
   _id: string
@@ -118,11 +115,21 @@ function CommitteeApplicationContent() {
   useEffect(() => {
     let isActive = true
     setIsLoadingCommittees(true)
-    client
-      .fetch(committeesQuery)
-      .then((data: CommitteeOption[]) => {
+    void fetch('/api/committees')
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Committees request failed with ${response.status}`)
+        }
+
+        return (await response.json()) as CommitteeOption[]
+      })
+      .then((data) => {
         if (!isActive) return
-        setCommitteeOptions(data)
+        setCommitteeOptions(Array.isArray(data) ? data : [])
+      })
+      .catch(() => {
+        if (!isActive) return
+        setCommitteeOptions([])
       })
       .finally(() => {
         if (!isActive) return
