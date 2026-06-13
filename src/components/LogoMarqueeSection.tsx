@@ -117,7 +117,7 @@ export function LogoMarqueeSection({
                       <div className={descriptionClassName}>
                         <h3>{item.name}</h3>
                         {item.title ? <p className="advisor-card-title">{item.title}</p> : null}
-                        <p>{item.description ?? 'Academic and industry advisor supporting the club.'}</p>
+                        {item.description?.trim() ? <p>{item.description}</p> : null}
                       </div>
                     </article>
                   )

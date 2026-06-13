@@ -4002,12 +4002,26 @@ hr {
     grid-template-columns: 1fr;
   }
 
+  .footer-email-link {
+    white-space: normal;
+    word-break: break-word;
+    align-items: flex-start;
+  }
+
   .footer-nl-right {
     flex-direction: column;
   }
 
   .footer-news-btn {
     width: 100%;
+  }
+
+  .application-form input,
+  .application-form textarea,
+  .application-form select,
+  .email-input,
+  .footer-news-input {
+    font-size: 16px;
   }
 
   .hero-logo-image {

@@ -1,8 +1,9 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
 const navLinks = [
@@ -23,44 +24,52 @@ export const Navigation = () => {
 
   return (
     <>
-      <nav style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 200,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 2.5rem',
-        height: '60px',
-        background: 'rgba(4, 6, 15, 0.7)',
-        backdropFilter: 'blur(20px) saturate(180%)',
-        borderBottom: '0.5px solid rgba(99, 130, 255, 0.1)',
-      }}>
-        {/* Brand */}
-        <Link href="/" style={{
+      <nav
+        className="site-nav"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 200,
           display: 'flex',
           alignItems: 'center',
-          textDecoration: 'none',
-          cursor: 'pointer',
-        }}>
+          justifyContent: 'space-between',
+          padding: '0 2.5rem',
+          height: '60px',
+          background: 'rgba(4, 6, 15, 0.7)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          borderBottom: '0.5px solid rgba(99, 130, 255, 0.1)',
+        }}
+      >
+        <Link
+          href="/"
+          className="site-nav-brand"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            textDecoration: 'none',
+            cursor: 'pointer',
+          }}
+        >
           <Image
             src="/ethbcc_logo.png.png"
             alt="ETH Blockchain Club"
             width={90}
             height={58}
+            className="site-nav-brand-image"
             style={{ width: '90px', height: '58px', objectFit: 'contain' }}
             priority
           />
         </Link>
 
-        {/* Desktop Nav Links */}
-        <div style={{
-          display: 'flex',
-          gap: 0,
-          listStyle: 'none',
-        }} className="hidden md:flex">
+        <div
+          className="site-nav-links hidden md:flex"
+          style={{
+            gap: 0,
+            listStyle: 'none',
+          }}
+        >
           {navLinks.map((link) => (
             <Link
               key={`${link.path}-${link.name}`}
@@ -86,67 +95,53 @@ export const Navigation = () => {
           ))}
         </div>
 
-        {/* Right Section */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-        }}>
-          <Link
-            href="/join"
-            className="nav-cta"
-            style={{
-              background: 'transparent',
-              color: 'var(--button)',
-              border: '0.5px solid var(--button)',
-              borderRadius: 'var(--r)',
-              padding: '7px 18px',
-              fontFamily: 'var(--font-body)',
-              fontSize: '13px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              letterSpacing: '0.3px',
-              textDecoration: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-            }}
-          >
+        <div
+          className="site-nav-actions"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+          }}
+        >
+          <Link href="/join" className="hero-cta-primary nav-cta" onClick={() => setMobileMenuOpen(false)}>
             Apply Now
           </Link>
 
-          {/* Mobile Menu Button */}
           <button
+            type="button"
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileMenuOpen}
+            className="nav-mobile-toggle md:hidden"
             style={{
               background: 'none',
               border: 'none',
               color: 'var(--text)',
               cursor: 'pointer',
-              fontSize: '20px',
             }}
-            className="md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            ☰
+            {mobileMenuOpen ? <X size={20} strokeWidth={2} /> : <Menu size={20} strokeWidth={2} />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'fixed',
-          top: '60px',
-          left: 0,
-          right: 0,
-          zIndex: 150,
-          background: 'var(--surface)',
-          borderBottom: '0.5px solid var(--border)',
-          padding: '16px 20px',
-          gap: '8px',
-        }}>
+        <div
+          className="site-mobile-menu"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'fixed',
+            top: '60px',
+            left: 0,
+            right: 0,
+            zIndex: 150,
+            background: 'var(--surface)',
+            borderBottom: '0.5px solid var(--border)',
+            padding: '16px 20px',
+            gap: '8px',
+          }}
+        >
           {navLinks.map((link) => (
             <Link
               key={`${link.path}-${link.name}`}
@@ -169,7 +164,6 @@ export const Navigation = () => {
         </div>
       )}
 
-      {/* CSS for nav link underline animation */}
       <style>{`
         .nav-link {
           position: relative;
@@ -192,9 +186,54 @@ export const Navigation = () => {
           transform: scaleX(1);
         }
 
-        .nav-cta:hover {
-          background: var(--button);
-          color: #fff;
+        .nav-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 40px;
+        }
+
+        /* Mobile breakpoint follows the site-wide 700px rule used in globals.css. */
+        @media (max-width: 700px) {
+          .site-nav {
+            padding: 0 var(--page-pad-x) !important;
+          }
+
+          .site-nav-brand-image {
+            width: 74px !important;
+            height: 48px !important;
+          }
+
+          .site-nav-actions {
+            gap: 8px !important;
+          }
+
+          .nav-cta {
+            min-height: 44px;
+            padding: 10px 14px;
+            font-size: 12px;
+            letter-spacing: 0.4px;
+          }
+
+          .nav-mobile-toggle {
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 0.5px solid var(--border);
+            background: rgba(9, 16, 34, 0.9);
+            color: var(--text);
+            flex-shrink: 0;
+          }
+
+          .site-mobile-menu {
+            padding-left: var(--page-pad-x) !important;
+            padding-right: var(--page-pad-x) !important;
+            background: rgba(13, 20, 36, 0.97) !important;
+            backdrop-filter: blur(20px) saturate(180%);
+          }
         }
       `}</style>
     </>

@@ -1,4 +1,25 @@
+import {createElement} from 'react'
 import {defineArrayMember, defineField, defineType} from 'sanity'
+
+function getSocialPreviewMedia(platform?: string) {
+  if ((platform ?? '').trim().toLowerCase() !== 'x') {
+    return undefined
+  }
+
+  return createElement(
+    'svg',
+    {
+      'aria-hidden': true,
+      viewBox: '0 0 24 24',
+      width: 18,
+      height: 18,
+      fill: 'currentColor',
+    },
+    createElement('path', {
+      d: 'M18.244 2H21l-6.56 7.497L22 22h-5.828l-4.563-6.247L6.14 22H3.38l7.016-8.018L2 2h5.976l4.124 5.659L18.244 2Zm-.968 18h1.527L7.148 3.898H5.51z',
+    }),
+  )
+}
 
 export default defineType({
   name: 'person',
@@ -112,6 +133,7 @@ export default defineType({
               return {
                 title: label.charAt(0).toUpperCase() + label.slice(1),
                 subtitle: subtitle ?? '',
+                media: getSocialPreviewMedia(label),
               }
             },
           },

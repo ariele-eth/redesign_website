@@ -13,7 +13,7 @@ import { LogoMarqueeSection } from "@/components/LogoMarqueeSection";
 import { PartnersSection } from "@/components/PartnersSection";
 import { CommitteeIcon } from "@/lib/committeeIcons";
 import { urlFor } from "@/sanity/lib/image";
-import { Github, Globe, Instagram, Linkedin, Network, Send, Twitter, Users } from "lucide-react";
+import { Github, Globe, Instagram, Linkedin, Network, Send, Users } from "lucide-react";
 
 type Committee = {
   _id: string;
@@ -142,7 +142,17 @@ function getSocialIcon(platform?: string | null) {
     case "linkedin":
       return <Linkedin size={20} strokeWidth={2} />;
     case "x":
-      return <Twitter size={20} strokeWidth={2} />;
+      return (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="currentColor"
+        >
+          <path d="M18.244 2H21l-6.56 7.497L22 22h-5.828l-4.563-6.247L6.14 22H3.38l7.016-8.018L2 2h5.976l4.124 5.659L18.244 2Zm-.968 18h1.527L7.148 3.898H5.51z" />
+        </svg>
+      );
     case "github":
       return <Github size={20} strokeWidth={2} />;
     case "telegram":

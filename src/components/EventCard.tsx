@@ -169,12 +169,12 @@ export function EventCard({ event, className, variant = 'default' }: EventCardPr
         </div>
       ) : (
         // ── DEFAULT variant: horizontal card, date panel left, content right ──
-        <div className="grid grid-cols-[180px_minmax(0,1fr)] md:grid-cols-[220px_minmax(0,1fr)]">
+        <div className="grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)]">
 
           {/* LEFT: date panel — height driven entirely by right content */}
-          <div className="flex items-center justify-center border-r border-white/10 bg-[linear-gradient(180deg,rgba(19,29,53,0.98)_0%,rgba(11,17,33,0.98)_100%)] px-6 py-8 text-center">
+          <div className="flex items-center justify-center border-b border-white/10 bg-[linear-gradient(180deg,rgba(19,29,53,0.98)_0%,rgba(11,17,33,0.98)_100%)] px-6 py-6 text-center md:border-b-0 md:border-r md:py-8">
             <div className="flex flex-col items-center gap-1">
-              <span className="font-head text-[3.7rem] font-semibold leading-none tracking-tight text-[#86a7ff] md:text-[4.25rem]">
+              <span className="font-head text-[3.25rem] font-semibold leading-none tracking-tight text-[#86a7ff] md:text-[4.25rem]">
                 {day}
               </span>
               <span className="text-[0.65rem] font-semibold uppercase tracking-[0.44em] text-[#8fa7df]">
@@ -184,7 +184,7 @@ export function EventCard({ event, className, variant = 'default' }: EventCardPr
           </div>
 
           {/* RIGHT: content — drives the card height */}
-          <div className="flex min-w-0 flex-col px-14 py-12">
+          <div className="flex min-w-0 flex-col px-5 py-6 md:px-14 md:py-12">
 
             {/* TOP: badge + time + location */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.72rem] text-[#9eb0d7] md:text-xs">
@@ -194,8 +194,8 @@ export function EventCard({ event, className, variant = 'default' }: EventCardPr
             </div>
 
             {/* MIDDLE: title + description */}
-            <div className="mt-8 min-w-0">
-              <h3 className="mb-5 font-head text-[1.35rem] font-semibold leading-tight text-white md:text-[1.55rem]">
+            <div className="mt-6 min-w-0 md:mt-8">
+              <h3 className="mb-4 font-head text-[1.2rem] font-semibold leading-tight text-white md:mb-5 md:text-[1.55rem]">
                 {event.title}
               </h3>
               <p className="max-w-4xl line-clamp-2 text-[0.86rem] leading-6 text-[#a7b6d8] md:text-[0.9rem]">
@@ -204,9 +204,9 @@ export function EventCard({ event, className, variant = 'default' }: EventCardPr
             </div>
 
             {/* BOTTOM: register button */}
-            <div className="mt-10">
+            <div className="mt-8 md:mt-10">
               {registrationLink ? (
-                <Button asChild className="inline-flex w-fit px-5 py-2.5 text-sm hero-cta-primary">
+                <Button asChild className="inline-flex w-full px-5 py-2.5 text-sm hero-cta-primary md:w-fit">
                   <a href={registrationLink} target="_blank" rel="noopener noreferrer" aria-label={`Register for ${event.title}`}>
                     Register
                   </a>
