@@ -170,7 +170,7 @@ export const Navigation = () => {
         }
 
         .site-nav-brand {
-          padding: 8px 14px 8px 0;
+          padding: 8px 14px 0px 0;
         }
 
         .nav-link::after {
