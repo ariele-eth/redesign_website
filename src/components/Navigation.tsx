@@ -103,7 +103,7 @@ export const Navigation = () => {
             gap: '12px',
           }}
         >
-          <Link href="/join" className="hero-cta-primary nav-cta" onClick={() => setMobileMenuOpen(false)}>
+          <Link href="/join" className="hero-cta-secondary nav-cta" onClick={() => setMobileMenuOpen(false)}>
             Apply Now
           </Link>
 
@@ -169,6 +169,10 @@ export const Navigation = () => {
           position: relative;
         }
 
+        .site-nav-brand {
+          padding: 8px 14px 8px 0;
+        }
+
         .nav-link::after {
           content: '';
           position: absolute;
@@ -197,6 +201,10 @@ export const Navigation = () => {
         @media (max-width: 700px) {
           .site-nav {
             padding: 0 var(--page-pad-x) !important;
+          }
+
+          .site-nav-brand {
+            padding: 0 !important;
           }
 
           .site-nav-brand-image {
