@@ -53,12 +53,12 @@ export const Navigation = () => {
           }}
         >
           <Image
-            src="/ethbcc_logo.png.png"
+            src="/ethbbc3.png"
             alt="ETH Blockchain Club"
-            width={90}
-            height={58}
+            width={72}
+            height={54}
             className="site-nav-brand-image"
-            style={{ width: '90px', height: '58px', objectFit: 'contain' }}
+            style={{ width: '72px', height: '54px', objectFit: 'contain' }}
             priority
           />
         </Link>
@@ -200,8 +200,8 @@ export const Navigation = () => {
           }
 
           .site-nav-brand-image {
-            width: 74px !important;
-            height: 48px !important;
+            width: 62px !important;
+            height: 46px !important;
           }
 
           .site-nav-actions {

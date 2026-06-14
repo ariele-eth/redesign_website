@@ -277,7 +277,7 @@ body::before {
 
 /* Text utilities */
 .label {
-  font-size: var(--font-size-tiny);
+  font-size: var(--font-size-caption);
   font-weight: 700;
   letter-spacing: var(--letter-spacing-widest);
   text-transform: uppercase;
@@ -1191,7 +1191,7 @@ hr {
 }
 
 .pillar-card h3 {
-  font-size: var(--font-size-h4);
+  font-size: 15px;
   margin: 0 0 10px;
   color: var(--text);
   font-family: var(--font-head);
@@ -1201,7 +1201,7 @@ hr {
 .pillar-card p {
   margin: 0;
   color: var(--text-secondary);
-  font-size: var(--font-size-body-sm);
+  font-size: 15px;
   line-height: var(--line-height-relaxed);
   font-family: var(--font-body);
 }
@@ -1406,14 +1406,14 @@ hr {
 .advisor-card-copy h3 {
   margin: 0;
   font-family: var(--font-head);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text);
 }
 
 .advisor-card-title {
   margin: 4px 0 0;
   color: var(--text);
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.45;
   letter-spacing: 0;
@@ -1424,13 +1424,13 @@ hr {
 
 .advisor-card-copy .advisor-card-title {
   color: var(--text);
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 .advisor-card-copy p {
   margin: 6px 0 0;
   color: var(--text-secondary);
-  font-size: 11px;
+  font-size: 15px;
   line-height: 1.5;
 }
 
@@ -2291,9 +2291,12 @@ hr {
   padding: 0 var(--page-pad-x) 80px;
 }
 
+.events-toolbar {
+  margin-bottom: 32px;
+}
+
 .events-filter-row {
   justify-content: flex-start;
-  margin-bottom: 32px;
 }
 
 .events-upcoming-block {
@@ -3822,7 +3825,7 @@ hr {
   margin: 0 0 12px;
   color: var(--text);
   font-family: var(--font-head);
-  font-size: var(--font-size-tiny);
+  font-size: 14px;
   letter-spacing: var(--letter-spacing-wider);
   font-weight: 700;
   text-transform: uppercase;
@@ -3832,7 +3835,7 @@ hr {
   display: block;
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 12px;
+  font-size: 13px;
   line-height: var(--line-height-relaxed);
   margin-bottom: 10px;
   font-family: var(--font-body);
@@ -3844,14 +3847,14 @@ hr {
 
 .footer-col-text {
   cursor: default;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .footer-email-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
@@ -3940,7 +3943,7 @@ hr {
 .footer-bottom-link {
   color: #425178;
   text-decoration: none;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .footer-bottom-links {

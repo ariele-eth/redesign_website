@@ -50,9 +50,9 @@ type AboutProps = {
   siteStats?: {
     members?: number;
     events?: number;
-    partners?: number;
+    collaborators?: number;
     committees?: number;
-    builders?: number;
+    teamMembers?: number;
   } | null;
 };
 
@@ -166,6 +166,35 @@ function getSocialIcon(platform?: string | null) {
   }
 }
 
+function getGroupKey(group: Committee) {
+  return group.groupType === "board" ? "board" : group.slug ?? group._id;
+}
+
+function getGroupLabel(group: Committee) {
+  return group.groupType === "board" ? "Board" : group.name;
+}
+
+function getMemberGroups(member: Person) {
+  const memberships = [...(member.groups ?? [])];
+
+  if (member.committee) {
+    memberships.push(member.committee);
+  }
+
+  const deduped: Committee[] = [];
+  const seenKeys = new Set<string>();
+
+  for (const group of memberships) {
+    const key = getGroupKey(group);
+    if (seenKeys.has(key)) continue;
+
+    seenKeys.add(key);
+    deduped.push(group);
+  }
+
+  return deduped;
+}
+
 function CommitteeAccordion({
   section,
   isOpen,
@@ -258,13 +287,14 @@ export default function About({ committees, people, advisors, siteStats }: About
       color: "var(--highlight)",
     },
     {
-      value: formatPlus(siteStats?.partners),
-      label: "Partners",
+      value: formatPlus(siteStats?.collaborators),
+      label: "Industry Collaborators",
       note: "industry and academic collaborators",
       meter: 68,
       color: "var(--text)",
     },
   ];
+  const heroStatCount = heroStats.length;
 
   const orderedCommittees = useMemo(
     () =>
@@ -315,31 +345,6 @@ export default function About({ committees, people, advisors, siteStats }: About
   const teamSectionId = "committee-members-section";
   const committeeFilters = orderedCommittees.filter((committee) => committee.groupType !== "board");
 
-  const getMemberGroups = (member: Person) => {
-    const memberships = [...(member.groups ?? [])];
-
-    if (member.committee) {
-      memberships.push(member.committee);
-    }
-
-    const deduped: Committee[] = [];
-    const seenKeys = new Set<string>();
-
-    for (const group of memberships) {
-      const key = getGroupKey(group);
-      if (seenKeys.has(key)) continue;
-
-      seenKeys.add(key);
-      deduped.push(group);
-    }
-
-    return deduped;
-  };
-
-  const getGroupKey = (group: Committee) => (group.groupType === "board" ? "board" : group.slug ?? group._id);
-
-  const getGroupLabel = (group: Committee) => (group.groupType === "board" ? "Board" : group.name);
-
   const focusMemberGroup = (group: Committee) => {
     setActiveFilter(getGroupKey(group));
     scrollToSection(teamSectionId);
@@ -355,11 +360,11 @@ export default function About({ committees, people, advisors, siteStats }: About
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActiveStat((prev) => (prev + 1) % heroStats.length);
+      setActiveStat((prev) => (prev + 1) % heroStatCount);
     }, 2200);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [heroStatCount]);
 
   const visibleTeamMembers = useMemo(() => {
     if (activeFilter === "all") return people;

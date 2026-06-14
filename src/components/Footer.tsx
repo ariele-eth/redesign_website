@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -56,12 +56,12 @@ export const Footer = () => {
         <div className="footer-top">
           <div className="footer-brand">
             <Image
-              src="/ethbcc_logo.png.png"
+              src="/ethbcc2.png"
               alt="ETH Blockchain Club"
-              width={94}
-              height={94}
+              width={188}
+              height={62}
               className="footer-brand-logo"
-              style={{ width: "94px", height: "94px", objectFit: "contain" }}
+              style={{ width: "188px", height: "62px", objectFit: "contain" }}
             />
 
             <p className="footer-tagline">
@@ -115,7 +115,7 @@ export const Footer = () => {
             <div>
               <h4 className="footer-col-title">CONTACT</h4>
               <a className="footer-col-link footer-email-link" href="mailto:contact@ethblockchain.ch">
-                <Mail size={14} className="footer-mail-icon" /> contact@ethblockchain.ch
+                contact@ethblockchain.ch
               </a>
               <div className="footer-col-link footer-col-text">
                 ETH Zurich, Rämistrasse 101

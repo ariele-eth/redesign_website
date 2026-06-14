@@ -18,8 +18,8 @@ export default defineType({
       validation: (Rule) => Rule.required().min(0),
     }),
     defineField({
-      name: 'partners',
-      title: 'Industry Partners',
+      name: 'collaborators',
+      title: 'Industry Collaborators',
       type: 'number',
       validation: (Rule) => Rule.required().min(0),
     }),
@@ -30,20 +30,35 @@ export default defineType({
       validation: (Rule) => Rule.required().min(0),
     }),
     defineField({
-      name: 'builders',
-      title: 'Active Builders',
+      name: 'teamMembers',
+      title: 'Team Members',
       type: 'number',
       validation: (Rule) => Rule.required().min(0),
+    }),
+    defineField({
+      name: 'partners',
+      title: 'Legacy Industry Partners',
+      type: 'number',
+      hidden: true,
+      readOnly: true,
+    }),
+    defineField({
+      name: 'builders',
+      title: 'Legacy Builders',
+      type: 'number',
+      hidden: true,
+      readOnly: true,
     }),
   ],
   preview: {
     select: {
       title: 'members',
-      subtitle: 'builders',
+      subtitle: 'teamMembers',
+      legacySubtitle: 'builders',
     },
-    prepare: ({ title, subtitle }) => ({
+    prepare: ({ title, subtitle, legacySubtitle }) => ({
       title: 'Site Stats',
-      subtitle: `Members: ${title ?? '--'} · Builders: ${subtitle ?? '--'}`,
+      subtitle: `Members: ${title ?? '--'} · Team Members: ${subtitle ?? legacySubtitle ?? '--'}`,
     }),
   },
 })

@@ -36,9 +36,9 @@ type HomeProps = {
   siteStats?: {
     members?: number;
     events?: number;
-    partners?: number;
+    collaborators?: number;
     committees?: number;
-    builders?: number;
+    teamMembers?: number;
   } | null;
 };
 
@@ -116,8 +116,8 @@ export default function Home({ advisors, events, siteStats }: HomeProps) {
               <span>Events / Year</span>
             </div>
             <div>
-              <strong>{formatPlus(siteStats?.partners)}</strong>
-              <span>Partners</span>
+              <strong>{formatPlus(siteStats?.collaborators)}</strong>
+              <span>Collaborators</span>
             </div>
           </div>
         </div>
@@ -133,10 +133,10 @@ export default function Home({ advisors, events, siteStats }: HomeProps) {
           </div>
           <div className="hero-logo-shell">
             <Image
-              src="/ethbcc_logo.png.png"
+              src="/ethbcc.png"
               alt="ETH Blockchain Club Logo"
-              width={310}
-              height={310}
+              width={480}
+              height={359}
               className="hero-logo-image"
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
               priority
@@ -167,16 +167,16 @@ export default function Home({ advisors, events, siteStats }: HomeProps) {
           <ScrollReveal delay={120}>
             <div className="vision-stats-home">
               <article className="vision-stat-card">
-                <strong>{formatPlus(siteStats?.builders)}</strong>
-                <span>Active Builders</span>
+                <strong>{formatPlus(siteStats?.teamMembers)}</strong>
+                <span>Team Members</span>
               </article>
               <article className="vision-stat-card">
                 <strong>{formatPlus(siteStats?.events)}</strong>
                 <span>Events Per Year</span>
               </article>
               <article className="vision-stat-card">
-                <strong>{formatPlus(siteStats?.partners)}</strong>
-                <span>Industry Partners</span>
+                <strong>{formatPlus(siteStats?.collaborators)}</strong>
+                <span>Industry Collaborators</span>
               </article>
               <article className="vision-stat-card">
                 <strong>{formatPlain(siteStats?.committees)}</strong>

@@ -20,9 +20,9 @@ const committeesQuery = `*[_type == "committee"] | order(order asc) {
 const siteStatsQuery = `*[_type == "siteStats"][0] {
   members,
   events,
-  partners,
+  "collaborators": coalesce(collaborators, partners),
   committees,
-  builders
+  "teamMembers": coalesce(teamMembers, builders)
 }`
 
 const advisorsQuery = `*[_type == "advisor" && isVisible != false && showOnAbout != false]

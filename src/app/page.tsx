@@ -19,9 +19,9 @@ const siteStatsQuery = `coalesce(
 ) {
   members,
   events,
-  partners,
+  "collaborators": coalesce(collaborators, partners),
   committees,
-  builders
+  "teamMembers": coalesce(teamMembers, builders)
 }`
 
 export default async function RootPage() {

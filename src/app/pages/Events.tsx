@@ -82,7 +82,7 @@ export default function Events({ upcomingEvents, eventTypes }: EventsProps) {
 
         <section className="events-content-shell">
           <div className="events-upcoming-block">
-            <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="events-toolbar flex flex-wrap items-center justify-between gap-4">
               <div className="filter-row events-filter-row">
                 {filters.map((filter) => (
                   <button
