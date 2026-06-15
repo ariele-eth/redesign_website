@@ -55,10 +55,10 @@ export const Navigation = () => {
           <Image
             src="/ethbbc3.png"
             alt="ETH Blockchain Club"
-            width={72}
-            height={54}
+            width={64}
+            height={48}
             className="site-nav-brand-image"
-            style={{ width: '72px', height: '54px', objectFit: 'contain' }}
+            style={{ width: '64px', height: '48px', objectFit: 'contain' }}
             priority
           />
         </Link>
@@ -170,7 +170,7 @@ export const Navigation = () => {
         }
 
         .site-nav-brand {
-          padding: 8px 14px 0px 0;
+          padding: 8px 12px 8px 0;
         }
 
         .nav-link::after {
